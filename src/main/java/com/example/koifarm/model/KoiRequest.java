@@ -1,27 +1,12 @@
-package com.example.koifarm.entity;
+package com.example.koifarm.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@Entity
-public class Koi {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long koiID;
-
-    @JsonIgnore
-    boolean isDeleted = false;
-
+@Data
+public class KoiRequest {
     @NotBlank(message = "Name is required")
     private String name;
 
@@ -46,8 +31,4 @@ public class Koi {
     private String location;
     private String owner;
     private String description;
-
-    @ManyToOne
-        @JoinColumn(name = "user_id")
-    User user;
 }

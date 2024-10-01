@@ -1,5 +1,6 @@
 package com.example.koifarm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -84,4 +85,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @OneToMany(mappedBy = "user")
+        @JsonIgnore
+    List<Koi> kois;
 }

@@ -1,8 +1,11 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.Koi;
+import com.example.koifarm.entity.User;
+import com.example.koifarm.model.KoiRequest;
 import com.example.koifarm.repository.KoiRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +16,20 @@ public class KoiService {
     @Autowired
     KoiRepository koiRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Autowired
+    AuthenticationService authenticationService;
+
     //create
-    public Koi create(Koi koi){
+    public Koi create(KoiRequest koiRequest){
+        Koi koi = modelMapper.map(koiRequest, Koi.class);
+
+        //luu thong tin nguoi tao
+        User user = authenticationService.getCurrentUser();
+        koi.setUser(user);
+
         Koi newKoi = koiRepository.save(koi);
         return newKoi;
     }

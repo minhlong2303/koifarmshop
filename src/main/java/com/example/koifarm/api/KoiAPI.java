@@ -1,6 +1,7 @@
 package com.example.koifarm.api;
 
 import com.example.koifarm.entity.Koi;
+import com.example.koifarm.model.KoiRequest;
 import com.example.koifarm.service.KoiService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,7 +26,7 @@ public class KoiAPI {
 
      //them Koi moi
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody Koi koi){
+    public ResponseEntity create(@Valid @RequestBody KoiRequest koi){
         Koi newKoi = koiService.create(koi);
         return ResponseEntity.ok(newKoi);
     }

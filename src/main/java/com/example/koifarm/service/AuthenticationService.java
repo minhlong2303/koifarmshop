@@ -3,6 +3,7 @@ package com.example.koifarm.service;
 import com.example.koifarm.entity.User;
 import com.example.koifarm.exception.DuplicateEntity;
 import com.example.koifarm.exception.EntityNotFoundException;
+import com.example.koifarm.model.EmailDetail;
 import com.example.koifarm.model.LoginRequest;
 import com.example.koifarm.model.RegisterRequest;
 import com.example.koifarm.model.UserResponse;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +38,9 @@ public class AuthenticationService implements UserDetailsService {
     @Autowired
     TokenService tokenService;
 
+    @Autowired
+    EmailService emailService;
+
     public UserResponse register(RegisterRequest registerRequest){
         //map RegisterRequest -> user
         User user = modelMapper.map(registerRequest, User.class);
@@ -44,6 +49,14 @@ public class AuthenticationService implements UserDetailsService {
             String originPassword = user.getPassword();
             user.setPassword(passwordEncoder.encode(originPassword));
             User newUser = userRepository.save(user);
+
+            EmailDetail emailDetail = new EmailDetail();
+            emailDetail.setUser(newUser);
+            emailDetail.setSubject("Welcome to Koi Farm Shop");
+            emailDetail.setLink("https://www.google.com/");   //link project
+
+            emailService.sentEmail(emailDetail);
+
             return modelMapper.map(newUser, UserResponse.class);
         } catch (Exception e){
             if (e.getMessage().contains(user.getUsername())){
@@ -79,5 +92,11 @@ public class AuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
         return userRepository.findUserByPhone(phone);
+    }
+
+    //ai dang goi request
+    public User getCurrentUser(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findUserById(user.getId());
     }
 }
