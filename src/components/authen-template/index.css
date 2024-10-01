@@ -1,0 +1,24 @@
+
+.authen-template{
+    width: 100%;
+    
+    background-image: url("https://images.unsplash.com/photo-1719234690062-8dda365f7157?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display:flex;
+    align-items: center;
+    height: 150vh;
+
+}
+.authen-template_form{
+    padding: 30px;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    margin-left: 50px;
+    border-radius: 12px;
+    
+}
+    
+
+

@@ -1,0 +1,32 @@
+
+
+.title {
+text-align: center;
+
+
+}
+
+.login-button {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
+}
+.google-button {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    ;
+}
+
+.forget-link {
+    margin-bottom: 20px;
+}
+
+
+.signup-link {
+    margin-top: 20px;
+    text-align: center;
+
+}
