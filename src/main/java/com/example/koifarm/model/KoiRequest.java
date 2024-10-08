@@ -31,4 +31,6 @@ public class KoiRequest {
     private String location;
     private String owner;
     private String description;
+
+    long speciesId;
 }

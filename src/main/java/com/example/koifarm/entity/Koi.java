@@ -50,4 +50,10 @@ public class Koi {
     @ManyToOne
         @JoinColumn(name = "user_id")
     User user;
+
+    // Relationship with KoiSpecies
+    @ManyToOne
+    @JoinColumn(name = "species_id")
+            @JsonProperty
+    KoiSpecies species;
 }

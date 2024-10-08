@@ -3,10 +3,7 @@ package com.example.koifarm.service;
 import com.example.koifarm.entity.User;
 import com.example.koifarm.exception.DuplicateEntity;
 import com.example.koifarm.exception.EntityNotFoundException;
-import com.example.koifarm.model.EmailDetail;
-import com.example.koifarm.model.LoginRequest;
-import com.example.koifarm.model.RegisterRequest;
-import com.example.koifarm.model.UserResponse;
+import com.example.koifarm.model.*;
 import com.example.koifarm.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,14 +86,41 @@ public class AuthenticationService implements UserDetailsService {
         }
     }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+//        return userRepository.findUserByPhone(phone);
+//    }
+
     @Override
-    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
-        return userRepository.findUserByPhone(phone);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findUserByUsername(username);
     }
 
     //ai dang goi request
     public User getCurrentUser(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findUserById(user.getId());
+    }
+
+    public void forgotPassword(ForgotPasswordRequest forgotPasswordRequest){
+        User user = userRepository.findUserByEmail(forgotPasswordRequest.getEmail());
+
+        if (user == null){
+            throw new EntityNotFoundException("User not found!");
+        } else {
+            EmailDetail emailDetail = new EmailDetail();
+            emailDetail.setUser(user);
+            emailDetail.setSubject("Reset Password");
+            emailDetail.setLink("https://www.google.com/?token=" + tokenService.generateToken(user));  //link forgot password
+
+            emailService.sentEmail(emailDetail);
+        }
+
+    }
+
+    public void resetPassword(ResetPasswordRequest resetPasswordRequest){
+        User user = getCurrentUser();
+        user.setPassword(passwordEncoder.encode(resetPasswordRequest.getPassword()));
+        userRepository.save(user);
     }
 }

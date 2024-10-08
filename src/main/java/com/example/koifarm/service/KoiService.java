@@ -1,9 +1,11 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.Koi;
+import com.example.koifarm.entity.KoiSpecies;
 import com.example.koifarm.entity.User;
 import com.example.koifarm.model.KoiRequest;
 import com.example.koifarm.repository.KoiRepository;
+import com.example.koifarm.repository.KoiSpeciesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class KoiService {
     @Autowired
     AuthenticationService authenticationService;
 
+    @Autowired
+    KoiSpeciesRepository koiSpeciesRepository;
     //create
     public Koi create(KoiRequest koiRequest){
         Koi koi = modelMapper.map(koiRequest, Koi.class);
@@ -29,6 +33,12 @@ public class KoiService {
         //luu thong tin nguoi tao
         User user = authenticationService.getCurrentUser();
         koi.setUser(user);
+
+        KoiSpecies koiSpecies = koiSpeciesRepository.findKoiSpeciesById(koiRequest.getSpeciesId());
+        if (koiSpecies == null) {
+            throw new EntityNotFoundException("Koi Species not found!");
+        }
+        koi.setSpecies(koiSpecies);
 
         Koi newKoi = koiRepository.save(koi);
         return newKoi;
