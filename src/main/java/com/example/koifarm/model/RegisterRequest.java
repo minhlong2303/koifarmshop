@@ -1,9 +1,8 @@
 package com.example.koifarm.model;
 
-import com.example.koifarm.entity.Role;
+import com.example.koifarm.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -17,9 +16,9 @@ public class RegisterRequest {
     @Column(unique = true)
     String username;
 
-//    String firstName;
-//
-//    String lastName;
+    String firstName;
+
+    String lastName;
 
     @Column(unique = true)
     @Email(message = "Invalid Email!")

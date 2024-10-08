@@ -50,7 +50,7 @@ public class AuthenticationService implements UserDetailsService {
             EmailDetail emailDetail = new EmailDetail();
             emailDetail.setUser(newUser);
             emailDetail.setSubject("Welcome to Koi Farm Shop");
-            emailDetail.setLink("https://www.google.com/");   //link project
+            emailDetail.setLink("http://localhost:5173/");   //link project
 
             emailService.sentEmail(emailDetail);
 

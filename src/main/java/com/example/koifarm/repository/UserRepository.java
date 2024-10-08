@@ -1,6 +1,7 @@
 package com.example.koifarm.repository;
 
 import com.example.koifarm.entity.User;
+import com.example.koifarm.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -13,5 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findUserById(long id);
 
     User findUserByEmail(String email);
+
+    User findUserByRole(Role role);
 
 }

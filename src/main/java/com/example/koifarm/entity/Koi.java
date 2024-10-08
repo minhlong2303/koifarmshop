@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,9 +17,9 @@ import java.math.BigDecimal;
 public class Koi {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long koiID;
+    private UUID koiID;
 
     @JsonIgnore
     boolean isDeleted = false;
@@ -32,13 +34,11 @@ public class Koi {
     @Pattern(regexp = "Male|Female", message = "Gender must be either 'Male' or 'Female'")
     private String gender;
 
-    @NotNull(message = "Age is required")
-    @Min(value = 1, message = "Age must be a positive number")
-    private Integer age;
-
     @NotNull(message = "Size is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Size must be greater than 0")
-    private BigDecimal size;
+    private float size;
+
+    private float  price;
 
     @NotBlank(message = "Breed is required")
     private String breed;
@@ -46,14 +46,21 @@ public class Koi {
     private String location;
     private String owner;
     private String description;
+    private String image;
 
     @ManyToOne
         @JoinColumn(name = "user_id")
+    @JsonIgnore
     User user;
 
     // Relationship with KoiSpecies
     @ManyToOne
     @JoinColumn(name = "species_id")
-            @JsonProperty
+            @JsonIgnore
     KoiSpecies species;
+
+    @OneToMany(mappedBy = "koi")
+    List<OrderDetails> orderDetails;
+
+
 }

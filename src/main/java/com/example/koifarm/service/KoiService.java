@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class KoiService {
@@ -50,28 +51,35 @@ public class KoiService {
         return  kois;
     }
 
+
     //Update
-    public Koi update(long koiID, Koi koi){
+    public Koi update(UUID koiID, Koi koi){
         //b1: tim Koi can duoc update
         Koi oldKoi = getKoiById(koiID);
 
         //b2: cap nhat thong tin cua no
         oldKoi.setName(koi.getName());
-        oldKoi.setAge(koi.getAge());
+        oldKoi.setOrigin(koi.getOrigin());
+        oldKoi.setGender(koi.getGender());
         oldKoi.setSize(koi.getSize());
-
+        oldKoi.setPrice(koi.getPrice());
+        oldKoi.setBreed(koi.getBreed());
+        oldKoi.setLocation(koi.getLocation());
+        oldKoi.setOwner(koi.getOwner());
+        oldKoi.setDescription(koi.getDescription());
+        oldKoi.setImage(koi.getImage());
         //b3: luu xuong DB
         return koiRepository.save(oldKoi);
     }
 
     //Delete
-    public Koi delete(long koiID){
+    public Koi delete(UUID koiID){
         Koi oldKoi = getKoiById(koiID);
         oldKoi.setDeleted(true);
         return koiRepository.save(oldKoi);
     }
 
-    public Koi getKoiById(long koiID){
+    public Koi getKoiById(UUID koiID){
         Koi oldKoi = koiRepository.findKoiByKoiID(koiID);
         if (oldKoi == null) throw new EntityNotFoundException("Koi not found!");
         return oldKoi;
