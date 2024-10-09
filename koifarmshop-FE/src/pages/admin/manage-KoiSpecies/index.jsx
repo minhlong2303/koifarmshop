@@ -67,7 +67,11 @@ function ManageKoiSpecies() {
 
   return (
     <div>
-      <CRUDTemplate columns={columns} formItems={formItems} path="KoiSpecies" />
+      <CRUDTemplate
+        columns={columns}
+        formItems={formItems}
+        path="koi-species"
+      />
     </div>
   );
 }

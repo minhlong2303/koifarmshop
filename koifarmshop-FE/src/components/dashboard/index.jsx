@@ -21,6 +21,7 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem("Manage Koi Species ", "KoiSpecies", <PieChartOutlined />),
   getItem("Manage Koi ", "koi", <PieChartOutlined />),
+  getItem("Manage User ", "users", <PieChartOutlined />),
 ];
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);

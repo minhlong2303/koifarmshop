@@ -27,22 +27,22 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
     ...columns,
     {
       title: "Action",
-      dataIndex: "koiId",
-      key: "koiId",
-      render: (koiId, koiFish) => (
+      dataIndex: "koiID",
+      key: "koiID",
+      render: (koiID, koi) => (
         <>
           <Button
             type="primary"
             onClick={() => {
               setShowModal(true);
-              form.setFieldsValue(koiFish);
-              if (typeof koiFish.image === "string" && koiFish.image) {
+              form.setFieldsValue(koi);
+              if (typeof koi.image === "string" && koi.image) {
                 setFileList([
                   {
                     uid: "-1",
                     name: "image.png",
                     status: "done",
-                    url: koiFish.image,
+                    url: koi.image,
                   },
                 ]);
               } else {
@@ -50,11 +50,11 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
               }
             }}
           >
-            Edit
+            Update
           </Button>
           <Popconfirm
             title="Do you want to delete this category"
-            onConfirm={() => handleDelete(koiId)}
+            onConfirm={() => handleDelete(koiID)}
           >
             <Button type="primary" danger>
               Delete
@@ -118,14 +118,14 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
     console.log(values);
     try {
       setLoading(true);
-      if (values.koiId) {
+      if (values.koiID) {
         //Update
         if (fileList.length > 0 && fileList[0].originFileObj) {
           const file = fileList[0];
           const url = await uploadFile(file.originFileObj);
           values.image = url;
         }
-        const response = await api.put(`${path}/${values.koiId}`, values);
+        const response = await api.put(`${path}/${values.koiID}`, values);
         toast.success("Update Sucessfully");
       } else {
         //Create

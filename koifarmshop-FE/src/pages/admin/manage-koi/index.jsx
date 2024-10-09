@@ -1,34 +1,33 @@
 import React from "react";
-import CRUDTemplate from "../../../components/crud-template/CrudWithPicture";
 import { Form, Image, Input, InputNumber } from "antd";
 import CRUDPictureTemplate from "../../../components/crud-template/CrudWithPicture";
 
 function ManageKoi() {
   const columns = [
-    { title: "ID", dataIndex: "koiId", key: "id" },
-    { title: "Name", dataIndex: "koiName", key: "koiName" },
-    {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (image) => {
-        return <Image src={image} alt="KoiFish's picture" width={100} />;
-      },
-    },
+    { title: "ID", dataIndex: "koiID", key: "koiID" },
+    { title: "Name", dataIndex: "name", key: "name" }, //koiName => name
+    // {
+    //   title: "Image",
+    //   dataIndex: "image",
+    //   key: "image",
+    //   render: (image) => {
+    //     return <Image src={image} alt="KoiFish's picture" width={100} />;
+    //   },
+    // },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
       render: (price) => `${price} $`,
     },
-    { title: "Quantity", dataIndex: "quantity", key: "quantity" },
+    // { title: "Quantity", dataIndex: "quantity", key: "quantity" },
   ];
 
   const formItems = (
     <>
       <Form.Item
         label="Koi Fish's name"
-        name="koiName"
+        name="name"
         rules={[
           {
             required: true,
@@ -62,7 +61,7 @@ function ManageKoi() {
         <InputNumber />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         label="Quantity"
         name="quantity"
         rules={[
@@ -79,11 +78,11 @@ function ManageKoi() {
         ]}
       >
         <InputNumber />
-      </Form.Item>
+      </Form.Item> */}
 
       <Form.Item
         label="Koi Fish's speciesID"
-        name="koiSpeciesID"
+        name="speciesId"
         rules={[
           {
             required: true,
@@ -102,7 +101,7 @@ function ManageKoi() {
 
       <Form.Item
         label="Koi Fish's origin"
-        name="koiOrigin"
+        name="origin"
         rules={[
           {
             required: true,
@@ -119,7 +118,7 @@ function ManageKoi() {
 
       <Form.Item
         label="Koi Fish's gender"
-        name="koiGender"
+        name="gender"
         rules={[
           {
             required: true,
@@ -136,7 +135,7 @@ function ManageKoi() {
 
       <Form.Item
         label="Koi Fish's age"
-        name="koiAge"
+        name="age"
         rules={[
           {
             required: true,
@@ -155,7 +154,7 @@ function ManageKoi() {
 
       <Form.Item
         label="Koi Fish's size"
-        name="koiSize"
+        name="size"
         rules={[
           {
             required: true,
@@ -174,7 +173,7 @@ function ManageKoi() {
 
       <Form.Item
         label="Koi Fish's breed"
-        name="koiBreed"
+        name="breed"
         rules={[
           {
             required: true,
@@ -232,18 +231,14 @@ function ManageKoi() {
         <Input />
       </Form.Item>
 
-      <Form.Item label="Koi Fish's Id" name="koiId" hidden>
+      <Form.Item label="Koi Fish's Id" name="koiID" hidden>
         <Input />
       </Form.Item>
     </>
   );
 
   return (
-    <CRUDPictureTemplate
-      columns={columns}
-      formItems={formItems}
-      path="KoiFish"
-    />
+    <CRUDPictureTemplate columns={columns} formItems={formItems} path="koi" />
   );
 }
 

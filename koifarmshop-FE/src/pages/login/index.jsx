@@ -10,8 +10,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../config/axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/userSlice";
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLoginGoogle = () => {
     const auth = getAuth();
     signInWithPopup(auth, googleProvider)
@@ -37,11 +41,12 @@ function LoginPage() {
         // ...
       });
   };
-  const navigate = useNavigate();
+
   const handleLogin = async (values) => {
     try {
       const response = await api.post("login", values);
       console.log(response);
+      dispatch(login(response.data));
       const { role, token } = response.data;
       toast.success("Đăng nhập thành công!");
       localStorage.setItem("token", token);

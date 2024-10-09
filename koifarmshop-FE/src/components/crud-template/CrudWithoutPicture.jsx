@@ -35,7 +35,7 @@ function CRUDTemplate({ columns, formItems, path }) {
               form.setFieldsValue(koiFish);
             }}
           >
-            Edit
+            Update
           </Button>
           <Popconfirm
             title="Do you want to delete this category"
