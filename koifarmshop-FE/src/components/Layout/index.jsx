@@ -1,15 +1,14 @@
 import React from "react";
-import Header from "../Header";
 import { Outlet } from "react-router-dom";
-import Navbar from "../navbar/navbar";
+import Navbar from "../Header/header";
 import AppFooter from "../footer";
-import HeaderTest from "../headerTest";
+import Header from "../Header/header";
 
 function Layout() {
   return (
     <div>
       <div>
-        <Navbar></Navbar>
+        <Header></Header>
         <div
           className="main-content"
           style={{ padding: 20, minHeight: "100vh" }}

@@ -18,6 +18,10 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import Layout from "./components/Layout";
 import ShopPage from "./pages/shop";
+import ContactPage from "./pages/Contact/contact";
+import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
+import CartPage from "./pages/Cart";
+import ManageUsers from "./pages/admin/manage-users/ManageUsers";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -46,6 +50,18 @@ function App() {
           path: "shop",
           element: <ShopPage></ShopPage>,
         },
+        {
+          path: "contact",
+          element: <ContactPage></ContactPage>,
+        },
+        {
+          path: "about-us",
+          element: <AboutUsPage></AboutUsPage>,
+        },
+        {
+          path: "cart",
+          element: <CartPage></CartPage>,
+        },
       ],
     },
     {
@@ -64,10 +80,10 @@ function App() {
     {
       path: "dashboard",
       element: (
-        <ProtectRouteAuth>
-          <Dashboard></Dashboard>
-        </ProtectRouteAuth>
-        // <Dashboard></Dashboard>
+        // <ProtectRouteAuth>
+        //   <Dashboard></Dashboard>
+        // </ProtectRouteAuth>
+        <Dashboard></Dashboard>
       ),
       children: [
         {
@@ -82,15 +98,11 @@ function App() {
           path: "service",
           element: <ManageServiceGroup />,
         },
+        {
+          path: "users",
+          element: <ManageUsers />,
+        },
       ],
-    },
-    {
-      path: "cart",
-      element: (
-        <div>
-          <Cart />
-        </div>
-      ),
     },
     {
       path: "order",

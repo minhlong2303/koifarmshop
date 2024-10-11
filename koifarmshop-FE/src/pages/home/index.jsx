@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import Header from "../../components/Header";
-import Navbar from "../../components/navbar/navbar";
-import api from "../../config/axios";
+
 function HomePage() {
   return (
     <div className="homepage">

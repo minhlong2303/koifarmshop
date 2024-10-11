@@ -149,7 +149,7 @@ function RegisterPage() {
             <Input.Password placeholder="Xác nhận lại mật khẩu" />
           </Form.Item>
 
-          <Button type="primary" className="register-button">
+          <Button type="primary" htmlType="submit" className="register-button">
             Đăng kí
           </Button>
           <Divider

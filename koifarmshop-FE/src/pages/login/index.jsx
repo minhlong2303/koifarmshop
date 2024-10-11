@@ -52,6 +52,8 @@ function LoginPage() {
       localStorage.setItem("token", token);
       if (role === "MANAGER") {
         navigate("/dashboard");
+      } else {
+        navigate("/");
       }
     } catch (err) {
       toast.error(err.response.data);
