@@ -1,15 +1,55 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
-import Header from "../../components/Header";
-import Navbar from "../../components/navbar/navbar";
+
+import KoiList from "../../components/KoiList";
+import api from "../../config/axios";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/features/cartSlide";
+
 function HomePage() {
+  const [category, setCategory] = useState("All");
+  const [products, setProducts] = useState([]);
+  const fetchProduct = async () => {
+    try {
+      const response = await api.get("/koi");
+
+      setProducts(response.data);
+    } catch (e) {
+      console.log("Error fetch product: ", e);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
   return (
     <div>
-      <Navbar />
-      <Header />
+      <KoiList category={category} setCategory={setCategory} />
+      <div className="product-list">
+        {products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </div>
     </div>
   );
 }
+const Product = ({ product }) => {
+  const dispatch = useDispatch();
 
+  const handleAddToCart = () => {
+    dispatch(addProduct(product));
+  };
+  return (
+    <div className="product">
+      <img src={product.image} alt="" />
+      <h3>{product.name}</h3>
+      <p>{product.description}</p>
+      <span>{product.price}</span>
+      <center>
+        <button onClick={handleAddToCart}>Add to cart</button>
+      </center>
+    </div>
+  );
+};
 export default HomePage;

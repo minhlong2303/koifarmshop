@@ -1,3 +1,46 @@
+.navbar {
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fdecee;
+    
+}
+.navbar .logo {
+    width: 150px;
+    
+}
+
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    color: black;
+    font-size: 18px;
+}
+
+.navbar-right {
+    padding-right: 10px;
+    
+}
+
+.navbar button {
+    background-color: #fdecee;
+    
+    border: none ;
+    border-radius: 20px;
+    padding: 20px;
+    
+}
+
+
+
+.navbar .active {
+    padding-bottom: 2px;
+    border-bottom: 2px solid black;
+}
+
 .header {
     height: 34vw;
     margin: 30px auto;
@@ -7,45 +50,12 @@
     padding: 10px 0;
      
 }
-.header-contents  {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 1.5vw;
-    max-width: 50%;
-    bottom: 10%;
-    left: 6vw;
-    color: white;
-    animation: fadeIn 3s;
-    
-
-}
-.header-contents h2 {
-    font-weight: 800;
-    color: white;
-    font-size: max(4.5w, 22px);
-}
 
 
-
-.header-contents button {
-    border: none;
-    color: #747474;
-    font-weight: 500;
-    padding: 1vw 2.3vw;
-    background-color: white;
-    font-size: max(1vw, 13px);
-    border-radius: 50px;
-}
-
-.header-image img{
-    /* width: 1135px;
-    height: 900px; */
+.header img{   
     width: 100%;
-    opacity:;
-
-    
-
 }
 
+
+
+   
