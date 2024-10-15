@@ -6,8 +6,8 @@ function ManageKoiSpecies() {
   const columns = [
     {
       title: "Koi Species ID",
-      dataIndex: "SpeciesID",
-      key: "SpeciesID",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Koi Species Name",
@@ -23,7 +23,7 @@ function ManageKoiSpecies() {
 
   const formItems = (
     <>
-      <Form.Item label="ID" name="SpeciesID" hidden>
+      <Form.Item label="ID" name="id" hidden>
         <Input />
       </Form.Item>
       <Form.Item

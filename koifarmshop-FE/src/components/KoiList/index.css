@@ -1,0 +1,45 @@
+
+.koi_scroll {
+width: 100%;
+display: flex;
+/* padding-top: 50px; */
+overflow-x: scroll;
+gap: 40px;
+text-align: center;
+margin: 20px 0px;
+
+}
+.koi_menu-items div {
+width: 100%;
+display: grid;
+grid-template-columns: auto auto auto;
+grid-gap: 20px;
+padding: 10px;
+flex: none;
+}
+.koi_menu-items div img {
+    width: 100%;
+    filter: grayscale(100%);
+    transition: transform 0.5s;
+
+}
+.koi_scroll::-webkit-scrollbar {
+    display: none;
+
+}
+.koi_list {
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 10% auto;
+}
+#btnLeft, #btnRight {
+    width: 50px;
+    cursor: pointer;
+    margin: 40px;
+}
+.koi_menu-items div img:hover {
+   filter: grayscale(0);
+   cursor: pointer;
+   transform: scale(1.1);
+}

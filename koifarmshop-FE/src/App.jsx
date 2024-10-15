@@ -5,11 +5,8 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import HomePage from "./pages/home";
 import Dashboard from "./components/dashboard";
-import Cart from "./pages/Cart";
 import Order from "./pages/PlaceOrder";
-import ManageCategory from "./pages/admin/manage-KoiSpecies";
 import ManageServiceGroup from "./pages/admin/manage-service-group";
 import ManageKoi from "./pages/admin/manage-koi";
 import ManageKoiSpecies from "./pages/admin/manage-KoiSpecies";
@@ -22,6 +19,7 @@ import ContactPage from "./pages/Contact/contact";
 import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
 import CartPage from "./pages/Cart";
 import ManageUsers from "./pages/admin/manage-users/ManageUsers";
+import HomePage from "./pages/home/HomePage";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {

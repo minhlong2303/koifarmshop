@@ -1,6 +1,6 @@
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { rootReducer } from "./rootReducer";
+import { rootReducer } from "../redux/features/rootReducer";
 import { configureStore } from "@reduxjs/toolkit";
 const persistConfig = {
   key: "root",

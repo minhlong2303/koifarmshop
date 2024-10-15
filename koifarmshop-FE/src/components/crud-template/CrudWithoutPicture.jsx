@@ -24,9 +24,9 @@ function CRUDTemplate({ columns, formItems, path }) {
     ...columns,
     {
       title: "Action",
-      dataIndex: "SpeciesID",
-      key: "SpeciesID",
-      render: (koiId, koiFish) => (
+      dataIndex: "id",
+      key: "id",
+      render: (id, koiFish) => (
         <>
           <Button
             type="primary"
@@ -39,7 +39,7 @@ function CRUDTemplate({ columns, formItems, path }) {
           </Button>
           <Popconfirm
             title="Do you want to delete this category"
-            onConfirm={() => handleDelete(koiId)}
+            onConfirm={() => handleDelete(id)}
           >
             <Button type="primary" danger>
               Delete
@@ -64,9 +64,9 @@ function CRUDTemplate({ columns, formItems, path }) {
     console.log(values);
     try {
       setLoading(true);
-      if (values.SpeciesID) {
+      if (values.id) {
         //Update
-        const response = await api.put(`${path}/${values.SpeciesID}`, values);
+        const response = await api.put(`${path}/${values.id}`, values);
         toast.success("Update Sucessfully");
       } else {
         //Create

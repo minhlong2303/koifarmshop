@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import {
   DesktopOutlined,
@@ -8,32 +7,50 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
+
 function getItem(label, key, icon, children) {
   return {
     key,
     icon,
     children,
-    label: <Link to={`/dashboard/${key}`}>{label}</Link>,
+    label,
   };
 }
+
 const items = [
-  getItem("Manage Koi Species ", "KoiSpecies", <PieChartOutlined />),
-  getItem("Manage Koi ", "koi", <PieChartOutlined />),
-  getItem("Manage User ", "users", <PieChartOutlined />),
+  getItem("Manage Shop", "manageShop", <UserOutlined />, [
+    getItem(
+      <Link to="/dashboard/KoiSpecies">Manage Koi Species</Link>,
+      "KoiSpecies",
+      <PieChartOutlined />
+    ),
+    getItem(
+      <Link to="/dashboard/koi">Manage Koi</Link>,
+      "koi",
+      <PieChartOutlined />
+    ),
+    getItem(
+      <Link to="/dashboard/users">Manage User</Link>,
+      "users",
+      <PieChartOutlined />
+    ),
+  ]),
+  getItem("Dashboard & Report", "dashboardReport", <TeamOutlined />, [
+    getItem("Team 1", "6"),
+    getItem("Team 2", "8"),
+  ]),
 ];
-const Dashboard = () => {
+
+const App = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider
         collapsible
         collapsed={collapsed}
@@ -48,22 +65,9 @@ const Dashboard = () => {
         />
       </Sider>
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          ></Breadcrumb>
+        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <Content style={{ margin: "0 16px" }}>
+          <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
           <div
             style={{
               padding: 24,
@@ -72,18 +76,15 @@ const Dashboard = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet> </Outlet>
+            <Outlet />
           </div>
         </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
+        <Footer style={{ textAlign: "center" }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
     </Layout>
   );
 };
-export default Dashboard;
+
+export default App;
