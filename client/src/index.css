@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap");
+* {
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Merriweather";
+  font-weight: ;
+  /* font-size: medium;  */
+}
+.app {
+  margin: auto;
+  /* background-color: #b9c2ad; */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

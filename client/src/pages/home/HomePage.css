@@ -1,0 +1,12 @@
+.header {
+  height: 34vw;
+  margin: 30px auto;
+  display: flex;
+  background-size: contain;
+  position: relative;
+  padding: 10px 0;
+}
+
+.header img {
+  width: 100%;
+}
