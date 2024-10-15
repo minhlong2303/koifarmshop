@@ -5,29 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="KoiSpeciesAPI, forgot password">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiSpeciesAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiSpeciesAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Koi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Koi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/KoiSpecies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/KoiSpecies.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiSpeciesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiSpeciesRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/RegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiSpeciesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiSpeciesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiSpeciesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiSpeciesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/api/KoiAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/api/KoiAPI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/Koi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/Koi.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/RegisterRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/repository/KoiRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/repository/KoiRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/KoiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/KoiService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/TokenService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +99,6 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/YenNhung/Downloads/Project cua toi/demo",
     "node.js.detected.package.eslint": "true",
@@ -187,6 +164,9 @@
       <updated>1726903682390</updated>
       <workItem from="1728978426967" duration="1099000" />
       <workItem from="1728979547657" duration="149000" />
+      <workItem from="1728980081563" duration="155000" />
+      <workItem from="1728980254242" duration="26000" />
+      <workItem from="1728980612812" duration="28000" />
     </task>
     <task id="LOCAL-00001" summary="JWT va phan quyen">
       <option name="closed" value="true" />
