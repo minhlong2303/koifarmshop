@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="KoiSpeciesAPI, forgot password">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiSpeciesAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiSpeciesAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Koi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Koi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/KoiSpecies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/KoiSpecies.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiSpeciesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiSpeciesRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiSpeciesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiSpeciesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiSpeciesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiSpeciesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/TokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/api/KoiAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/api/KoiAPI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/Koi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/Koi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/RegisterRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/RegisterRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/repository/KoiRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/repository/KoiRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/KoiService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/KoiService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/TokenService.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev/Long/orderdetail" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Yen-Nhung&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/minhlong2303/koifarmshop&quot;,
+    &quot;accountId&quot;: &quot;4e88e88a-905a-4c6c-b272-f0bca4c8b60d&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;minhlong2303&quot;,
+    &quot;repository&quot;: &quot;koifarmshop&quot;
+  },
+  &quot;editorReviewEnabled&quot;: false
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/example/koifarm/api/OrderAPI.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2mN4QKnVqLK6arnqhSN3qsZrteB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.koifarm.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/YenNhung/Downloads/Project cua toi/demo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.editor",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.example.koifarm.entity" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.koifarm.exception" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.koifarm">
+    <configuration name="koifarm" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.example.koifarm.KoifarmApplication" />
+      <module name="koifarm" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="koifarm-0.0.1-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/koifarm-0.0.1-SNAPSHOT.jar" />
+      <method v="2" />
+    </configuration>
+    <configuration name="KoifarmApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="koifarm" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.koifarm.KoifarmApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JAR Application.koifarm-0.0.1-SNAPSHOT.jar" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\YenNhung\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="" />
+      <created>1726903682390</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726903682390</updated>
+      <workItem from="1728978426967" duration="1099000" />
+      <workItem from="1728979547657" duration="149000" />
+    </task>
+    <task id="LOCAL-00001" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727542741566</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727542741566</updated>
+    </task>
+    <task id="LOCAL-00002" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727543743583</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727543743583</updated>
+    </task>
+    <task id="LOCAL-00003" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727545601567</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727545601567</updated>
+    </task>
+    <task id="LOCAL-00004" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727545611999</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727545611999</updated>
+    </task>
+    <task id="LOCAL-00005" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727545649045</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727545649045</updated>
+    </task>
+    <task id="LOCAL-00006" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727545696691</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727545696691</updated>
+    </task>
+    <task id="LOCAL-00007" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727547086013</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727547086013</updated>
+    </task>
+    <task id="LOCAL-00008" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727547099777</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727547099777</updated>
+    </task>
+    <task id="LOCAL-00009" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727547228060</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1727547228060</updated>
+    </task>
+    <task id="LOCAL-00010" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727686794954</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1727686794954</updated>
+    </task>
+    <task id="LOCAL-00011" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727760355913</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1727760355913</updated>
+    </task>
+    <task id="LOCAL-00012" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727760602543</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727760602543</updated>
+    </task>
+    <task id="LOCAL-00013" summary="JWT va phan quyen">
+      <option name="closed" value="true" />
+      <created>1727762322727</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1727762322728</updated>
+    </task>
+    <task id="LOCAL-00014" summary="changes">
+      <option name="closed" value="true" />
+      <created>1727774180563</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1727774180564</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Send Mail">
+      <option name="closed" value="true" />
+      <created>1727774208293</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1727774208293</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Send Mail">
+      <option name="closed" value="true" />
+      <created>1727775162842</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1727775162842</updated>
+    </task>
+    <task id="LOCAL-00017" summary="KoiSpeciesAPI, forgot password">
+      <option name="closed" value="true" />
+      <created>1728351757917</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1728351757917</updated>
+    </task>
+    <task id="LOCAL-00018" summary="KoiSpeciesAPI, forgot password">
+      <option name="closed" value="true" />
+      <created>1728351771515</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1728351771515</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="18590396-db73-401a-83b9-c5547ea6c50e" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/BE-Nhung" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="18590396-db73-401a-83b9-c5547ea6c50e">
+          <value>
+            <State />
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="60" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="144" />
+                </map>
+              </option>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="user">
+                    <value>
+                      <list>
+                        <option value="*" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="JWT va phan quyen" />
+    <MESSAGE value="changes" />
+    <MESSAGE value="Send Mail" />
+    <MESSAGE value="KoiSpeciesAPI, forgot password" />
+    <option name="LAST_COMMIT_MESSAGE" value="KoiSpeciesAPI, forgot password" />
+  </component>
+</project>

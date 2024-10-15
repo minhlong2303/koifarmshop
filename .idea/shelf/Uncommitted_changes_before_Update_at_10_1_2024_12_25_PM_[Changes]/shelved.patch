@@ -1,0 +1,44 @@
+Index: src/main/java/com/example/koifarm/model/RegisterRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.koifarm.model;\r\n\r\nimport com.example.koifarm.entity.Role;\r\nimport jakarta.persistence.Column;\r\nimport jakarta.validation.constraints.Email;\r\nimport jakarta.validation.constraints.NotBlank;\r\nimport jakarta.validation.constraints.Pattern;\r\nimport jakarta.validation.constraints.Size;\r\nimport lombok.Data;\r\n\r\n@Data\r\npublic class RegisterRequest {\r\n//    @Pattern(regexp = \"KH\\\\d{6}\", message = \"Invalid code!\")\r\n//    @Column(unique = true)\r\n//    String userCode;\r\n\r\n    @Column(unique = true)\r\n    String username;\r\n\r\n//    String firstName;\r\n//\r\n//    String lastName;\r\n\r\n    @Column(unique = true)\r\n    @Email(message = \"Invalid Email!\")\r\n    String email;\r\n\r\n    @Column(unique = true)\r\n    @Pattern(regexp = \"^((\\\\+84)|0)[3|5|7|8|9][0-9]{8}$\", message = \"Invalid phone!\")\r\n    String phone;\r\n\r\n    @Size(min = 6, message = \"Password must be at least 6 character!\")\r\n    String password;\r\n\r\n    Role role;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/koifarm/model/RegisterRequest.java b/src/main/java/com/example/koifarm/model/RegisterRequest.java
+--- a/src/main/java/com/example/koifarm/model/RegisterRequest.java	(revision c1bfb2beb278136382c552145f652624c9f24393)
++++ b/src/main/java/com/example/koifarm/model/RegisterRequest.java	(date 1727759793426)
+@@ -17,10 +17,6 @@
+     @Column(unique = true)
+     String username;
+ 
+-//    String firstName;
+-//
+-//    String lastName;
+-
+     @Column(unique = true)
+     @Email(message = "Invalid Email!")
+     String email;
+Index: src/main/java/com/example/koifarm/model/UserResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.koifarm.model;\r\n\r\nimport lombok.Data;\r\n\r\n@Data\r\npublic class UserResponse {\r\n     long id;\r\n     //String userCode;\r\n     String email;\r\n     String phone;\r\n     String token;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/example/koifarm/model/UserResponse.java b/src/main/java/com/example/koifarm/model/UserResponse.java
+--- a/src/main/java/com/example/koifarm/model/UserResponse.java	(revision c1bfb2beb278136382c552145f652624c9f24393)
++++ b/src/main/java/com/example/koifarm/model/UserResponse.java	(date 1727691124933)
+@@ -1,5 +1,6 @@
+ package com.example.koifarm.model;
+ 
++import com.example.koifarm.entity.Role;
+ import lombok.Data;
+ 
+ @Data
+@@ -9,4 +10,5 @@
+      String email;
+      String phone;
+      String token;
++     Role role;
+ }
