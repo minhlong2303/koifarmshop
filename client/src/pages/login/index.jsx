@@ -72,7 +72,7 @@ function LoginPage() {
         >
           <h1 className="title">Đăng nhập</h1>
           <Form.Item
-            label="Tên Đăng Nhập"
+            label="Số điện thoại hoặc tên đăng nhập"
             name="username"
             rules={[
               {
