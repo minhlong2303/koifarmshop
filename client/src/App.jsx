@@ -24,6 +24,8 @@ import AccountTemplate from "./components/account-template";
 import UserAccount from "./pages/account/userAccount";
 import Address from "./pages/account/address";
 import CartHistory from "./pages/account/cartHistory";
+import SuccessPage from "./pages/success/SuccessPage";
+import ErrorPage from "./pages/error/ErrorPage";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -65,6 +67,14 @@ function App() {
           element: <CartPage></CartPage>,
         },
       ],
+    },
+    {
+      path: "success",
+      element: <SuccessPage></SuccessPage>,
+    },
+    {
+      path: "error",
+      element: <ErrorPage></ErrorPage>,
     },
     {
       path: "test",

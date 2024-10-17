@@ -33,6 +33,7 @@ function CartPage() {
       }));
       const response = await api.post("order", { detail });
       // dispatch(clearAll()); //Cái này dùng để xóa Item mình vừa mới mua nào học xong sẽ update tiếp
+      window.open(response.data);
       toast.success("Create Order successfully");
     } catch (error) {
       console.log(error.response.data);
