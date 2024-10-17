@@ -4,6 +4,7 @@ const api = axios.create({
   baseURL: "http://localhost:8080/api",
   // baseURL: "https://66dd9794f7bcc0bbdcde7d3c.mockapi.io/",
   //baseURL: "http://103.200.20.149:8081/api/",
+  //hihi
 });
 
 // làm hành động gì đó trước khi call api
