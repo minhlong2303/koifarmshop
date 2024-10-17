@@ -1,6 +1,6 @@
 import { Button, Image, Table } from "antd";
 import "./index.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAll } from "../../redux/features/cartSlice";
 import api from "../../config/axios";

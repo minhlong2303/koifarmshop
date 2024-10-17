@@ -6,7 +6,7 @@ import {
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 import Dashboard from "./components/dashboard";
-import Order from "./pages/PlaceOrder";
+
 import ManageServiceGroup from "./pages/admin/manage-service-group";
 import ManageKoi from "./pages/admin/manage-koi";
 import ManageKoiSpecies from "./pages/admin/manage-KoiSpecies";
@@ -20,6 +20,10 @@ import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
 import CartPage from "./pages/Cart";
 import ManageUsers from "./pages/admin/manage-users/ManageUsers";
 import HomePage from "./pages/home/HomePage";
+import AccountTemplate from "./components/account-template";
+import UserAccount from "./pages/account/userAccount";
+import Address from "./pages/account/address";
+import CartHistory from "./pages/account/cartHistory";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -102,17 +106,30 @@ function App() {
         },
       ],
     },
+
     {
-      path: "order",
+      path: "account-template",
       element: (
         <div>
-          <Order />
+          <AccountTemplate />
         </div>
       ),
+      children: [
+        {
+          path: "users",
+          element: <UserAccount />,
+        },
+        {
+          path: "address",
+          element: <Address />,
+        },
+        {
+          path: "cart",
+          element: <CartHistory />,
+        },
+      ],
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
-
 export default App;

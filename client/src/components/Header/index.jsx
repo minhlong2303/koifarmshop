@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Header() {
-  const [current, setCurrent] = useState("home");
+  const [current, setCurrent] = useState(null);
   const cart = useSelector((store) => store.cart);
   const navigate = useNavigate();
   const [menu, setMenu] = useState("home");
@@ -26,7 +26,7 @@ function Header() {
   const items = [
     {
       key: 1,
-      label: <Link to="/">Tài khoản</Link>,
+      label: <Link to="/account-template">Tài khoản</Link>,
     },
     {
       key: "2",
@@ -65,7 +65,7 @@ function Header() {
               <AiOutlineUser size={25} />
             </Button>
           </Dropdown>
-          <Button onClick={() => navigate("cart")} className="cart-icon">
+          <Button onClick={() => navigate("/cart")} className="cart-icon">
             <Badge count={cart.length}>
               <AiOutlineShoppingCart size={25} />
             </Badge>
