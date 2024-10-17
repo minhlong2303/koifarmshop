@@ -6,14 +6,14 @@ function ManageKoi() {
   const columns = [
     { title: "ID", dataIndex: "koiID", key: "koiID" },
     { title: "Name", dataIndex: "name", key: "name" }, //koiName => name
-    // {
-    //   title: "Image",
-    //   dataIndex: "image",
-    //   key: "image",
-    //   render: (image) => {
-    //     return <Image src={image} alt="KoiFish's picture" width={100} />;
-    //   },
-    // },
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => {
+        return <Image src={image} alt="KoiFish's picture" width={100} />;
+      },
+    },
     {
       title: "Price",
       dataIndex: "price",
@@ -53,7 +53,7 @@ function ManageKoi() {
           {
             type: "number",
             min: 1,
-            max: 10000,
+            max: 99999999,
             message: "Price must be between 1 and 10,000",
           },
         ]}
@@ -132,7 +132,6 @@ function ManageKoi() {
       >
         <Input />
       </Form.Item>
-
 
       <Form.Item
         label="Koi Fish's size"

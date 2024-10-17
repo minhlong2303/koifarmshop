@@ -11,7 +11,7 @@ function ShopPage() {
     try {
       // const response = await api.get("koi");
       const response = await api.get("koi");
-      setKoiFishs(response.data); 
+      setKoiFishs(response.data.content); 
       //Bên back-end là response.data.content
     } catch (error) {
       console.log(error.response.data);
