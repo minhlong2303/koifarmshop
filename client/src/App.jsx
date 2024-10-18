@@ -26,6 +26,8 @@ import Address from "./pages/account/address";
 import CartHistory from "./pages/account/cartHistory";
 import KoiConsignment from "./pages/consignment/koiConsignment";
 import Manager from "./components/manager";
+import SuccessPage from "./pages/success/SuccessPage";
+import ErrorPage from "./pages/error/ErrorPage";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
