@@ -24,8 +24,8 @@ import AccountTemplate from "./components/account-template";
 import UserAccount from "./pages/account/userAccount";
 import Address from "./pages/account/address";
 import CartHistory from "./pages/account/cartHistory";
-import Manager from "./components/manager";
 import KoiConsignment from "./pages/consignment/koiConsignment";
+import Manager from "./components/manager";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -71,6 +71,14 @@ function App() {
           element: <KoiConsignment />,
         },
       ],
+    },
+    {
+      path: "success",
+      element: <SuccessPage></SuccessPage>,
+    },
+    {
+      path: "error",
+      element: <ErrorPage></ErrorPage>,
     },
     {
       path: "test",

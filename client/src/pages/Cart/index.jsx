@@ -1,6 +1,6 @@
 import { Button, Image, Table } from "antd";
 import "./index.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAll } from "../../redux/features/cartSlice";
 import api from "../../config/axios";
@@ -20,6 +20,10 @@ function CartPage() {
     onChange: onSelectChange,
   };
 
+  const totalAmount = useMemo(() => {
+    return data.reduce((total, item) => total + item.price * item.quantity, 0);
+  }, [data]);
+
   //Lưu ý chỗ này cần sửa nhiều để phù hợp với backend
   const handleBuy = async () => {
     try {
@@ -33,6 +37,7 @@ function CartPage() {
       }));
       const response = await api.post("order", { detail });
       // dispatch(clearAll()); //Cái này dùng để xóa Item mình vừa mới mua nào học xong sẽ update tiếp
+      window.open(response.data);
       toast.success("Create Order successfully");
     } catch (error) {
       console.log(error.response.data);
@@ -55,14 +60,21 @@ function CartPage() {
       key: "name",
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
     },
     {
       title: "Quantity",
       dataIndex: "quantity",
       key: "quantity",
+    },
+    {
+      title: "Total Price",
+      key: "totalPrice",
+      render: (koiFish) => {
+        return <span>{koiFish.price * koiFish.quantity}</span>;
+      },
     },
   ];
 
@@ -78,6 +90,12 @@ function CartPage() {
         rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
+        pagination={false} // Không phân trang nếu bạn muốn hiển thị tất cả sản phẩm cùng một lúc
+        footer={() => (
+          <div style={{ textAlign: "right", fontSize: "18px" }}>
+            <b>Total: </b> {totalAmount} {/* Hiển thị tổng số tiền */}
+          </div>
+        )}
       />
       <Button onClick={handleBuy}>Buy</Button>
     </div>
