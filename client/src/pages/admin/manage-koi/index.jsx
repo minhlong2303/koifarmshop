@@ -1,5 +1,4 @@
-import React from "react";
-import { Form, Image, Input, InputNumber } from "antd";
+import { Form, Input, InputNumber } from "antd";
 import CRUDPictureTemplate from "../../../components/crud-template/CrudWithPicture";
 
 function ManageKoi() {
@@ -132,7 +131,6 @@ function ManageKoi() {
       >
         <Input />
       </Form.Item>
-
 
       <Form.Item
         label="Koi Fish's size"

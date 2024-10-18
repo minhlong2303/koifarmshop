@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import Dashboard from "./components/dashboard";
+
 
 import ManageServiceGroup from "./pages/admin/manage-service-group";
 import ManageKoi from "./pages/admin/manage-koi";
@@ -24,6 +24,8 @@ import AccountTemplate from "./components/account-template";
 import UserAccount from "./pages/account/userAccount";
 import Address from "./pages/account/address";
 import CartHistory from "./pages/account/cartHistory";
+import Manager from "./components/manager";
+import KoiConsignment from "./pages/consignment/koiConsignment";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -64,6 +66,10 @@ function App() {
           path: "cart",
           element: <CartPage></CartPage>,
         },
+        {
+          path: "koiConsignment",
+          element: <KoiConsignment />,
+        },
       ],
     },
     {
@@ -80,12 +86,12 @@ function App() {
     },
 
     {
-      path: "dashboard",
+      path: "manager",
       element: (
         // <ProtectRouteAuth>
         //   <Dashboard></Dashboard>
         // </ProtectRouteAuth>
-        <Dashboard></Dashboard>
+        <Manager />
       ),
       children: [
         {

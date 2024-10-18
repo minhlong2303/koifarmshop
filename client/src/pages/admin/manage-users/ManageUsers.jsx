@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Button, Descriptions, Image, Modal, Table, theme } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Descriptions, Image, Modal, Table } from "antd";
 import api from "../../../config/axios";
 
 const ManageUser = () => {
   const columns = [
     {
       title: "ID",
-      dataIndex: "id", 
+      dataIndex: "id",
       key: "id",
     },
     {
       title: "Name",
-      dataIndex: ["firstName", "lastName"], 
+      dataIndex: ["firstName", "lastName"],
       key: "name",
       render: (text, record) => `${record.firstName} ${record.lastName}`,
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
@@ -60,9 +60,7 @@ const ManageUser = () => {
       >
         {selectedUser && (
           <Descriptions bordered layout="vertical">
-            <Descriptions.Item label="ID">
-              {selectedUser.id}
-            </Descriptions.Item>
+            <Descriptions.Item label="ID">{selectedUser.id}</Descriptions.Item>
             <Descriptions.Item label="Name">
               {selectedUser.firstName} {selectedUser.lastName}
             </Descriptions.Item>

@@ -1,10 +1,9 @@
-import React from "react";
-import { Layout, Menu, Form, Input, Button, Row, Col } from "antd";
-import { Link } from "react-router-dom"; // Assuming you are using react-router for routing
+
+import {Form, Input, Button, Row, Col } from "antd";
 import { MailOutlined, PhoneOutlined, UserOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
 
-const { Header, Content, Footer } = Layout;
+
 
 const Contact = () => {
   const [form] = Form.useForm();

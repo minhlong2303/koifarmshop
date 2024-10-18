@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { IoFishOutline } from "react-icons/io5";
+import { IoIosList } from "react-icons/io";
 import {
-  EnvironmentOutlined,
-  ShoppingOutlined,
-  UserOutlined,
+  PieChartOutlined,
+  ShopOutlined,
+  TeamOutlined,
+
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
@@ -20,21 +23,25 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem(
-    <Link to="/account-template/users">Tài khoản</Link>,
-    "users",
-    <UserOutlined />
-  ),
-  getItem(
-    <Link to="/account-template/address">Địa chỉ</Link>,
-    "address",
-    <EnvironmentOutlined />
-  ),
-  getItem(
-    <Link to="/account-template/cart">Đơn hàng</Link>,
-    "cart",
-    <ShoppingOutlined />
-  ),
+  getItem("Sản phẩm", "manageShop", <ShopOutlined />, [
+    getItem(
+      <Link to="/manager/KoiSpecies">Giống cá Koi</Link>,
+      "KoiSpecies",
+      <PieChartOutlined />
+    ),
+    getItem(<Link to="/manager/koi">Cá Koi</Link>, "koi", <IoFishOutline />),
+  ]),
+  getItem("Khách hàng", "customer", <TeamOutlined />, [
+    getItem(
+      <Link to="/manager/users">Danh sách</Link>,
+      "users",
+      <IoIosList />
+    ),
+  ]),
+  getItem("Dashboard & Report", "dashboardReport", <TeamOutlined />, [
+    getItem("Team 1", "6"),
+    getItem("Team 2", "8"),
+  ]),
 ];
 
 const contentStyle = {
@@ -65,12 +72,11 @@ const layoutStyle = {
   width: "100%",
   height: "100vh",
 };
-
-const AccountTemplate = () => {
+const Manager = () => {
   const [collapsed, setCollapsed] = useState(false);
-  //   const {
-  //     token: { colorBgContainer, borderRadiusLG },
-  //   } = theme.useToken();
+  // const {
+  //   token: { colorBgContainer, borderRadiusLG },
+  // } = theme.useToken();
 
   return (
     <Layout style={layoutStyle}>
@@ -106,4 +112,4 @@ const AccountTemplate = () => {
   );
 };
 
-export default AccountTemplate;
+export default Manager;

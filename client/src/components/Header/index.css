@@ -5,13 +5,13 @@
   background-color: #fdecee;
 }
 .navbar .logo {
-  width: 150px;
+  width: 140px;
 }
 
 .navbar-menu {
   display: flex;
   list-style: none;
-  gap: 20px;
+  gap: 10px;
   color: black;
   font-size: 18px;
   background-color: #fdecee;
@@ -20,6 +20,7 @@
 
 .navbar-right {
   padding-right: 10px;
+  display: flex;
 }
 
 .navbar button {
