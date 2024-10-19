@@ -3,10 +3,12 @@ import "./index.css";
 import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAll } from "../../redux/features/cartSlice";
-import api from "../../config/axios";
+import { useNavigate } from "react-router-dom";
+import { clearOrder, createOrder } from "../../redux/features/orderSlice";
 import { toast } from "react-toastify";
 
 function CartPage() {
+  const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const data = useSelector((store) => store.cart);
   const dispatch = useDispatch();
@@ -28,20 +30,17 @@ function CartPage() {
   const handleBuy = async () => {
     try {
       const selectedItems = data.filter((koi) =>
-        selectedRowKeys.includes(koi.koiID)
+        selectedRowKeys.includes(koi.iD)
       );
-
-      const detail = selectedItems.map((koi) => ({
-        koiId: koi.koiID,
-        quantity: koi.quantity,
-      }));
-      const response = await api.post("order", { detail });
-      // dispatch(clearAll()); //Cái này dùng để xóa Item mình vừa mới mua nào học xong sẽ update tiếp
-      window.open(response.data);
-      toast.success("Create Order successfully");
+      if (selectedItems.length === 0) {
+        dispatch(clearOrder());
+        toast.warning("Bạn chưa chọn sản phẩm muốn mua");
+        return;
+      }
+      dispatch(createOrder(selectedItems));
+      navigate("/order");
     } catch (error) {
       console.log(error.response.data);
-      toast.error("Failed to create order");
     }
   };
 
@@ -97,7 +96,13 @@ function CartPage() {
           </div>
         )}
       />
-      <Button onClick={handleBuy}>Buy</Button>
+      <Button
+        onClick={() => {
+          handleBuy();
+        }}
+      >
+        Mua ngay
+      </Button>
     </div>
   );
 }
