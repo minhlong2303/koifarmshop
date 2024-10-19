@@ -6,27 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="KoiSpeciesAPI, forgot password">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/OrderDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/OrderDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Orders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/OrderAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/OrderAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/enums/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/OrderRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/TokenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/KoiSpecies.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/KoiSpecies.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/EmailDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/EmailDetail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/ForgotPasswordRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/ForgotPasswordRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/KoiRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/KoiRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/KoiResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/KoiResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/OrderDetailRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/OrderDetailRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/OrderRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/OrderRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/ResetPasswordRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/ResetPasswordRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/OrderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/OrderService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.example.koifarm.KoifarmApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.example.koifarm.KoifarmApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.example.koifarm.KoifarmApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.example.koifarm.KoifarmApplicationTests.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,24 +100,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.koifarm.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;BE-Long&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Project/blearning/demo&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.koifarm.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "BE-Long",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Project/blearning/demo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.koifarm.entity" />
@@ -192,7 +178,8 @@
       <workItem from="1728980925723" duration="30000" />
       <workItem from="1729039593860" duration="3932000" />
       <workItem from="1729064815383" duration="4219000" />
-      <workItem from="1729328965920" duration="252000" />
+      <workItem from="1729328965920" duration="381000" />
+      <workItem from="1729329689191" duration="358000" />
     </task>
     <task id="LOCAL-00001" summary="JWT va phan quyen">
       <option name="closed" value="true" />

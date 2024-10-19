@@ -7,14 +7,15 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID id;
 
     Date date;
 
@@ -27,4 +28,7 @@ public class Orders {
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
+
+    @OneToOne(mappedBy = "orders")
+    Payment payment;
 }

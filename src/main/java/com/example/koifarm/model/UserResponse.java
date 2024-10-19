@@ -1,6 +1,6 @@
 package com.example.koifarm.model;
 
-import com.example.koifarm.entity.Role;
+import com.example.koifarm.enums.Role;
 import lombok.Data;
 
 @Data

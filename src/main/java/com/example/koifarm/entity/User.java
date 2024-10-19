@@ -1,5 +1,7 @@
+
 package com.example.koifarm.entity;
 
+import com.example.koifarm.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -88,9 +91,20 @@ public class User implements UserDetails {
     }
 
     @OneToMany(mappedBy = "user")
-        @JsonIgnore
+    @JsonIgnore
     List<Koi> kois;
 
     @OneToMany(mappedBy = "customer")
     List<Orders> orders;
+
+    @OneToMany(mappedBy = "from")
+    Set<Transactions> transactionsFrom;
+
+    @OneToMany(mappedBy = "to")
+    Set<Transactions> transactionsTo;
+
+    @OneToMany(mappedBy = "user")
+    Set<Koi> koiSet ;
+
+    float balance = 0;
 }
