@@ -22,8 +22,8 @@ public class KoiAPI {
     KoiService koiService;
 
     //phan quyen chi co staff moi create dc
-   // @PreAuthorize("hasAuthority('STAFF')")
-    @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAuthority('STAFF')")
+    //@PreAuthorize("hasAuthority('MANAGER')")
      //them Koi moi
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody KoiRequest koi){

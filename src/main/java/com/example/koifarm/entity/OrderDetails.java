@@ -18,12 +18,12 @@ public class OrderDetails {
     int quantity;
 
     @ManyToOne
-            @JoinColumn(name = "order_id")
-            @JsonIgnore
+    @JoinColumn(name = "order_id")
+    @JsonIgnore
     Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "koi_id")
-            @JsonIgnore
+    @JsonIgnore
     Koi koi;
 }

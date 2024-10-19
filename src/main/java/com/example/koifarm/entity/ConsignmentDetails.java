@@ -5,26 +5,25 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
-public class Orders {
+public class ConsignmentDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    Date date;
+    float price;
 
-    float total;
+    int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "consignment_id")
     @JsonIgnore
-    User customer;
+    Consignment consignment;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    List<OrderDetails> orderDetails;
+    @ManyToOne
+    @JoinColumn(name = "koi_id")
+    @JsonIgnore
+    Koi koi;
 }

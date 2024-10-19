@@ -16,7 +16,7 @@ import java.util.Date;
 @Service
 public class TokenService {
     @Autowired
-            @Lazy
+    @Lazy
     UserRepository userRepository;
 
     public final String SECRET_KEY = "4bb6d1dfbafb64a681139d1586b6f1160d18159afd57c8c79136d7490630407bb";
@@ -37,15 +37,21 @@ public class TokenService {
     }
 
     //verify token
-    public User getUserByToken(String token){
-        Claims claims = Jwts.parser()
-                .verifyWith(getSigninKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-        String idString = claims.getSubject();
-        long id = Long.parseLong(idString);
+    public User getUserByToken(String token) {
+        try {
+            Claims claims = Jwts.parser() // Sử dụng parserBuilder() cho phiên bản mới
+                    .setSigningKey(getSigninKey()) // Thiết lập key cho việc xác thực
+                    .build() // Xây dựng parser
+                    .parseClaimsJws(token) // Phân tích token và lấy claims
+                    .getBody(); // Lấy body từ claims
 
-        return userRepository.findUserById(id);
+            String idString = claims.getSubject(); // Lấy subject từ claims
+            long id = Long.parseLong(idString); // Chuyển đổi subject thành long
+
+            return userRepository.findUserById(id); // Tìm người dùng theo ID
+        } catch (Exception e) {
+            // Xử lý ngoại lệ nếu token không hợp lệ hoặc không thể phân tích
+            throw new RuntimeException("Invalid token");
+        }
     }
 }

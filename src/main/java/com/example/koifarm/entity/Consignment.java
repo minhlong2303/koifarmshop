@@ -11,12 +11,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Orders {
+public class Consignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    Date consignmentDate;
 
     float total;
 
@@ -25,6 +26,6 @@ public class Orders {
     @JsonIgnore
     User customer;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
-    List<OrderDetails> orderDetails;
+    @OneToMany(mappedBy = "consignment", cascade = CascadeType.ALL)
+    List<ConsignmentDetails> consignmentDetails;
 }
