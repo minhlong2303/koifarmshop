@@ -51,7 +51,7 @@ function LoginPage() {
       toast.success("Đăng nhập thành công!");
       localStorage.setItem("token", token);
       if (role === "MANAGER") {
-        navigate("/dashboard");
+        navigate("/manager");
       } else {
         navigate("/");
       }

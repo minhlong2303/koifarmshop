@@ -30,7 +30,7 @@ function CartPage() {
   const handleBuy = async () => {
     try {
       const selectedItems = data.filter((koi) =>
-        selectedRowKeys.includes(koi.iD)
+        selectedRowKeys.includes(koi.koiID)
       );
       if (selectedItems.length === 0) {
         dispatch(clearOrder());
