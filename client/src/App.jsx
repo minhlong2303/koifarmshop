@@ -29,6 +29,7 @@ import SuccessPage from "./pages/success/SuccessPage";
 import ErrorPage from "./pages/error/ErrorPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import HistoryPage from "./pages/history/HistoryPage";
+import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -129,6 +130,10 @@ function App() {
         {
           path: "users",
           element: <ManageUsers />,
+        },
+        {
+          path: "manage-orders",
+          element: <ManageOrder></ManageOrder>,
         },
       ],
     },

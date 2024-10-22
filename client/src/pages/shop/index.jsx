@@ -39,10 +39,7 @@ const Product = ({ koiFish }) => {
   };
   return (
     <div className="product">
-      <Image
-        src="https://firebasestorage.googleapis.com/v0/b/koifarmshop-6cae6.appspot.com/o/images.jpg?alt=media&token=6df342a7-cb7e-4d14-8e93-9ffcb23ed38e"
-        alt="koi's picture"
-      ></Image>
+      <Image src={koiFish.image} alt="koi's picture"></Image>
       {/*Khi nào koi có image sẽ thay vô */}
       {/* <img src={koiFish.image} alt="koi's picture"></img> */}
       <h3>{koiFish.name}</h3>

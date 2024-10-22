@@ -5,7 +5,6 @@ import {
   PieChartOutlined,
   ShopOutlined,
   TeamOutlined,
-
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
@@ -31,10 +30,15 @@ const items = [
     ),
     getItem(<Link to="/manager/koi">Cá Koi</Link>, "koi", <IoFishOutline />),
   ]),
-  getItem("Khách hàng", "customer", <TeamOutlined />, [
+  getItem("Quản Lí", "manage", <TeamOutlined />, [
     getItem(
-      <Link to="/manager/users">Danh sách</Link>,
+      <Link to="/manager/users">Khách hàng</Link>,
       "users",
+      <IoIosList />
+    ),
+    getItem(
+      <Link to="/manager/manage-orders">Đơn hàng</Link>,
+      "manage-orders",
       <IoIosList />
     ),
   ]),
