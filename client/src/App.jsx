@@ -6,7 +6,6 @@ import {
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
 
-
 import ManageServiceGroup from "./pages/admin/manage-service-group";
 import ManageKoi from "./pages/admin/manage-koi";
 import ManageKoiSpecies from "./pages/admin/manage-KoiSpecies";
@@ -28,6 +27,8 @@ import KoiConsignment from "./pages/consignment/koiConsignment";
 import Manager from "./components/manager";
 import SuccessPage from "./pages/success/SuccessPage";
 import ErrorPage from "./pages/error/ErrorPage";
+import OrderPage from "./pages/OrderPage/OrderPage";
+import HistoryPage from "./pages/history/HistoryPage";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -67,6 +68,11 @@ function App() {
         {
           path: "cart",
           element: <CartPage></CartPage>,
+          // children: [{ path: "order", element: <OrderPage></OrderPage> }],
+        },
+        {
+          path: "order",
+          element: <OrderPage></OrderPage>,
         },
         {
           path: "koiConsignment",
@@ -93,6 +99,10 @@ function App() {
     {
       path: "register",
       element: <RegisterPage />,
+    },
+    {
+      path: "history",
+      element: <HistoryPage></HistoryPage>,
     },
 
     {

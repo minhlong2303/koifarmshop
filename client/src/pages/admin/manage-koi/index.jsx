@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber } from "antd";
+import { Form, Image, Input, InputNumber } from "antd";
 import CRUDPictureTemplate from "../../../components/crud-template/CrudWithPicture";
 
 function ManageKoi() {
