@@ -10,7 +10,7 @@ import { Breadcrumb, Layout, Menu } from "antd";
 import { Link, Outlet } from "react-router-dom";
 import Header from "../Header";
 
-const { Content, Footer, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
   return {
@@ -64,12 +64,6 @@ const siderStyle = {
   backgroundColor: "#fdecee",
 };
 
-const footerStyle = {
-  textAlign: "center",
-  color: "#fff",
-  backgroundColor: "#fdecee",
-};
-
 const layoutStyle = {
   borderRadius: 8,
   overflow: "hidden",
@@ -110,8 +104,6 @@ const Manager = () => {
           </div>
         </Content>
       </Layout>
-
-      <Footer style={footerStyle}>Footer</Footer>
     </Layout>
   );
 };
