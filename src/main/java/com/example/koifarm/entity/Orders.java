@@ -1,5 +1,6 @@
 package com.example.koifarm.entity;
 
+import com.example.koifarm.enums.OrderStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,6 +22,9 @@ public class Orders {
 
     float total;
 
+    @Enumerated(EnumType.STRING)
+    OrderStatusEnum status;
+
     @ManyToOne
             @JoinColumn(name = "customer_id")
             @JsonIgnore
@@ -32,3 +36,9 @@ public class Orders {
     @OneToOne(mappedBy = "orders")
     Payment payment;
 }
+
+
+
+
+
+

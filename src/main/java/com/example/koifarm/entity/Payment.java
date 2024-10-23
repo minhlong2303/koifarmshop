@@ -1,6 +1,7 @@
 package com.example.koifarm.entity;
 
 import com.example.koifarm.enums.PaymentEnums;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,13 +19,18 @@ public class Payment {
 
     Date createAt;
 
+    float total;
+
     @Enumerated(EnumType.STRING)
     PaymentEnums payment_method;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
+            @JsonIgnore
     Orders orders;
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     Set<Transactions> transactions;
+
+
 }

@@ -22,8 +22,6 @@ public class KoiAPI {
     @Autowired
     KoiService koiService;
 
-    //phan quyen chi co staff moi create dc
-   // @PreAuthorize("hasAuthority('STAFF')")
    @PreAuthorize("hasAuthority('MANAGER')")
     //@PreAuthorize("hasAnyAuthority('MANAGER', 'OWNER')")
 

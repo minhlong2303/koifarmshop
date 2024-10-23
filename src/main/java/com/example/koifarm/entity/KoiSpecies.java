@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Entity
 @Data
-//@Table(name = "KoiSpecies")
 public class KoiSpecies {
 
     @Id
@@ -22,14 +21,16 @@ public class KoiSpecies {
     @JsonIgnore
     boolean isDeleted = false;
 
-
+    @Column(unique = true)
     String name;
+
     String description;
 
     // One-to-Many relationship with Koi
     @OneToMany(mappedBy = "species")
     Set<Koi> kois;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "species")
+    private Set<BatchKoi> batchKoi;
 }
 

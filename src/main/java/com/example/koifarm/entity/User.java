@@ -27,10 +27,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-//    @Column(unique = true)
-//    @Pattern(regexp = "KH\\d{6}", message = "Invalid code!")
-//    String userCode;
-
     @Column(unique = true)
     String username;
 
@@ -53,6 +49,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     Role role;
+
+    @JsonIgnore
+    boolean isDeleted = false;
 
     //dung de phan quyen
     @Override
