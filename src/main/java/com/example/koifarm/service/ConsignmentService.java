@@ -2,55 +2,62 @@ package com.example.koifarm.service;
 
 import com.example.koifarm.entity.Consignment;
 import com.example.koifarm.entity.ConsignmentDetails;
-import com.example.koifarm.entity.Koi;
-import com.example.koifarm.entity.User;
-import com.example.koifarm.model.ConsignmentDetailRequest;
 import com.example.koifarm.model.ConsignmentRequest;
 import com.example.koifarm.repository.ConsignmentRepository;
-import com.example.koifarm.repository.KoiRepository;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ConsignmentService {
-    @Autowired
-    AuthenticationService authenticationService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ConsignmentService.class);
 
     @Autowired
-    KoiRepository koiRepository;
+    private ConsignmentRepository consignmentRepository;
 
-    @Autowired
-    ConsignmentRepository consignmentRepository;
+    @Transactional
+    public void createConsignment(@Valid ConsignmentRequest consignmentRequest) {
+        try {
+            // Tạo đối tượng Consignment từ request
+            Consignment consignment = new Consignment();
+            consignment.setFullName(consignmentRequest.getFullName());
+            consignment.setPhoneNumber(consignmentRequest.getPhoneNumber());
+            consignment.setEmail(consignmentRequest.getEmail());
+            consignment.setAddress(consignmentRequest.getAddress());
+            consignment.setConsignmentDate(consignmentRequest.getConsignmentDate());
+            consignment.setInspectionMethod(consignmentRequest.getInspectionMethod());
+            consignment.setStatus("Pending");
 
-    public Consignment create(ConsignmentRequest consignmentRequest) {
-        // lấy thông tin của người dùng tạo đơn ký gửi
-        User customer = authenticationService.getCurrentUser();
-        Consignment consignment = new Consignment();
-        List<ConsignmentDetails> consignmentDetails = new ArrayList<>();
-        float total = 0;
+            // Tạo danh sách chi tiết consignment từ request
+            List<ConsignmentDetails> detailsList = consignmentRequest.getConsignmentDetails().stream().map(detailRequest -> {
+                ConsignmentDetails details = new ConsignmentDetails();
+                details.setQuantity(detailRequest.getQuantity());
+                details.setKoiBreed(detailRequest.getBreed()); // Updated to match property name
+                details.setSize(detailRequest.getSize()); // Assuming this is present in the request
+                details.setHealthStatus(detailRequest.getHealthStatus());
+                details.setGender(detailRequest.getGender());
+                details.setAdditionalInfo(detailRequest.getAdditionalNotes()); // Updated to match property name
+                details.setConsignment(consignment);
+                return details;
+            }).collect(Collectors.toList());
 
-        consignment.setCustomer(customer);
-        consignment.setConsignmentDate(new Date());
+            consignment.setConsignmentDetails(detailsList);
 
-        for(ConsignmentDetailRequest consignmentDetailRequest: consignmentRequest.getDetail()){
-            //lấy id của koi mà người dùng yêu cầu bán
-            Koi koi = koiRepository.findKoiByKoiID(consignmentDetailRequest.getKoiId());
-            ConsignmentDetails consignmentDetail = new ConsignmentDetails();
-            consignmentDetail.setQuantity(consignmentDetailRequest.getQuantity());
-            consignmentDetail.setPrice(consignmentDetail.getPrice());
-            consignmentDetail.setConsignment(consignment);
-            consignmentDetail.setKoi(koi);
+            // Lưu consignment vào database
+            consignmentRepository.save(consignment);
+            logger.info("Consignment created successfully for: {}", consignmentRequest.getFullName());
 
-            consignmentDetails.add(consignmentDetail);
-            total += koi.getPrice() * consignmentDetailRequest.getQuantity();
+        } catch (Exception e) {
+            logger.error("Error creating consignment: {}", e.getMessage(), e);
+            // Handle the exception as needed (e.g., throw a custom exception)
         }
-        consignment.setConsignmentDetails(consignmentDetails);
-        consignment.setTotal(total);
-
-        return consignmentRepository.save(consignment);
     }
 }
