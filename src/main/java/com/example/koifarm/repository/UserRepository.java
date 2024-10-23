@@ -13,7 +13,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //lay account bang username
     User findUserByUsername(String username);
 
-    User findUserById(long id);
+    Optional<User> findUserById(Long id);
 
     User findUserByEmail(String email);
 

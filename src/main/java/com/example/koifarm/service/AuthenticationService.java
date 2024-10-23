@@ -99,7 +99,8 @@ public class AuthenticationService implements UserDetailsService {
     //ai dang goi request
     public User getCurrentUser(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserById(user.getId());
+        return userRepository.findUserById(user.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
     }
 
     public void forgotPassword(ForgotPasswordRequest forgotPasswordRequest){

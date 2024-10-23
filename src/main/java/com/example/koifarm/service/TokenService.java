@@ -1,6 +1,7 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.User;
+import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -48,7 +49,8 @@ public class TokenService {
             String idString = claims.getSubject(); // Lấy subject từ claims
             long id = Long.parseLong(idString); // Chuyển đổi subject thành long
 
-            return userRepository.findUserById(id); // Tìm người dùng theo ID
+            return userRepository.findUserById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("User not found!")); // Tìm người dùng theo ID
         } catch (Exception e) {
             // Xử lý ngoại lệ nếu token không hợp lệ hoặc không thể phân tích
             throw new RuntimeException("Invalid token");
