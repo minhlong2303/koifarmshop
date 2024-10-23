@@ -16,7 +16,6 @@ public class OrderDetails {
     UUID id;
 
     float price;
-
     int quantity;
 
     @ManyToOne
