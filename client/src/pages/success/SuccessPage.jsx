@@ -19,17 +19,26 @@ function SuccessPage() {
       return response.data;
     } catch (error) {
       console.log(error);
+      return [];
     }
   };
   useEffect(() => {
-    if (vnp_TransactionStatus === "00") {
-      const products = postOrderID();
-      dispatch(clearOrder());
-      dispatch(removeSelected(products.map((product) => product.koiID)));
-    } else {
-      //Chuyen qua trang thanh toan that bai
-      navigate("/error");
-    }
+    const handlePaymentStatus = async () => {
+      if (vnp_TransactionStatus === "00") {
+        const products = await postOrderID(); // Wait for the response
+        dispatch(clearOrder());
+
+        // Make sure products is an array before mapping
+        if (Array.isArray(products)) {
+          dispatch(removeSelected(products.map((product) => product.koiID)));
+        }
+      } else {
+        // Redirect to error page if payment failed
+        navigate("/error");
+      }
+    };
+
+    handlePaymentStatus(); // Call the async function inside useEffect
   }, []);
   return (
     <div>

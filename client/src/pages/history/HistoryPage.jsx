@@ -60,6 +60,18 @@ function HistoryPage() {
       render: (payment) => (payment ? payment.payment_method : "Not Paid"),
     },
     {
+      title: "Rating",
+      dataIndex: "rating",
+      key: "rating",
+      render: (feedback, record) => <Rate defaultValue={record?.rating}></Rate>,
+    },
+    {
+      title: "Feedback",
+      dataIndex: "feedback",
+      key: "feedback",
+      render: (feedback, record) => record?.content,
+    },
+    {
       title: "Action",
       dataIndex: "id",
       key: "action",
@@ -84,7 +96,7 @@ function HistoryPage() {
     console.log(values);
     values.orderID = selectedOrder.orderID;
     try {
-      await api.post("/feeback/order", values);
+      await api.post("/feeback", values);
       fetchHistory();
       setSelectedOrder(null);
       form.resetFields();
@@ -127,7 +139,7 @@ function HistoryPage() {
           </Form.Item>
           <Form.Item
             label="Feedback"
-            name="feedback"
+            name="content"
             rules={[
               {
                 required: true,
