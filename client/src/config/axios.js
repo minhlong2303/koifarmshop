@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/",
-  
+  baseURL: "http://localhost:8080/api",
 });
 
 // làm hành động gì đó trước khi call api
