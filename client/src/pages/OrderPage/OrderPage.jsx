@@ -1,12 +1,13 @@
 import { Button, Form, Image, Input, Table } from "antd";
 import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import api from "../../config/axios";
+import { clearOrder } from "../../redux/features/orderSlice";
+import { removeSelected } from "../../redux/features/cartSlice";
 
 function OrderPage() {
   const data = useSelector((store) => store.order);
-
   const columns = [
     {
       title: "Image",
@@ -42,7 +43,6 @@ function OrderPage() {
       }));
       const response = await api.post("order", { detail });
       window.open(response.data);
-      toast.success("Create Order successfully");
     } catch (error) {
       console.log(error.response.data);
       toast.error("Failed to create order");

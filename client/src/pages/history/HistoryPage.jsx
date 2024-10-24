@@ -46,47 +46,33 @@ function HistoryPage() {
       key: "orderDetails",
       render: (orderDetails) =>
         orderDetails.map((item) => (
-          <div key={item.orderID} style={{ marginBottom: "10px" }}>
-            <img
-              src={item.koi.image}
-              alt={item.koi.name}
-              style={{ width: "50px", marginRight: "10px" }}
-            />
-            <strong>{item.koi.name}</strong> x {item.quantity} -{" "}
-            {item.price.toLocaleString()} VND
+          <div key={item.id} style={{ marginBottom: "10px" }}>
+            {/* Thay đổi src và alt cho hình ảnh nếu cần */}
+            <strong>Price: {item.price.toLocaleString()} VND</strong> x{" "}
+            {item.quantity}
           </div>
         )),
     },
     {
-      title: "Rating",
-      dataIndex: "feedback",
-      key: "feedback",
-      render: (feedback, record) => (
-        <Rate defaultValue={record.feedback?.rating}></Rate>
-      ),
-    },
-    {
-      title: "Feedback",
-      dataIndex: "feedback",
-      key: "feedback",
-      render: (feedback, record) => record.feedback.feeddback,
+      title: "Payment Method",
+      dataIndex: "payment",
+      key: "payment",
+      render: (payment) => (payment ? payment.payment_method : "Not Paid"),
     },
     {
       title: "Action",
-      dataIndex: "orderID",
-      key: "orderID",
-      render: (record) => {
-        return (
-          <Button
-            onClick={() => {
-              setSelectedOrder(record);
-            }}
-            type="primary"
-          >
-            Feedback
-          </Button>
-        );
-      },
+      dataIndex: "id",
+      key: "action",
+      render: (id) => (
+        <Button
+          onClick={() => {
+            setSelectedOrder(id); // Chọn đơn hàng để gửi feedback
+          }}
+          type="primary"
+        >
+          Feedback
+        </Button>
+      ),
     },
   ];
 

@@ -3,8 +3,12 @@ import React, { useEffect } from "react";
 import useGetParams from "../../hooks/useGetParams";
 import api from "../../config/axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearOrder } from "../../redux/features/orderSlice";
+import { removeSelected } from "../../redux/features/cartSlice";
 
 function SuccessPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useGetParams();
   const orderID = params("orderID");
@@ -12,13 +16,16 @@ function SuccessPage() {
   const postOrderID = async () => {
     try {
       const response = await api.post(`/order/pay?orderID=${orderID}`);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     if (vnp_TransactionStatus === "00") {
-      postOrderID();
+      const products = postOrderID();
+      dispatch(clearOrder());
+      dispatch(removeSelected(products.map((product) => product.koiID)));
     } else {
       //Chuyen qua trang thanh toan that bai
       navigate("/error");

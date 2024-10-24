@@ -19,7 +19,7 @@ const authSlice = createSlice({
       state.data = action.payload;
       localStorage.setItem("customer_GenKiKoi", JSON.stringify(action.payload));
     },
-    removeAuth: (state, _action) => {
+    removeAuth: (state, action) => {
       state.data = initialState;
       localStorage.setItem("customer_GenKiKoi", JSON.stringify({}));
     },
