@@ -1,36 +1,39 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import api from "../../config/axios";
+import React, { useState, useEffect } from "react";
 import "./HistoryPage.scss";
 import { Alert, Button, Form, Input, Modal, Rate, Table, Tag } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
+import api from "../../config/axios";
 
 function HistoryPage() {
   const [orders, setOrders] = useState([]);
   const [form] = useForm();
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  // Fetch order history
   const fetchHistory = async () => {
     try {
       const response = await api.get("/order");
       setOrders(response.data);
     } catch (error) {
       console.log(error);
+      toast.error("Failed to load order history");
     }
   };
 
+  // Define columns for the table
   const columns = [
     {
       title: "Order Date",
       dataIndex: "date",
       key: "date",
-      render: (date) => new Date(date).toLocaleDateString(), // Format ngày
+      render: (date) => new Date(date).toLocaleDateString(),
     },
     {
       title: "Total Amount",
       dataIndex: "total",
       key: "total",
-      render: (total) => `${total.toLocaleString()} VND`, // Định dạng tiền VND
+      render: (total) => `${total.toLocaleString()} VND`,
     },
     {
       title: "Status",
@@ -47,7 +50,6 @@ function HistoryPage() {
       render: (orderDetails) =>
         orderDetails.map((item) => (
           <div key={item.id} style={{ marginBottom: "10px" }}>
-            {/* Thay đổi src và alt cho hình ảnh nếu cần */}
             <strong>Price: {item.price.toLocaleString()} VND</strong> x{" "}
             {item.quantity}
           </div>
@@ -63,22 +65,25 @@ function HistoryPage() {
       title: "Rating",
       dataIndex: "rating",
       key: "rating",
-      render: (feedback, record) => <Rate defaultValue={record?.rating}></Rate>,
+      render: (feedback, record) => (
+        <Rate disabled defaultValue={record?.rating} />
+      ),
     },
     {
       title: "Feedback",
       dataIndex: "feedback",
       key: "feedback",
-      render: (feedback, record) => record?.content,
+      render: (feedback, record) =>
+        feedback ? feedback.content : "No Feedback",
     },
     {
       title: "Action",
       dataIndex: "id",
       key: "action",
-      render: (id) => (
+      render: (id, record) => (
         <Button
           onClick={() => {
-            setSelectedOrder(id); // Chọn đơn hàng để gửi feedback
+            setSelectedOrder(record); // Select order to send feedback
           }}
           type="primary"
         >
@@ -88,42 +93,59 @@ function HistoryPage() {
     },
   ];
 
+  // Fetch history when component loads
   useEffect(() => {
     fetchHistory();
   }, []);
 
+  // Handle feedback form submission
   const handleFeedback = async (values) => {
-    console.log(values);
-    values.orderID = selectedOrder.orderID;
+    if (!selectedOrder) return;
+
+    values.id = selectedOrder.id; // Include order ID in feedback request
     try {
-      await api.post("/feeback", values);
-      fetchHistory();
-      setSelectedOrder(null);
-      form.resetFields();
+      // Post feedback to server
+      await api.post("/feedback", values);
+
+      // Update the selected order with new feedback data locally
+      const updatedOrders = orders.map((order) =>
+        order.id === selectedOrder.id
+          ? {
+              ...order,
+              feedback: { content: values.content }, // Update feedback content
+              rating: values.rating, // Update rating
+            }
+          : order
+      );
+
+      setOrders(updatedOrders); // Update the order list with the modified order
+      setSelectedOrder(null); // Close feedback modal
+      form.resetFields(); // Reset form fields
       toast.success("Successfully created feedback");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to submit feedback");
     }
   };
+
   return (
     <div className="history">
-      <h1>Lịch sử đơn hàng</h1>
+      <h1>Order History</h1>
 
-      <Table dataSource={orders} columns={columns}></Table>
+      {/* Display order history */}
+      <Table dataSource={orders} columns={columns} rowKey="id" />
 
+      {/* Feedback modal */}
       <Modal
         title="Feedback"
-        open={selectedOrder}
+        open={!!selectedOrder} // Modal is open when there's a selected order
         onOk={() => form.submit()}
-        onCancel={() => {
-          setSelectedOrder(null);
-        }}
+        onCancel={() => setSelectedOrder(null)} // Close modal on cancel
       >
         <Alert
-          message={`Feedback cho đơn hàng #^${selectedOrder?.orderID}`}
+          message={`Feedback for order #${selectedOrder?.id}`}
           type="info"
-        ></Alert>
-        <p></p>
+        />
         <Form labelCol={{ span: 24 }} onFinish={handleFeedback} form={form}>
           <Form.Item
             label="Rating"
@@ -143,11 +165,11 @@ function HistoryPage() {
             rules={[
               {
                 required: true,
-                message: "Please enter a feedback",
+                message: "Please enter feedback",
               },
             ]}
           >
-            <Input.TextArea></Input.TextArea>
+            <Input.TextArea />
           </Form.Item>
         </Form>
       </Modal>

@@ -24,27 +24,22 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem("Sản phẩm", "manageShop", <ShopOutlined />, [
     getItem(
-      <Link to="/manager/KoiSpecies">Giống cá Koi</Link>,
+      <Link to="KoiSpecies">Giống cá Koi</Link>,
       "KoiSpecies",
       <PieChartOutlined />
     ),
-    getItem(<Link to="/manager/koi">Cá Koi</Link>, "koi", <IoFishOutline />),
+    getItem(<Link to="koi">Cá Koi</Link>, "koi", <IoFishOutline />),
   ]),
   getItem("Quản Lí", "manage", <TeamOutlined />, [
+    getItem(<Link to="users">Khách hàng</Link>, "users", <IoIosList />),
     getItem(
-      <Link to="/manager/users">Khách hàng</Link>,
-      "users",
-      <IoIosList />
-    ),
-    getItem(
-      <Link to="/manager/manage-orders">Đơn hàng</Link>,
+      <Link to="manage-orders">Đơn hàng</Link>,
       "manage-orders",
       <IoIosList />
     ),
   ]),
   getItem("Dashboard & Report", "dashboardReport", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
+    getItem(<Link to="overview">Overview</Link>, "overview", <IoIosList />),
   ]),
 ];
 

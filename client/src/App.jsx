@@ -30,6 +30,7 @@ import ErrorPage from "./pages/error/ErrorPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import HistoryPage from "./pages/history/HistoryPage";
 import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
+import OverviewPage from "./pages/admin/overview/OverviewPage";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -134,6 +135,10 @@ function App() {
         {
           path: "manage-orders",
           element: <ManageOrder></ManageOrder>,
+        },
+        {
+          path: "overview",
+          element: <OverviewPage></OverviewPage>,
         },
       ],
     },
