@@ -23,6 +23,7 @@ function Header() {
     if (e.key === "koiConsignment") navigate("/koiConsignment");
     if (e.key === "contact") navigate("/contact");
     if (e.key === "about-us") navigate("/about-us");
+    if (e.key === "batchKoi") navigate("/batch-koi");
   };
   const items = [
     {
@@ -51,6 +52,7 @@ function Header() {
           <Menu.Item key="home">Trang Chủ</Menu.Item>
 
           <Menu.Item key="shop">Cá Koi</Menu.Item>
+          <Menu.Item key="batchKoi">Mua theo lô</Menu.Item>
           <Menu.Item key="koiConsignment">Kí gửi-Bán hộ</Menu.Item>
           <Menu.Item key="about-us">Giới Thiệu</Menu.Item>
           <Menu.Item key="contact">Liên Hệ</Menu.Item>

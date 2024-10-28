@@ -26,9 +26,14 @@ const items = [
     getItem(
       <Link to="KoiSpecies">Giống cá Koi</Link>,
       "KoiSpecies",
-      <PieChartOutlined />
+      <IoFishOutline />
     ),
     getItem(<Link to="koi">Cá Koi</Link>, "koi", <IoFishOutline />),
+    getItem(
+      <Link to="batch-koi-manage">Lô cá Koi</Link>,
+      "batchKoi",
+      <IoFishOutline />
+    ),
   ]),
   getItem("Quản Lí", "manage", <TeamOutlined />, [
     getItem(<Link to="users">Khách hàng</Link>, "users", <IoIosList />),

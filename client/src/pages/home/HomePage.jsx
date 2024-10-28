@@ -51,10 +51,10 @@ const Product = ({ product }) => {
   return (
     <>
       <div className="product">
-        <img  src={product.image} alt="" />
+        <img src={product.image} alt="" />
         <h3>{product.name}</h3>
         <p>{product.description}</p>
-        <span>{product.price}</span>
+        <span>{`${product.price} vnđ`}</span>
         <center>
           <button onClick={handleAddToCart}>Add to cart</button>
         </center>

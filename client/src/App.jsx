@@ -31,6 +31,8 @@ import OrderPage from "./pages/OrderPage/OrderPage";
 import HistoryPage from "./pages/history/HistoryPage";
 import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
 import OverviewPage from "./pages/admin/overview/OverviewPage";
+import BatchKoiPage from "./pages/BatchKoi/BatchKoiPage";
+import ManageBatchKoi from "./pages/admin/manage-batchKoi";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -50,6 +52,10 @@ function App() {
         {
           path: "/",
           element: <HomePage></HomePage>,
+        },
+        {
+          path: "batch-koi",
+          element: <BatchKoiPage></BatchKoiPage>,
         },
         {
           path: "check-out",
@@ -123,6 +129,10 @@ function App() {
         {
           path: "KoiSpecies",
           element: <ManageKoiSpecies />,
+        },
+        {
+          path: "batch-koi-manage",
+          element: <ManageBatchKoi></ManageBatchKoi>,
         },
         {
           path: "service",

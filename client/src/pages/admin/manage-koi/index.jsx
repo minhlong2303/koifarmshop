@@ -23,45 +23,45 @@ function ManageKoi() {
   ];
 
   const formItems = (
-    <Form className="manage-koi-scrollable-content">
-    <>
-      <Form.Item
-        label="Koi Fish's name"
-        name="name"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's name",
-          },
-          {
-            min: 3,
-            message: "Name should be at least 3 characters",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+    <Form labelCol={{ span: 24 }} className="manage-koi-scrollable-content">
+      <>
+        <Form.Item
+          label="Koi Fish's name"
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's name",
+            },
+            {
+              min: 3,
+              message: "Name should be at least 3 characters",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Price"
-        name="price"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's price",
-          },
-          {
-            type: "number",
-            min: 1,
-            max: 99999999,
-            message: "Price must be between 1 and 10,000",
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
+        <Form.Item
+          label="Price"
+          name="price"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's price",
+            },
+            {
+              type: "number",
+              min: 1,
+              max: 99999999,
+              message: "Price must be between 1 and 10,000",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
 
-      {/* <Form.Item
+        {/* <Form.Item
         label="Quantity"
         name="quantity"
         rules={[
@@ -80,142 +80,139 @@ function ManageKoi() {
         <InputNumber />
       </Form.Item> */}
 
-      <Form.Item
-        label="Koi Fish's speciesID"
-        name="speciesId"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's speciesID",
-          },
-          {
-            type: "number",
-            min: 1,
-            max: 999,
-            message: "SpeciesID must be between 1 and 999",
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's speciesID"
+          name="speciesId"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's speciesID",
+            },
+            {
+              type: "number",
+              min: 1,
+              max: 999,
+              message: "SpeciesID must be between 1 and 999",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's origin"
-        name="origin"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's origin",
-          },
-          {
-            min: 3,
-            message: "Origin should be at least 3 characters",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's origin"
+          name="origin"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's origin",
+            },
+            {
+              min: 3,
+              message: "Origin should be at least 3 characters",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's gender"
-        name="gender"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's gender",
-          },
-          {
-            pattern: new RegExp(/^(Male|Female)$/i),
-            message: "Gender must be either 'Male' or 'Female'",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's gender"
+          name="gender"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's gender",
+            },
+            {
+              pattern: new RegExp(/^(Male|Female)$/i),
+              message: "Gender must be either 'Male' or 'Female'",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's size"
-        name="size"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's size",
-          },
-          {
-            type: "number",
-            min: 1,
-            max: 120,
-            message: "Size must be between 1 and 120 cm",
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's size"
+          name="size"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's size",
+            },
+            {
+              type: "number",
+              min: 1,
+              max: 120,
+              message: "Size must be between 1 and 120 cm",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's breed"
-        name="breed"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's breed",
-          },
-          {
-            min: 3,
-            message: "Breed should be at least 3 characters",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's breed"
+          name="breed"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's breed",
+            },
+            {
+              min: 3,
+              message: "Breed should be at least 3 characters",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's location"
-        name="location"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's location",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's location"
+          name="location"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's location",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's owner"
-        name="owner"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's owner",
-          },
-          {
-            min: 3,
-            message: "Owner's name should be at least 3 characters",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          label="Koi Fish's owner"
+          name="owner"
+          rules={[
+            {
+              required: true,
+              message: "Please enter Koi Fish's owner",
+            },
+            {
+              min: 3,
+              message: "Owner's name should be at least 3 characters",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's description"
-        name="description"
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item label="Koi Fish's description" name="description">
+          <Input />
+        </Form.Item>
 
-      <Form.Item label="Koi Fish's Id" name="koiID" hidden>
-        <Input />
-      </Form.Item>
-    </>
+        <Form.Item label="Koi Fish's Id" name="koiID" hidden>
+          <Input />
+        </Form.Item>
+      </>
     </Form>
   );
 
   return (
     <div className="manage-koi-container">
-    <CRUDPictureTemplate columns={columns} formItems={formItems} path="koi" />
+      <CRUDPictureTemplate columns={columns} formItems={formItems} path="koi" />
     </div>
   );
 }

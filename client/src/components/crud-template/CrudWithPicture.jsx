@@ -171,6 +171,7 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
 
   const handleOpenModal = () => {
     setShowModal(true);
+    form.resetFields();
   };
 
   return (
