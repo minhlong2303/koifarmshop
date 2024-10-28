@@ -42,9 +42,9 @@ const Product = ({ koiFish }) => {
       {/* <Image src={koiFish.image} alt="koi's picture"></Image> */}
       <h3>{koiFish.name}</h3>
       <p>{koiFish.quantity}</p>
-      <span>{koiFish.price}</span>
+      <span>{`${koiFish.price} vnđ`}</span>
       <center>
-        <button onClick={handleAddToCart}>Add to cart</button>
+        <button onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
       </center>
     </div>
   );

@@ -56,7 +56,7 @@ const Product = ({ product }) => {
         <p>{product.description}</p>
         <span>{`${product.price} vnđ`}</span>
         <center>
-          <button onClick={handleAddToCart}>Add to cart</button>
+          <button onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
         </center>
       </div>
     </>

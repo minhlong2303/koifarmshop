@@ -46,7 +46,7 @@ const Product = ({ koiFish }) => {
       <p>{koiFish.description}</p>
       <span>{`${koiFish.price} vnđ`}</span>
       <center>
-        <button onClick={handleAddToCart}>Add to cart</button>
+        <button onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
       </center>
     </div>
   );
