@@ -1,4 +1,3 @@
-
 package com.example.koifarm.entity;
 
 import com.example.koifarm.enums.Role;
@@ -9,8 +8,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,51 +22,50 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
 
-//    @Column(unique = true)
-//    @Pattern(regexp = "KH\\d{6}", message = "Invalid code!")
-//    String userCode;
+    @Column(unique = true, nullable = false)
+    @NotBlank(message = "Username cannot be blank!")
+    private String username;
 
-    @Column(unique = true)
-    String username;
+    @Size(min = 6, message = "Password must be at least 6 characters!")
+    @NotBlank(message = "Password cannot be blank!")  // Thêm NotBlank cho mật khẩu
+    private String password;
 
-    @Size(min = 6, message = "Password must be at least 6 character!")
-    String password;
+    private String firstName;
 
-    String firstName;
+    private String lastName;
 
-    String lastName;
-
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @NotBlank(message = "Email cannot be blank!")
     @Email(message = "Invalid Email!")
-    String email;
+    private String email;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @NotBlank(message = "Phone cannot be blank!")
     @Pattern(regexp = "^((\\+84)|0)[3|5|7|8|9][0-9]{8}$", message = "Invalid phone!")
-    String phone;
+    private String phone;
 
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
 
-    //dung de phan quyen
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        if (this.role != null)
-            authorities.add(new SimpleGrantedAuthority(this.role.toString()));
+        if (role != null) {
+            authorities.add(new SimpleGrantedAuthority(role.name()));
+        }
         return authorities;
     }
 
     @Override
     public String getUsername() {
-//        return this.phone;
-        return this.username;
+        return username;
     }
 
     @Override
@@ -92,25 +90,28 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    List<Koi> kois;
+    private List<Koi> kois;
 
     @OneToMany(mappedBy = "customer")
-    List<Orders> orders;
+    private List<Orders> orders;
 
     @OneToMany(mappedBy = "from")
-    Set<Transactions> transactionsFrom;
+    private Set<Transactions> transactionsFrom;
 
     @OneToMany(mappedBy = "to")
-    Set<Transactions> transactionsTo;
+    private Set<Transactions> transactionsTo;
 
     @OneToMany(mappedBy = "user")
-    Set<Koi> koiSet ;
+    private Set<Koi> koiSet;
 
-    float balance = 0;
+    private float balance = 0;
 
     @OneToMany(mappedBy = "customer")
-    Set<Feedback> customer_feedbacks;
+    private Set<Feedback> customerFeedbacks;
 
     @OneToMany(mappedBy = "shop")
-    Set<Feedback> shop_feedbacks;
+    private Set<Feedback> shopFeedbacks;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Consignment> consignments;
 }

@@ -1,72 +1,67 @@
 package com.example.koifarm.model;
 
-import java.time.LocalDate;
-import java.util.List;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
+import java.time.LocalDateTime;
+
+@Data
 public class ConsignmentRequest {
-    private String fullName;
-    private String phoneNumber;
+
+    @NotBlank(message = "First name cannot be blank")
+    private String firstName;
+
+    @NotBlank(message = "Last name cannot be blank")
+    private String lastName;
+
+    @NotBlank(message = "Phone cannot be blank")
+    @Size(min = 10, max = 15, message = "Phone number must be between 10 and 15 characters")
+    private String phone;
+
+    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Invalid email format")
     private String email;
+
+    @NotBlank(message = "Address cannot be blank")
     private String address;
-    private LocalDate consignmentDate;
+
+    private LocalDateTime date; // Có thể cần thêm validation nếu cần thiết
+
+    @NotBlank(message = "Inspection method cannot be blank")
     private String inspectionMethod;
-    private List<ConsignmentDetailsRequest> consignmentDetails;
 
-    // Getters and Setters
+    @NotBlank(message = "Consignment type cannot be blank")
+    private String consignmentType; // Xem xét chuyển sang kiểu enum nếu có thể
 
-    public String getFullName() {
-        return fullName;
-    }
+    @NotBlank(message = "Koi name cannot be blank")
+    private String koiName;
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    @NotBlank(message = "Breed cannot be blank")
+    private String breed;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    @NotBlank(message = "Size cannot be blank")
+    private String size;
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
+    @Positive(message = "Age must be a positive number")
+    private int age;
 
-    public String getEmail() {
-        return email;
-    }
+    @NotBlank(message = "Gender cannot be blank")
+    private String gender;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Positive(message = "Expected price must be a positive number")
+    private double expectedPrice;
 
-    public String getAddress() {
-        return address;
-    }
+    @Positive(message = "Quantity must be a positive number")
+    private int quantity;
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    @Positive(message = "Care duration must be a positive number")
+    private int careDuration;
 
-    public LocalDate getConsignmentDate() {
-        return consignmentDate;
-    }
+    @Positive(message = "Care fee must be a positive number")
+    private double careFee;
 
-    public void setConsignmentDate(LocalDate consignmentDate) {
-        this.consignmentDate = consignmentDate;
-    }
-
-    public String getInspectionMethod() {
-        return inspectionMethod;
-    }
-
-    public void setInspectionMethod(String inspectionMethod) {
-        this.inspectionMethod = inspectionMethod;
-    }
-
-    public List<ConsignmentDetailsRequest> getConsignmentDetails() {
-        return consignmentDetails;
-    }
-
-    public void setConsignmentDetails(List<ConsignmentDetailsRequest> consignmentDetails) {
-        this.consignmentDetails = consignmentDetails;
-    }
+    private String specialRequirements;
 }

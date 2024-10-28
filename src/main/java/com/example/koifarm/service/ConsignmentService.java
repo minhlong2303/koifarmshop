@@ -1,63 +1,74 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.Consignment;
-import com.example.koifarm.entity.ConsignmentDetails;
+import com.example.koifarm.entity.User;
+import com.example.koifarm.enums.ConsignmentType;
+import com.example.koifarm.exception.InvalidConsignmentTypeException;
 import com.example.koifarm.model.ConsignmentRequest;
 import com.example.koifarm.repository.ConsignmentRepository;
-import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.koifarm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 public class ConsignmentService {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConsignmentService.class);
+    @Autowired
+    ConsignmentRepository consignmentRepository;
 
     @Autowired
-    private ConsignmentRepository consignmentRepository;
+    UserRepository userRepository;
 
-    @Transactional
-    public void createConsignment(@Valid ConsignmentRequest consignmentRequest) {
+    @Autowired
+    AuthenticationService authenticationService;
+
+    public Consignment createConsignment(ConsignmentRequest consignmentRequest) {
+        User customer = authenticationService.getCurrentUser(); // Lấy người dùng hiện tại
+
+        Consignment consignment = new Consignment();
+
+        // Thiết lập các thuộc tính từ yêu cầu
+        consignment.setKoiName(consignmentRequest.getKoiName());
+        consignment.setBreed(consignmentRequest.getBreed());
+        consignment.setSize(consignmentRequest.getSize());
+        consignment.setAge(consignmentRequest.getAge());
+        consignment.setGender(consignmentRequest.getGender());
+        consignment.setExpectedPrice(consignmentRequest.getExpectedPrice());
+        consignment.setQuantity(consignmentRequest.getQuantity());
+        consignment.setCareDuration(consignmentRequest.getCareDuration());
+        consignment.setCareFee(consignmentRequest.getCareFee());
+        consignment.setSpecialRequirements(consignmentRequest.getSpecialRequirements());
+
+        // Xử lý loại consignments
         try {
-            // Tạo đối tượng Consignment từ request
-            Consignment consignment = new Consignment();
-            consignment.setFullName(consignmentRequest.getFullName());
-            consignment.setPhoneNumber(consignmentRequest.getPhoneNumber());
-            consignment.setEmail(consignmentRequest.getEmail());
-            consignment.setAddress(consignmentRequest.getAddress());
-            consignment.setConsignmentDate(consignmentRequest.getConsignmentDate());
-            consignment.setInspectionMethod(consignmentRequest.getInspectionMethod());
-            consignment.setStatus("Pending");
-
-            // Tạo danh sách chi tiết consignment từ request
-            List<ConsignmentDetails> detailsList = consignmentRequest.getConsignmentDetails().stream().map(detailRequest -> {
-                ConsignmentDetails details = new ConsignmentDetails();
-                details.setQuantity(detailRequest.getQuantity());
-                details.setKoiBreed(detailRequest.getBreed()); // Updated to match property name
-                details.setSize(detailRequest.getSize()); // Assuming this is present in the request
-                details.setHealthStatus(detailRequest.getHealthStatus());
-                details.setGender(detailRequest.getGender());
-                details.setAdditionalInfo(detailRequest.getAdditionalNotes()); // Updated to match property name
-                details.setConsignment(consignment);
-                return details;
-            }).collect(Collectors.toList());
-
-            consignment.setConsignmentDetails(detailsList);
-
-            // Lưu consignment vào database
-            consignmentRepository.save(consignment);
-            logger.info("Consignment created successfully for: {}", consignmentRequest.getFullName());
-
-        } catch (Exception e) {
-            logger.error("Error creating consignment: {}", e.getMessage(), e);
-            // Handle the exception as needed (e.g., throw a custom exception)
+            consignment.setConsignmentType(ConsignmentType.valueOf(consignmentRequest.getConsignmentType().toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new InvalidConsignmentTypeException("Loại consignments không hợp lệ: " + consignmentRequest.getConsignmentType());
         }
+
+        consignment.setAddress(consignmentRequest.getAddress());
+        consignment.setInspectionMethod(consignmentRequest.getInspectionMethod());
+        consignment.setCreatedDate(LocalDateTime.now());
+
+        return consignmentRepository.save(consignment);
+    }
+
+    public List<Consignment> getAllConsignments() {
+        return consignmentRepository.findAll();
+    }
+
+    public List<Consignment> getConsignmentsByType(ConsignmentType type) {
+        return consignmentRepository.findByConsignmentType(type);
+    }
+
+    public List<Consignment> getConsignmentsByUserId(Long userId) {
+        return consignmentRepository.findByCustomer_Id(userId);
+    }
+
+    public List<Consignment> getConsignmentsByKoiName(String koiName) {
+        return consignmentRepository.findByKoiNameContainingIgnoreCase(koiName);
     }
 }

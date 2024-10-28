@@ -1,97 +1,51 @@
 package com.example.koifarm.entity;
 
+import com.example.koifarm.enums.ConsignmentType;
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
+@Setter
+@Getter
 public class Consignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    UUID id;
 
-    private String fullName;
-    private String phoneNumber;
-    private String email;
+    @Column(length = 100, nullable = false)
+    private String koiName;
+
+    @Column(length = 50)
+    private String breed;
+
+    @Column(length = 20)
+    private String size;
+
+    private int age;
+    private String gender;
+    private double expectedPrice;
+    private int quantity;
+    private int careDuration;
+    private double careFee;
+    private String specialRequirements;
+
+    @Enumerated(EnumType.STRING)
+    private ConsignmentType consignmentType;
+
+    private LocalDateTime createdDate = LocalDateTime.now(); // Khởi tạo mặc định
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private User customer;
+
+    // Other fields (e.g., address, inspectionMethod, etc.)
     private String address;
-    private LocalDate consignmentDate;
+
+    private LocalDateTime inspectionDate;
+
     private String inspectionMethod;
-    private String status;
-
-    @OneToMany(mappedBy = "consignment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ConsignmentDetails> consignmentDetails;
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public LocalDate getConsignmentDate() {
-        return consignmentDate;
-    }
-
-    public void setConsignmentDate(LocalDate consignmentDate) {
-        this.consignmentDate = consignmentDate;
-    }
-
-    public String getInspectionMethod() {
-        return inspectionMethod;
-    }
-
-    public void setInspectionMethod(String inspectionMethod) {
-        this.inspectionMethod = inspectionMethod;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public List<ConsignmentDetails> getConsignmentDetails() {
-        return consignmentDetails;
-    }
-
-    public void setConsignmentDetails(List<ConsignmentDetails> consignmentDetails) {
-        this.consignmentDetails = consignmentDetails;
-    }
 }
