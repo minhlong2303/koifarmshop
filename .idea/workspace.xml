@@ -8,16 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/ConsignmentAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/ConsignmentAPI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Consignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Consignment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/ConsignmentDetails.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/ConsignmentDetailsRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/ConsignmentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/ConsignmentRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiSpeciesRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/KoiSpeciesRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/ConsignmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/ConsignmentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/ConsignmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/ConsignmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/EmailDetail.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/EmailDetail.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/KoiSpeciesRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/KoiSpeciesRequest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +185,7 @@
       <workItem from="1729741138688" duration="3022000" />
       <workItem from="1729757111030" duration="4566000" />
       <workItem from="1730107124547" duration="6002000" />
-      <workItem from="1730113551454" duration="299000" />
+      <workItem from="1730113551454" duration="1385000" />
     </task>
     <task id="LOCAL-00001" summary="JWT va phan quyen">
       <option name="closed" value="true" />
@@ -388,7 +379,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729693149561</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="update consignment">
+      <option name="closed" value="true" />
+      <created>1730114297499</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1730114297499</updated>
+    </task>
+    <task id="LOCAL-00026" summary="update consignment">
+      <option name="closed" value="true" />
+      <created>1730114315021</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1730114315021</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

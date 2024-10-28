@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class ConsignmentService {
@@ -52,6 +51,7 @@ public class ConsignmentService {
         consignment.setAddress(consignmentRequest.getAddress());
         consignment.setInspectionMethod(consignmentRequest.getInspectionMethod());
         consignment.setCreatedDate(LocalDateTime.now());
+        consignment.setCustomer(customer); // Gán người dùng hiện tại vào consignments
 
         return consignmentRepository.save(consignment);
     }
@@ -70,5 +70,11 @@ public class ConsignmentService {
 
     public List<Consignment> getConsignmentsByKoiName(String koiName) {
         return consignmentRepository.findByKoiNameContainingIgnoreCase(koiName);
+    }
+
+    // Phương thức mới để lấy consignments của người dùng hiện tại
+    public List<Consignment> getConsignmentsByCurrentUser() {
+        User customer = authenticationService.getCurrentUser(); // Lấy người dùng hiện tại
+        return consignmentRepository.findByCustomer_Id(customer.getId()); // Truy vấn consignments theo ID người dùng
     }
 }

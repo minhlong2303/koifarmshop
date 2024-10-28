@@ -14,15 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/consignments")
-@CrossOrigin("*") //de cho fe co the truy cap
+@CrossOrigin("*") // cho phép truy cập từ FE
 @SecurityRequirement(name = "api")
 public class ConsignmentAPI {
     @Autowired
     private ConsignmentService consignmentService;
 
     @PostMapping
-    public ResponseEntity<Consignment> createConsignment(@RequestBody ConsignmentRequest consignmentRequest) throws  Exception{
-
+    public ResponseEntity<Consignment> createConsignment(@RequestBody ConsignmentRequest consignmentRequest) throws Exception {
         Consignment consignment = consignmentService.createConsignment(consignmentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(consignment);
     }
@@ -48,4 +47,7 @@ public class ConsignmentAPI {
             return ResponseEntity.badRequest().body("Invalid consignment type: " + type);
         }
     }
+
+
+
 }

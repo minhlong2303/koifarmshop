@@ -1,6 +1,7 @@
 package com.example.koifarm.entity;
 
 import com.example.koifarm.enums.ConsignmentType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,7 @@ public class Consignment {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private User customer;
 
     // Other fields (e.g., address, inspectionMethod, etc.)
