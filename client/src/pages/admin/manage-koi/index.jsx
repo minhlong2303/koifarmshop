@@ -1,6 +1,6 @@
 import { Form, Image, Input, InputNumber } from "antd";
 import CRUDPictureTemplate from "../../../components/crud-template/CrudWithPicture";
-
+import "./index.css";
 function ManageKoi() {
   const columns = [
     { title: "ID", dataIndex: "koiID", key: "koiID" },
@@ -23,6 +23,7 @@ function ManageKoi() {
   ];
 
   const formItems = (
+    <Form className="manage-koi-scrollable-content">
     <>
       <Form.Item
         label="Koi Fish's name"
@@ -201,12 +202,6 @@ function ManageKoi() {
       <Form.Item
         label="Koi Fish's description"
         name="description"
-        rules={[
-          {
-            min: 10,
-            message: "Description should be at least 10 characters",
-          },
-        ]}
       >
         <Input />
       </Form.Item>
@@ -215,10 +210,13 @@ function ManageKoi() {
         <Input />
       </Form.Item>
     </>
+    </Form>
   );
 
   return (
+    <div className="manage-koi-container">
     <CRUDPictureTemplate columns={columns} formItems={formItems} path="koi" />
+    </div>
   );
 }
 

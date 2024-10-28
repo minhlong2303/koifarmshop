@@ -37,7 +37,7 @@ const ManageUser = () => {
       <ManageTemplate
         columns={columns}
         DescriptionsForm={userDetail}
-        path="users"
+        path="user"
         idKey="id"
       ></ManageTemplate>
     </div>

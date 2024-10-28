@@ -19,7 +19,7 @@ function OverviewPage() {
   const [monthlyData, setMonthlyData] = useState();
   const fetchData = async () => {
     try {
-      const response = await api.get("/admin/stats");
+      const response = await api.get("/manager/stats");
       console.log(response.data);
       setData(response.data);
     } catch (error) {
@@ -28,7 +28,7 @@ function OverviewPage() {
   };
   const fetchDataMonthly = async () => {
     try {
-      const response = await api.get("/admin/revenue/monthly");
+      const response = await api.get("/manager/revenue/monthly");
       console.log(response.data.monthlyRevenue);
       const formatData = response.data.monthlyRevenue.map((item) => ({
         name: `${item?.month}/${item?.year}`,

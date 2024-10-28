@@ -1,24 +1,23 @@
-
-.authen-template{
+.authen-template {
     width: 100%;
-    
-    background-image: url("https://images.unsplash.com/photo-1719234690062-8dda365f7157?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
     background-repeat: no-repeat;
     background-size: cover;
-    display:flex;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    height: 150vh;
-
+    height: 100vh; /* Chiều cao vừa đủ khung nhìn */
+    background-color: #f9e9e9;
+    overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài */
 }
-.authen-template_form{
+
+.authen-template_form {
     padding: 30px;
     width: fit-content;
-    height: fit-content;
     background-color: white;
-    margin-left: 50px;
     border-radius: 12px;
-    
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
+    text-align: center;
+    max-height: 90vh; /* Giới hạn chiều cao form để không vượt quá màn hình */
+    overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung quá dài */
+    margin: 0;
 }
-    
-
-
