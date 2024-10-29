@@ -104,5 +104,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     Set<Koi> koiSet ;
 
+    @OneToMany(mappedBy = "customer")
+    private Set<Feedback> customerFeedbacks;
+
     float balance = 0;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Consignment> consignments;
 }
