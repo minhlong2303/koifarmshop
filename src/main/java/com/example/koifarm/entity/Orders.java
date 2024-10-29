@@ -26,8 +26,8 @@ public class Orders {
     OrderStatusEnum status;
 
     @ManyToOne
-            @JoinColumn(name = "customer_id")
-            @JsonIgnore
+    @JoinColumn(name = "customer_id")
+    @JsonIgnore
     User customer;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)

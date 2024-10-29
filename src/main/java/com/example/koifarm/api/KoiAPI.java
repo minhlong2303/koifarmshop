@@ -22,7 +22,7 @@ public class KoiAPI {
     @Autowired
     KoiService koiService;
 
-   @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAuthority('MANAGER')")
     //@PreAuthorize("hasAnyAuthority('MANAGER', 'OWNER')")
 
 
