@@ -1,31 +1,34 @@
 import React from "react";
 import CRUDPictureTemplate from "../../../components/crud-template/CrudWithPicture";
-import { Form, Input, InputNumber } from "antd";
+import { Form, Image, Input, InputNumber } from "antd";
 
 function ManageBatchKoi() {
   const columns = [
     {
-      label: "Name",
+      title: "Name",
       dataIndex: "name",
       key: "name",
     },
     {
-      label: "Image",
+      title: "Image",
       dataIndex: "image",
       key: "image",
+      render: (image) => {
+        return <Image src={image} alt="batch's picture" width={100} />;
+      },
     },
     {
-      label: "Price",
+      title: "Price",
       dataIndex: "price",
       key: "price",
     },
     {
-      label: "Description",
+      title: "Description",
       dataIndex: "description",
       key: "description",
     },
     {
-      label: "Quantity",
+      title: "Quantity",
       dataIndex: "quantity",
       key: "quantity",
     },
@@ -92,6 +95,9 @@ function ManageBatchKoi() {
       >
         <InputNumber />
       </Form.Item>
+      <Form.Item label="batchKoiFish ID" name="batchKoiID" hidden>
+        <Input />
+      </Form.Item>
     </>
   );
   return (
@@ -100,6 +106,7 @@ function ManageBatchKoi() {
         columns={columns}
         formItems={formItem}
         path="batchKoi"
+        idKey="batchKoiID"
       ></CRUDPictureTemplate>
     </div>
   );

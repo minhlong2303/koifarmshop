@@ -15,7 +15,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import uploadFile from "../../utils/file";
 import api from "../../config/axios";
 
-function CRUDPictureTemplate({ columns, formItems, path }) {
+function CRUDPictureTemplate({ columns, formItems, path, idKey }) {
   const [datas, setDatas] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [form] = useForm();
@@ -27,9 +27,9 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
     ...columns,
     {
       title: "Action",
-      dataIndex: "koiID",
-      key: "koiID",
-      render: (koiID, koi) => (
+      dataIndex: idKey,
+      key: idKey,
+      render: (idKey, koi) => (
         <>
           <Button
             type="primary"
@@ -53,8 +53,8 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
             Update
           </Button>
           <Popconfirm
-            title="Do you want to delete this category"
-            onConfirm={() => handleDelete(koiID)}
+            title="Do you want to delete ?"
+            onConfirm={() => handleDelete(idKey)}
           >
             <Button type="primary" danger>
               Delete
@@ -118,14 +118,14 @@ function CRUDPictureTemplate({ columns, formItems, path }) {
     console.log(values);
     try {
       setLoading(true);
-      if (values.koiID) {
+      if (values[idKey]) {
         //Update
         if (fileList.length > 0 && fileList[0].originFileObj) {
           const file = fileList[0];
           const url = await uploadFile(file.originFileObj);
           values.image = url;
         }
-        const response = await api.put(`${path}/${values.koiID}`, values);
+        const response = await api.put(`${path}/${values[idKey]}`, values);
         toast.success("Update Sucessfully");
       } else {
         //Create

@@ -212,7 +212,12 @@ function ManageKoi() {
 
   return (
     <div className="manage-koi-container">
-      <CRUDPictureTemplate columns={columns} formItems={formItems} path="koi" />
+      <CRUDPictureTemplate
+        columns={columns}
+        formItems={formItems}
+        path="koi"
+        idKey="koiID"
+      />
     </div>
   );
 }

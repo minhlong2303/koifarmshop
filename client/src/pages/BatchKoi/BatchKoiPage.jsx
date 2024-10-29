@@ -39,7 +39,7 @@ const Product = ({ koiFish }) => {
   };
   return (
     <div className="product">
-      {/* <Image src={koiFish.image} alt="koi's picture"></Image> */}
+      <Image src={koiFish.image} alt="koi's picture"></Image>
       <h3>{koiFish.name}</h3>
       <p>{koiFish.quantity}</p>
       <span>{`${koiFish.price} vnđ`}</span>
