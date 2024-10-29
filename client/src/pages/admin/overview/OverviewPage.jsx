@@ -107,7 +107,7 @@ function OverviewPage() {
             outerRadius={60}
             fill="#8884d8"
           >
-            {data?.topProduct.map((item, index) => (
+            {data?.topProduct?.map((item, index) => (
               <Cell key={index} fill={COLORS[index]}></Cell>
             ))}
           </Pie>
