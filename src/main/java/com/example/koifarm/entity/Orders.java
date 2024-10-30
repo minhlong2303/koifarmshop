@@ -35,6 +35,9 @@ public class Orders {
 
     @OneToOne(mappedBy = "orders")
     Payment payment;
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    List<Feedback> feedbacks;
 }
 
 

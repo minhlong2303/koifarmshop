@@ -8,4 +8,6 @@ import java.util.UUID;
 public class OrderDetailRequest {
     UUID koiId;
     int quantity;
+//    String feedbackContent;
+//    int rating;
 }
