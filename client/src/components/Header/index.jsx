@@ -30,7 +30,7 @@ function Header() {
   };
 
   const items = () => {
-    return user == null
+    return !user || !user.token
       ? [
           {
             key: "2",
@@ -56,7 +56,7 @@ function Header() {
               <Button
                 onClick={() => {
                   dispatch(logout());
-                  navigate("login");
+                  navigate("/");
                 }}
               >
                 Đăng Xuất
@@ -96,7 +96,7 @@ function Header() {
             </Button>
           </Dropdown>
           <Button onClick={() => navigate("/cart")} className="cart-icon">
-            <Badge count={cart.length}>
+            <Badge count={user && user.token ? cart.length : 0}>
               <AiOutlineShoppingCart size={25} />
             </Badge>
           </Button>

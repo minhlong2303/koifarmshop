@@ -1,6 +1,6 @@
 import { Button, Image, Table } from "antd";
 import "./index.css";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAll } from "../../redux/features/cartSlice";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +8,27 @@ import { clearOrder, createOrder } from "../../redux/features/orderSlice";
 import { toast } from "react-toastify";
 
 function CartPage() {
+  const user = useSelector((store) => store.user);
+  const cart = useSelector((store) => store.cart);
   const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const data = useSelector((store) => store.cart);
   const dispatch = useDispatch();
-  console.log(data);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
+    }
+  }, [cart, user]);
+
+  if (!user || !user.token) {
+    return (
+      <div style={{ padding: "60px", textAlign: "center" }}>
+        Giỏ hàng trống. Vui lòng đăng nhập để thêm sản phẩm.
+      </div>
+    );
+  }
+
   const onSelectChange = (newSelectedRowKeys) => {
     console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);

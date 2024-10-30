@@ -24,8 +24,12 @@ const cartSlice = createSlice({
       const idsToRemove = action.payload;
       return state.filter((koi) => !idsToRemove.includes(koi.koiID)); // Lọc ra những sản phẩm không nằm trong mảng idsToRemove
     },
+    loadCart: (state, action) => {
+      return action.payload;
+    },
   },
 });
 
-export const { addProduct, clearAll, removeSelected } = cartSlice.actions;
+export const { addProduct, clearAll, removeSelected, loadCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

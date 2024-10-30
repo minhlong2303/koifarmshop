@@ -33,6 +33,7 @@ import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
 import OverviewPage from "./pages/admin/overview/OverviewPage";
 import BatchKoiPage from "./pages/BatchKoi/BatchKoiPage";
 import ManageBatchKoi from "./pages/admin/manage-batchKoi";
+import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -52,6 +53,10 @@ function App() {
         {
           path: "/",
           element: <HomePage></HomePage>,
+        },
+        {
+          path: "/detail/:koiID",
+          element: <ProductDetailPage />,
         },
         {
           path: "batch-koi",

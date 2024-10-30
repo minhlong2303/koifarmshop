@@ -40,7 +40,7 @@ function RegisterPage() {
   const handleRegister = async (values) => {
     //submit xuong be
     try {
-      values.role = "MANAGER";
+      values.role = "CUSTOMER";
       const response = await api.post("register", values);
       toast.success("Đăng kí thành công!");
       navigate("/login");

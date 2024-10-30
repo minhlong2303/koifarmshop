@@ -44,7 +44,7 @@ function OverviewPage() {
     fetchDataMonthly();
   }, []);
 
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#42101b"];
   return (
     <div>
       <Row gutter={16}>
@@ -97,22 +97,25 @@ function OverviewPage() {
           alignItems: "center",
         }}
       >
-        <PieChart width={400} height={200}>
+        <PieChart width={500} height={500}>
           <Pie
-            data={data?.topProduct}
+            data={data?.topKoi}
             dataKey="totalSold"
-            nameKey="Kohaku"
+            nameKey="koiName"
             cx="50%"
             cy="50%"
-            outerRadius={60}
+            outerRadius={80}
             fill="#8884d8"
+            label
           >
-            {data?.topProduct?.map((item, index) => (
+            {data?.topKoi.map((item, index) => (
               <Cell key={index} fill={COLORS[index]}></Cell>
             ))}
           </Pie>
+          <Tooltip></Tooltip>
+          <Legend></Legend>
         </PieChart>
-        <BarChart width={500} height={250} data={monthlyData}>
+        <BarChart width={500} height={350} data={monthlyData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />

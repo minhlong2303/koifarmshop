@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Descriptions, Image, Modal, Table } from "antd";
+import { Button, Descriptions, Image, Modal, Popconfirm, Table } from "antd";
 import api from "../../config/axios";
 import { toast } from "react-toastify";
 
@@ -24,9 +24,14 @@ const ManageTemplate = ({ columns, DescriptionsForm, path, idKey }) => {
       dataIndex: idKey,
       key: idKey,
       render: (idKey) => (
-        <Button type="danger" onClick={() => handleDelete(idKey)}>
-          Delete
-        </Button>
+        <Popconfirm
+          title="do you want delete this ?"
+          onConfirm={() => handleDelete(idKey)}
+        >
+          <Button type="primary" danger>
+            Delete
+          </Button>
+        </Popconfirm>
       ),
     },
   ];

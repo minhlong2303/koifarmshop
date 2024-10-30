@@ -5,6 +5,7 @@ import "./index.scss";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/features/cartSlice";
 import { Image } from "antd";
+import { useNavigate } from "react-router-dom";
 function ShopPage() {
   const [koiFishs, setKoiFishs] = useState([]);
   const fetchKoiFish = async () => {
@@ -33,12 +34,16 @@ function ShopPage() {
   );
 }
 const Product = ({ koiFish }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleAddToCart = () => {
     dispatch(addProduct(koiFish));
   };
+  const handleViewDetail = () => {
+    navigate(`/detail/${koiFish.koiID}`);
+  };
   return (
-    <div className="product">
+    <div className="product" onClick={handleViewDetail}>
       <Image src={koiFish.image} alt="koi's picture"></Image>
       {/*Khi nào koi có image sẽ thay vô */}
       {/* <img src={koiFish.image} alt="koi's picture"></img> */}
