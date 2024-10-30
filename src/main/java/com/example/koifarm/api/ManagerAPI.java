@@ -32,10 +32,4 @@ public class ManagerAPI {
         return ResponseEntity.ok(stats);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity deleteUser(@PathVariable Long id){
-        User deletedUser = managerService.delete(id);
-        return ResponseEntity.ok(deletedUser);
-    }
-
 }
