@@ -40,6 +40,13 @@ public class KoiAPI {
         return ResponseEntity.ok(kois);
     }
 
+    // Get details of a specific Koi by ID
+    @GetMapping("{koiID}")
+    public ResponseEntity getKoiDetails(@PathVariable UUID koiID) {
+        Koi koi = koiService.getKoiById(koiID);
+        return ResponseEntity.ok(koi);
+    }
+
     //api/koi/{koiId}
     //update Koi
     @PutMapping("{koiID}")

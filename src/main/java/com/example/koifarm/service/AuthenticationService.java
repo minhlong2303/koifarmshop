@@ -102,6 +102,14 @@ public class AuthenticationService implements UserDetailsService {
         return userRepository.findUserById(user.getId());
     }
 
+    public User delete(long id){
+        User oldUser = userRepository.findUserById(id);
+        if (oldUser == null) throw new EntityNotFoundException("User not found!");
+        oldUser.setDeleted(true);
+        return userRepository.save(oldUser);
+    }
+
+
     public void forgotPassword(ForgotPasswordRequest forgotPasswordRequest){
         User user = userRepository.findUserByEmail(forgotPasswordRequest.getEmail());
 
