@@ -15,25 +15,25 @@ public class BatchKoi {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private UUID batchKoiID;
+    UUID batchKoiID;
 
     @NotBlank(message = "Name is required")
     @Column(unique = true)
-    private String name;
+    String name;
 
     @Column(nullable = false)
-    private int quantity;
+    int quantity;
 
     @Column(nullable = false)
-    private float price;
+    float price;
 
-    private String description;
-    private String image;
+    String description;
+    String image;
 
     @ManyToOne
     @JoinColumn(name = "species_id")
     @JsonIgnore
-    private KoiSpecies species;
+    KoiSpecies species;
 
     @JsonIgnore
     boolean isDeleted = false;

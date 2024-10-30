@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,49 +17,51 @@ import java.util.List;
 public class Koi {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long koiID;
+    UUID koiID;
 
     @JsonIgnore
     boolean isDeleted = false;
 
     @NotBlank(message = "Name is required")
-    private String name;
+    @Column(unique = true)
+    String name;
 
     @NotBlank(message = "Origin is required")
-    private String origin;
+    String origin;
 
     @NotBlank(message = "Gender is required")
     @Pattern(regexp = "Male|Female", message = "Gender must be either 'Male' or 'Female'")
-    private String gender;
+    String gender;
 
     @NotNull(message = "Size is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Size must be greater than 0")
-    private float size;
+    float size;
 
-//    @DecimalMin(value = "0.01", inclusive = false, message = "Price must be greater than 0")
-//    @DecimalMax(value = "99999999.99", message = "Price must be less than or equal to 99999999.99")
-    private float  price;
+    float  price;
 
     @NotBlank(message = "Breed is required")
-    private String breed;
+    String breed;
 
-    private String location;
-    private String owner;
-    private String description;
-    private String image;
+    String location;
+    String owner;
+    String description;
+    String image;
 
     @ManyToOne
-        @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
     User user;
 
     // Relationship with KoiSpecies
     @ManyToOne
     @JoinColumn(name = "species_id")
-            @JsonIgnore
+    @JsonIgnore
     KoiSpecies species;
 
     @OneToMany(mappedBy = "koi")
     List<OrderDetails> orderDetails;
+
+
 }

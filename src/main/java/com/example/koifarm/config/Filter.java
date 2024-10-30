@@ -49,7 +49,7 @@ public class Filter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-    throws ServletException, IOException{
+            throws ServletException, IOException{
         // cho phep request co the truy cap duoc vo controller
         //filterChain.doFilter(request, response);
 

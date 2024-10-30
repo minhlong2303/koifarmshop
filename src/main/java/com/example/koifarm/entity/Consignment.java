@@ -18,36 +18,36 @@ public class Consignment {
     UUID id;
 
     @Column(length = 100, nullable = false)
-    private String koiName;
+    String koiName;
 
     @Column(length = 50)
-    private String breed;
+    String breed;
 
     @Column(length = 20)
-    private String size;
+    String size;
 
-    private int age;
-    private String gender;
-    private double expectedPrice;
-    private int quantity;
-    private int careDuration;
-    private double careFee;
-    private String specialRequirements;
+    int age;
+    String gender;
+    double expectedPrice;
+    int quantity;
+    int careDuration;
+    double careFee;
+    String specialRequirements;
 
     @Enumerated(EnumType.STRING)
-    private ConsignmentType consignmentType;
+    ConsignmentType consignmentType;
 
-    private LocalDateTime createdDate = LocalDateTime.now(); // Khởi tạo mặc định
+    LocalDateTime createdDate = LocalDateTime.now(); // Khởi tạo mặc định
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
-    private User customer;
+    User customer;
 
     // Other fields (e.g., address, inspectionMethod, etc.)
-    private String address;
+    String address;
 
-    private LocalDateTime inspectionDate;
+    LocalDateTime inspectionDate;
 
-    private String inspectionMethod;
+    String inspectionMethod;
 }
