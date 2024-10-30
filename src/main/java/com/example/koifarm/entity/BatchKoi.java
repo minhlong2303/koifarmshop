@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -37,5 +38,14 @@ public class BatchKoi {
 
     @JsonIgnore
     boolean isDeleted = false;
+
+    // Relationship with BatchKoiOrderDetail
+    @OneToMany(mappedBy = "batchKoi")
+    private List<BatchKoiOrderDetail> orderDetails;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

@@ -1,13 +1,9 @@
 package com.example.koifarm.model;
-
 import lombok.Data;
-
 import java.util.UUID;
 
 @Data
-public class OrderDetailRequest {
-    UUID koiId;
+public class BatchKoiOrderDetailRequest {
+    UUID batchKoiId;
     int quantity;
-//    String feedbackContent;
-//    int rating;
 }

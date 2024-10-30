@@ -34,6 +34,13 @@ public class BatchKoiAPI {
         return ResponseEntity.ok(batchKoi);
     }
 
+    //lay thong tin chi tiet cua 1 lo Koi cu the
+    @GetMapping("{batchKoiID}")
+    public ResponseEntity getbatchKoiDetails(@PathVariable UUID batchKoiID){
+        BatchKoi batchKoi = batchKoiService.getBatchKoiById(batchKoiID);
+        return ResponseEntity.ok(batchKoi);
+    }
+
     @PutMapping("{batchKoiID}")
     public ResponseEntity update(@PathVariable UUID batchKoiID, @Valid @RequestBody BatchKoi batchKoi){
         BatchKoi newBatchKoi = batchKoiService.update(batchKoiID, batchKoi);

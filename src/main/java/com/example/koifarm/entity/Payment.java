@@ -32,5 +32,8 @@ public class Payment {
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     Set<Transactions> transactions;
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "batchkoiorder_id", referencedColumnName = "id")
+    @JsonIgnore
+    BatchKoiOrder batchKoiOrder;
 }

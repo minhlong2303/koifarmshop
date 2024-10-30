@@ -1,15 +1,16 @@
 package com.example.koifarm.service;
 
+
 import com.example.koifarm.entity.*;
 import com.example.koifarm.enums.OrderStatusEnum;
 import com.example.koifarm.enums.PaymentEnums;
 import com.example.koifarm.enums.Role;
 import com.example.koifarm.enums.TransactionEnum;
 import com.example.koifarm.exception.EntityNotFoundException;
-import com.example.koifarm.model.OrderDetailRequest;
-import com.example.koifarm.model.OrderRequest;
-import com.example.koifarm.repository.KoiRepository;
-import com.example.koifarm.repository.OrderRepository;
+import com.example.koifarm.model.BatchKoiOrderDetailRequest;
+import com.example.koifarm.model.BatchKoiOrderRequest;
+import com.example.koifarm.repository.BatchKoiOrderRepository;
+import com.example.koifarm.repository.BatchKoiRepository;
 import com.example.koifarm.repository.PaymentRepository;
 import com.example.koifarm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -27,15 +27,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
-public class OrderService {
+public class BatchKoiOrderService {
     @Autowired
     AuthenticationService authenticationService;
 
     @Autowired
-    KoiRepository koiRepository;
+    BatchKoiRepository batchKoiRepository;
 
     @Autowired
-    OrderRepository orderRepository;
+    BatchKoiOrderRepository batchKoiOrderRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -43,66 +43,59 @@ public class OrderService {
     @Autowired
     PaymentRepository paymentRepository;
 
-    public Orders create(OrderRequest orderRequest){
+    public BatchKoiOrder createOrder(BatchKoiOrderRequest batchKoiOrderRequest){
         //lay thong tin nguoi vua tao order
         User customer = authenticationService.getCurrentUser();
         //create order
-        Orders order = new Orders();
-        List<OrderDetails> orderDetails = new ArrayList<>();
-        List<Feedback> feedbacks = new ArrayList<>();
+        BatchKoiOrder batchKoiOrder = new BatchKoiOrder();
+        List<BatchKoiOrderDetail> batchKoiOrderDetail = new ArrayList<>();
         float total = 0;
 
-        order.setCustomer(customer);
-        order.setDate(new Date());
-        order.setStatus(OrderStatusEnum.PENDING);
+        batchKoiOrder.setCustomer(customer);
+        batchKoiOrder.setDate(new Date());
+        batchKoiOrder.setStatus(OrderStatusEnum.PENDING);
 
-        for(OrderDetailRequest orderDetailRequest: orderRequest.getDetail()){
+        for(BatchKoiOrderDetailRequest batchKoiOrderDetailRequest: batchKoiOrderRequest.getDetail()){
             //lay id cua koi ma ng dung yeu cau mua
-            Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getKoiId());
-            OrderDetails orderDetail = new OrderDetails();
-            orderDetail.setQuantity(orderDetailRequest.getQuantity());
-            orderDetail.setPrice(koi.getPrice());
-            orderDetail.setOrders(order);
-            orderDetail.setKoi(koi);
+            BatchKoi batchKoi = batchKoiRepository.findBatchKoiBybatchKoiID(batchKoiOrderDetailRequest.getBatchKoiId());
+            BatchKoiOrderDetail batchKoiOrderDetails = new BatchKoiOrderDetail();
+            batchKoiOrderDetails.setQuantity(batchKoiOrderDetailRequest.getQuantity());
+            batchKoiOrderDetails.setPrice(batchKoi.getPrice());
+            batchKoiOrderDetails.setBatchKoiOrder(batchKoiOrder);
+            batchKoiOrderDetails.setBatchKoi(batchKoi);
 
-            // Set feedback content
-            Feedback feedback = new Feedback();
-            feedback.setContent(feedback.getContent());  // Custom feedback data
-            feedback.setRating(feedback.getRating());
-            feedbacks.add(feedback);
-
-            orderDetails.add(orderDetail);
-            total += koi.getPrice() * orderDetailRequest.getQuantity();
+            batchKoiOrderDetail.add(batchKoiOrderDetails);
+            total += batchKoi.getPrice() * batchKoiOrderDetailRequest.getQuantity();
         }
 
-        order.setOrderDetails(orderDetails);
-        order.setTotal(total);
-        order.setFeedbacks(feedbacks);
-        return orderRepository.save(order);
+        batchKoiOrder.setBatchOrderDetails(batchKoiOrderDetail);
+        batchKoiOrder.setTotal(total);
+
+        return batchKoiOrderRepository.save(batchKoiOrder);
 
     }
 
-    public List<Orders> get(){
+    public List<BatchKoiOrder> get(){
         User user = authenticationService.getCurrentUser();
-        List<Orders> orders = orderRepository.findOrdersByCustomer(user);
-        return orders;
+        List<BatchKoiOrder> batchKoiOrders = batchKoiOrderRepository.findBatchKoiOrderByCustomer(user);
+        return batchKoiOrders;
     }
 
-    public String createUrl(OrderRequest orderRequest) throws  Exception {
+    public String createUrl(BatchKoiOrderRequest batchKoiOrderRequest) throws  Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime createDate = LocalDateTime.now();
         String formattedCreateDate = createDate.format(formatter);
 
         //tao orders
-        Orders orders = create(orderRequest);
+        BatchKoiOrder batchKoiOrder = createOrder(batchKoiOrderRequest);
         //
-        float money = orders.getTotal()*100;
+        float money = batchKoiOrder.getTotal()*100;
         String amount = String.valueOf((int) money);
 
         String tmnCode = "OHNZVMJ7";
         String secretKey = "KL9DNZY17C0XVP5QQI95KJJX49F2U71E";
         String vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        String returnUrl = "http://localhost:5173/success?orderID=" + orders.getId(); //return trang thanh toan thanh cong
+        String returnUrl = "http://localhost:5173/success?orderID=" + batchKoiOrder.getId(); //return trang thanh toan thanh cong
         String currCode = "VND";
 
         Map<String, String> vnpParams = new TreeMap<>();
@@ -111,8 +104,8 @@ public class OrderService {
         vnpParams.put("vnp_TmnCode", tmnCode);
         vnpParams.put("vnp_Locale", "vn");
         vnpParams.put("vnp_CurrCode", currCode);
-        vnpParams.put("vnp_TxnRef", orders.getId().toString()); //moi don hang la duy nhat
-        vnpParams.put("vnp_OrderInfo", "Thanh toan cho ma GD: " + orders.getId());
+        vnpParams.put("vnp_TxnRef", batchKoiOrder.getId().toString()); //moi don hang la duy nhat
+        vnpParams.put("vnp_OrderInfo", "Thanh toan cho ma GD: " + batchKoiOrder.getId());
         vnpParams.put("vnp_OrderType", "other");
         vnpParams.put("vnp_Amount",amount);
 
@@ -162,20 +155,20 @@ public class OrderService {
 
     public void createTransaction(UUID uuid){
         //tim order
-        Orders orders = orderRepository.findById(uuid)
+        BatchKoiOrder batchKoiOrder = batchKoiOrderRepository.findById(uuid)
                 .orElseThrow(()->new EntityNotFoundException("Order not found!"));
 
         // Check if a payment already exists for this order
-        if (orders.getPayment() != null) {
+        if (batchKoiOrder.getPayment() != null) {
             throw new RuntimeException("Payment already exists for this order.");
         }
 
         //tao payment
         Payment payment = new Payment();
-        payment.setOrders(orders);
+        payment.setBatchKoiOrder(batchKoiOrder);
         payment.setCreateAt(new Date());
         payment.setPayment_method(PaymentEnums.BANKING);
-        payment.setTotal(orders.getTotal());
+        payment.setTotal(batchKoiOrder.getTotal());
 
         paymentRepository.save(payment);
 
@@ -199,7 +192,7 @@ public class OrderService {
         transactions2.setPayment(payment);
         transactions2.setStatus(TransactionEnum.SUCCESS);
         transactions2.setDescription("CUSTOMER TO MANAGER");
-        float newBalance = manager.getBalance() + orders.getTotal()*0.1f;  //10% cua he thong
+        float newBalance = manager.getBalance() + batchKoiOrder.getTotal()*0.1f;  //10% cua he thong
         transactions2.setAmount(newBalance);
         manager.setBalance(newBalance);
         transactionsSet.add(transactions2); //add to transacrionSet
@@ -210,9 +203,9 @@ public class OrderService {
         transactions3.setStatus(TransactionEnum.SUCCESS);
         transactions3.setDescription("MANAGER TO OWNER");
         transactions3.setFrom(manager);
-        User owner = orders.getOrderDetails().get(0).getKoi().getUser();
+        User owner = batchKoiOrder.getBatchOrderDetails().get(0).getBatchKoi().getUser();
         transactions3.setTo(owner);
-        float newShopBalance = owner.getBalance()+ orders.getTotal()*(1-0.1f);
+        float newShopBalance = owner.getBalance()+ batchKoiOrder.getTotal()*(1-0.1f);
         transactions3.setAmount(newShopBalance);
         owner.setBalance(newShopBalance);
         transactionsSet.add(transactions3);
@@ -220,8 +213,8 @@ public class OrderService {
         // Save payment and transactions
         payment.setTransactions(transactionsSet);
 
-        orders.setPayment(payment); // Set the payment for the order
-        orderRepository.save(orders); // Save the order with the payment
+        batchKoiOrder.setPayment(payment); // Set the payment for the order
+        batchKoiOrderRepository.save(batchKoiOrder); // Save the order with the payment
 
         userRepository.save(manager);
         userRepository.save(owner);
@@ -230,12 +223,12 @@ public class OrderService {
     }
 
     //Update Status
-    public Orders updateOrderStatus(UUID orderId, OrderStatusEnum status) {
-        Orders order = orderRepository.findById(orderId)
+    public BatchKoiOrder updateOrderStatus(UUID orderId, OrderStatusEnum status) {
+        BatchKoiOrder batchKoiOrder = batchKoiOrderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
 
-        order.setStatus(status);
-        return orderRepository.save(order);
+        batchKoiOrder.setStatus(status);
+        return batchKoiOrderRepository.save(batchKoiOrder);
     }
 
 

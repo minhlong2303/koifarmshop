@@ -1,12 +1,12 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.Feedback;
-import com.example.koifarm.entity.User;
+import com.example.koifarm.entity.Orders;
 import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.model.FeedBackResponse;
 import com.example.koifarm.model.FeedbackRequest;
 import com.example.koifarm.repository.FeedbackRepository;
-import com.example.koifarm.repository.UserRepository;
+import com.example.koifarm.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +22,15 @@ public class FeedbackService {
     AuthenticationService authenticationService;
 
     @Autowired
-    UserRepository userRepository;
+    OrderRepository orderRepository;
 
     public Feedback createFeedback(FeedbackRequest feedbackRequest) {
-//        User shop = userRepository.findById(feedbackRequest.getShopID())
-//                .orElseThrow(() -> new EntityNotFoundException("Shop not found!"));
+        Orders orders = orderRepository.findById(feedbackRequest.getOrderID())
+                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
         Feedback feedback = new Feedback();
         feedback.setContent(feedbackRequest.getContent());
         feedback.setRating(feedbackRequest.getRating());
         feedback.setCustomer(authenticationService.getCurrentUser());  //lay thong tin khach hang
-       // feedback.setShop(shop);
-
         return feedbackRepository.save(feedback);
     }
 
