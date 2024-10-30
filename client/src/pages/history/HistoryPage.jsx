@@ -24,19 +24,19 @@ function HistoryPage() {
   // Define columns for the table
   const columns = [
     {
-      title: "Order Date",
+      title: "Ngày đặt hàng",
       dataIndex: "date",
       key: "date",
       render: (date) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Total Amount",
+      title: "Tổng tiền",
       dataIndex: "total",
       key: "total",
       render: (total) => `${total.toLocaleString()} VND`,
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
       key: "status",
       render: (status) => (
@@ -44,7 +44,7 @@ function HistoryPage() {
       ),
     },
     {
-      title: "Order Details",
+      title: "Chi tiết đơn hàng",
       dataIndex: "orderDetails",
       key: "orderDetails",
       render: (orderDetails) =>
@@ -56,13 +56,13 @@ function HistoryPage() {
         )),
     },
     {
-      title: "Payment Method",
+      title: "Phương thức thanh toán",
       dataIndex: "payment",
       key: "payment",
       render: (payment) => (payment ? payment.payment_method : "Not Paid"),
     },
     {
-      title: "Rating",
+      title: "Đánh giá",
       dataIndex: "rating",
       key: "rating",
       render: (feedback, record) => (
@@ -70,14 +70,14 @@ function HistoryPage() {
       ),
     },
     {
-      title: "Feedback",
+      title: "Phản hồi",
       dataIndex: "feedback",
       key: "feedback",
       render: (feedback, record) =>
         feedback ? feedback.content : "No Feedback",
     },
     {
-      title: "Action",
+      title: "Hành động",
       dataIndex: "id",
       key: "action",
       render: (id, record) => (
@@ -87,7 +87,7 @@ function HistoryPage() {
           }}
           type="primary"
         >
-          Feedback
+          Đánh giá
         </Button>
       ),
     },
@@ -137,7 +137,7 @@ function HistoryPage() {
 
       {/* Feedback modal */}
       <Modal
-        title="Feedback"
+        title="Phản hồi"
         open={!!selectedOrder} // Modal is open when there's a selected order
         onOk={() => form.submit()}
         onCancel={() => setSelectedOrder(null)} // Close modal on cancel
@@ -148,7 +148,7 @@ function HistoryPage() {
         />
         <Form labelCol={{ span: 24 }} onFinish={handleFeedback} form={form}>
           <Form.Item
-            label="Rating"
+            label="Đánh giá"
             name="rating"
             rules={[
               {
@@ -160,12 +160,12 @@ function HistoryPage() {
             <Rate />
           </Form.Item>
           <Form.Item
-            label="Feedback"
+            label="Phản hồi"
             name="content"
             rules={[
               {
                 required: true,
-                message: "Please enter feedback",
+                message: "Vui lòng nhập phản hồi!",
               },
             ]}
           >

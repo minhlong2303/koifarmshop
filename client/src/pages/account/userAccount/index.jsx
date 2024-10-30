@@ -81,8 +81,8 @@ const UserAccount = () => {
             layout="vertical"
             onFinish={onFinish}
             initialValues={{
-              email: "doquangdung1782004@gmail.com",
-              username: "QuangDung2k4",
+              email: "Customer@gmail.com",
+              username: "Customer",
             }}
           >
             <Row gutter={16}>

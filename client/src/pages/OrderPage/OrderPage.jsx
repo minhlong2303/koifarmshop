@@ -10,7 +10,7 @@ function OrderPage() {
   const data = useSelector((store) => store.order);
   const columns = [
     {
-      title: "Image",
+      title: "Ảnh",
       dataIndex: "image",
       key: "image",
       render: (image) => {
@@ -18,17 +18,17 @@ function OrderPage() {
       },
     },
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
     },
     {
-      title: "Total Price",
+      title: "Tổng tiền",
       key: "totalPrice",
       render: (koiFish) => {
         return <span>{koiFish.price * koiFish.quantity}</span>;
@@ -65,7 +65,7 @@ function OrderPage() {
           pagination={false} // Không phân trang nếu bạn muốn hiển thị tất cả sản phẩm cùng một lúc
           footer={() => (
             <div style={{ textAlign: "right", fontSize: "18px" }}>
-              <b>Total: </b> {totalAmount} {/* Hiển thị tổng số tiền */}
+              <b>Tổng: </b> {totalAmount} {/* Hiển thị tổng số tiền */}
             </div>
           )}
         />
