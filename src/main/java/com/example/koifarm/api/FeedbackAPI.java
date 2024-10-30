@@ -1,10 +1,8 @@
 package com.example.koifarm.api;
 
 import com.example.koifarm.entity.Feedback;
-import com.example.koifarm.entity.Koi;
 import com.example.koifarm.model.FeedBackResponse;
 import com.example.koifarm.model.FeedbackRequest;
-import com.example.koifarm.model.KoiRequest;
 import com.example.koifarm.service.FeedbackService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class AuthenticationAPI {
         UserResponse newUser = authenticationService.login(loginRequest);
         return ResponseEntity.ok(newUser);
     }
+
+    @PreAuthorize("hasAuthority('MANAGER')")
     @GetMapping("user")
     public ResponseEntity getAllUser(){
         List<User> users = authenticationService.getAllUser();

@@ -2,8 +2,10 @@ package com.example.koifarm.model;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class OrderDetailRequest {
-    long koiId;
+    UUID koiId;
     int quantity;
 }

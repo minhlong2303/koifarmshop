@@ -1,6 +1,7 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.*;
+import com.example.koifarm.enums.OrderStatusEnum;
 import com.example.koifarm.enums.PaymentEnums;
 import com.example.koifarm.enums.Role;
 import com.example.koifarm.enums.TransactionEnum;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -44,12 +46,14 @@ public class OrderService {
     public Orders create(OrderRequest orderRequest){
         //lay thong tin nguoi vua tao order
         User customer = authenticationService.getCurrentUser();
+        //create order
         Orders order = new Orders();
         List<OrderDetails> orderDetails = new ArrayList<>();
         float total = 0;
 
         order.setCustomer(customer);
         order.setDate(new Date());
+        order.setStatus(OrderStatusEnum.PENDING);
 
         for(OrderDetailRequest orderDetailRequest: orderRequest.getDetail()){
             //lay id cua koi ma ng dung yeu cau mua
@@ -164,6 +168,9 @@ public class OrderService {
         payment.setOrders(orders);
         payment.setCreateAt(new Date());
         payment.setPayment_method(PaymentEnums.BANKING);
+        payment.setTotal(orders.getTotal());
+
+        paymentRepository.save(payment);
 
         Set<Transactions> transactionsSet = new HashSet<>();
         //tao transaction
@@ -186,8 +193,9 @@ public class OrderService {
         transactions2.setStatus(TransactionEnum.SUCCESS);
         transactions2.setDescription("CUSTOMER TO MANAGER");
         float newBalance = manager.getBalance() + orders.getTotal()*0.1f;  //10% cua he thong
+        transactions2.setAmount(newBalance);
         manager.setBalance(newBalance);
-        transactionsSet.add(transactions2);
+        transactionsSet.add(transactions2); //add to transacrionSet
 
         //MANAGER TO OWNER
         Transactions transactions3 = new Transactions();
@@ -197,16 +205,31 @@ public class OrderService {
         transactions3.setFrom(manager);
         User owner = orders.getOrderDetails().get(0).getKoi().getUser();
         transactions3.setTo(owner);
-        float newShopBalance = owner.getBalance()+ orders.getTotal()*0.9f;
+        float newShopBalance = owner.getBalance()+ orders.getTotal()*(1-0.1f);
+        transactions3.setAmount(newShopBalance);
         owner.setBalance(newShopBalance);
         transactionsSet.add(transactions3);
 
+        // Save payment and transactions
         payment.setTransactions(transactionsSet);
+
+        orders.setPayment(payment); // Set the payment for the order
+        orderRepository.save(orders); // Save the order with the payment
 
         userRepository.save(manager);
         userRepository.save(owner);
         paymentRepository.save(payment);
 
     }
+
+    //Update Status
+    public Orders updateOrderStatus(UUID orderId, OrderStatusEnum status) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
+
+        order.setStatus(status);
+        return orderRepository.save(order);
+    }
+
 
 }

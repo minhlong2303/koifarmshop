@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class KoiService {
@@ -52,7 +53,7 @@ public class KoiService {
 
 
     //Update
-    public Koi update(long koiID, Koi koi){
+    public Koi update(UUID koiID, Koi koi){
         //b1: tim Koi can duoc update
         Koi oldKoi = getKoiById(koiID);
 
@@ -72,13 +73,13 @@ public class KoiService {
     }
 
     //Delete
-    public Koi delete(long koiID){
+    public Koi delete(UUID koiID){
         Koi oldKoi = getKoiById(koiID);
         oldKoi.setDeleted(true);
         return koiRepository.save(oldKoi);
     }
 
-    public Koi getKoiById(long koiID){
+    public Koi getKoiById(UUID koiID){
         Koi oldKoi = koiRepository.findKoiByKoiID(koiID);
         if (oldKoi == null) throw new EntityNotFoundException("Koi not found!");
         return oldKoi;
