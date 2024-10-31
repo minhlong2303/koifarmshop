@@ -35,7 +35,12 @@ function ProductDetailPage() {
     <div className="product-detail">
       <Image src={koiFish.image} alt={koiFish.name} />
       <h1>{koiFish.name}</h1>
-      <p>{koiFish.description}</p>
+      <p>Nguồn gốc: {koiFish.origin}</p>
+      <p>Giới tính: {koiFish.gender}</p>
+      <p>Kích thước: {koiFish.size} cm</p>
+      <p>Giống: {koiFish.breed}</p>
+      <p>Địa điểm: {koiFish.location}</p>
+      <p>Mô tả: {koiFish.description}</p>
       <span>{`${koiFish.price} vnđ`}</span>
       <button onClick={() => handleAddToCart(koiFish)}>
         Thêm vào giỏ hàng
