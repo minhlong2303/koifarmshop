@@ -29,11 +29,11 @@ import SuccessPage from "./pages/success/SuccessPage";
 import ErrorPage from "./pages/error/ErrorPage";
 import OrderPage from "./pages/OrderPage/OrderPage";
 import HistoryPage from "./pages/history/HistoryPage";
-import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
 import OverviewPage from "./pages/admin/overview/OverviewPage";
 import BatchKoiPage from "./pages/BatchKoi/BatchKoiPage";
 import ManageBatchKoi from "./pages/admin/manage-batchKoi";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
+import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -121,10 +121,9 @@ function App() {
     {
       path: "manager",
       element: (
-        // <ProtectRouteAuth>
-        //   <Dashboard></Dashboard>
-        // </ProtectRouteAuth>
-        <Manager />
+        <ProtectRouteAuth>
+          <Manager />
+        </ProtectRouteAuth>
       ),
       children: [
         {

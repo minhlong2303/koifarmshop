@@ -102,7 +102,7 @@ function HistoryPage() {
   const handleFeedback = async (values) => {
     if (!selectedOrder) return;
 
-    values.id = selectedOrder.id; // Include order ID in feedback request
+    values.orderID = selectedOrder.id; // Include order ID in feedback request
     try {
       // Post feedback to server
       await api.post("/feedback", values);

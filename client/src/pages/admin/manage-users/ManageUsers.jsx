@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { Button, Descriptions, Image, Modal, Table } from "antd";
-import api from "../../../config/axios";
+import { Descriptions, Image } from "antd";
+
 import ManageTemplate from "../../../components/manage-template";
 
 const ManageUser = () => {
