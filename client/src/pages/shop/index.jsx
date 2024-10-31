@@ -43,13 +43,19 @@ const Product = ({ koiFish }) => {
     navigate(`/detail/${koiFish.koiID}`);
   };
   return (
-    <div className="product" onClick={handleViewDetail}>
-      <Image src={koiFish.image} alt="koi's picture"></Image>
-      {/*Khi nào koi có image sẽ thay vô */}
-      {/* <img src={koiFish.image} alt="koi's picture"></img> */}
+    <div className="product">
+      <div onClick={handleViewDetail}>
+        <Image src={koiFish.image} alt="koi's picture"></Image>
+        {/*Khi nào koi có image sẽ thay vô */}
+        {/* <img src={koiFish.image} alt="koi's picture"></img> */}
+        <h3>{koiFish.name}</h3>
+        <p>{koiFish.description}</p>
+        <span>{`${koiFish.price} vnđ`}</span>
+      </div>
+      {/* <Image src={koiFish.image} alt="koi's picture"></Image>
       <h3>{koiFish.name}</h3>
       <p>{koiFish.description}</p>
-      <span>{`${koiFish.price} vnđ`}</span>
+      <span>{`${koiFish.price} vnđ`}</span> */}
       <center>
         <button onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
       </center>

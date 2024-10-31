@@ -16,6 +16,7 @@ function SuccessPage() {
   const postOrderID = async () => {
     try {
       const response = await api.post(`/order/pay?orderID=${orderID}`);
+      console.log("Response data:", response.data);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -26,12 +27,15 @@ function SuccessPage() {
     const handlePaymentStatus = async () => {
       if (vnp_TransactionStatus === "00") {
         const products = await postOrderID(); // Wait for the response
-        dispatch(clearOrder());
-
-        // Make sure products is an array before mapping
         if (Array.isArray(products)) {
+          console.log(
+            "Products to remove:",
+            products.map((product) => product.koiID)
+          );
           dispatch(removeSelected(products.map((product) => product.koiID)));
         }
+        console.log("Order cleared");
+        dispatch(clearOrder());
       } else {
         // Redirect to error page if payment failed
         navigate("/error");
@@ -39,7 +43,7 @@ function SuccessPage() {
     };
 
     handlePaymentStatus(); // Call the async function inside useEffect
-  }, []);
+  }, [orderID, vnp_TransactionStatus]);
   return (
     <div>
       <Result
