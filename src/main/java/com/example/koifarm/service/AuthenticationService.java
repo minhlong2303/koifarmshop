@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 
 @Service
@@ -109,6 +111,13 @@ public class AuthenticationService implements UserDetailsService {
         return userRepository.save(oldUser);
     }
 
+    public UserResponse getUserById(long id) {
+        User user = userRepository.findUserById(id);
+        if (user == null) {
+            throw new EntityNotFoundException("User with ID " + id + " not found!");
+        }
+        return modelMapper.map(user, UserResponse.class);
+    }
 
     public void forgotPassword(ForgotPasswordRequest forgotPasswordRequest){
         User user = userRepository.findUserByEmail(forgotPasswordRequest.getEmail());

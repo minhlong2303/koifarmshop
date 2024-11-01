@@ -9,4 +9,6 @@ import java.util.UUID;
 
 public interface OrderRepository extends JpaRepository<Orders, UUID> {
     List<Orders> findOrdersByCustomer(User customer);
+
+    Orders findOrdersById(UUID id);
 }

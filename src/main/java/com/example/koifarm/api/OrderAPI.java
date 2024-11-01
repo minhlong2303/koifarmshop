@@ -43,6 +43,12 @@ public class OrderAPI {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("{orderId}")
+    public ResponseEntity getOrder(@PathVariable UUID orderId){
+        Orders orders = orderService.getOrderById(orderId);
+        return ResponseEntity.ok(orders);
+    }
+
 
     //update orders status
     @PreAuthorize("hasAnyAuthority('MANAGER', 'STAFF')")

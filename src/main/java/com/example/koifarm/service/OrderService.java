@@ -49,7 +49,6 @@ public class OrderService {
         //create order
         Orders order = new Orders();
         List<OrderDetails> orderDetails = new ArrayList<>();
-        List<Feedback> feedbacks = new ArrayList<>();
         float total = 0;
 
         order.setCustomer(customer);
@@ -65,21 +64,14 @@ public class OrderService {
             orderDetail.setOrders(order);
             orderDetail.setKoi(koi);
 
-            // Set feedback content
-            Feedback feedback = new Feedback();
-            feedback.setContent(feedback.getContent());  // Custom feedback data
-            feedback.setRating(feedback.getRating());
-            feedbacks.add(feedback);
-
             orderDetails.add(orderDetail);
             total += koi.getPrice() * orderDetailRequest.getQuantity();
         }
 
         order.setOrderDetails(orderDetails);
         order.setTotal(total);
-        order.setFeedbacks(feedbacks);
-        return orderRepository.save(order);
 
+        return orderRepository.save(order);
     }
 
     public List<Orders> get(){
@@ -236,6 +228,14 @@ public class OrderService {
 
         order.setStatus(status);
         return orderRepository.save(order);
+    }
+
+    //Get orders
+    public Orders getOrderById(UUID orderId){
+        Orders oldOrders = orderRepository.findOrdersById(orderId);
+        if (oldOrders == null) throw new EntityNotFoundException("Orders not found!");
+        return oldOrders;
+
     }
 
 
