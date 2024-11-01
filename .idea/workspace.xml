@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="update all">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/BatchKoiAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/BatchKoiAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/OrderAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/OrderAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/BatchKoi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/BatchKoi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/BatchKoiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/BatchKoiRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/BatchKoiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/BatchKoiRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/BatchKoiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/BatchKoiService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/api/OrderAPI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/api/OrderAPI.class" afterDir="false" />
-    </list>
+    <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="update all" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,29 +91,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.koifarm.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.KoifarmApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;BE-Long&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/koifarmshop&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.koifarm.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.KoifarmApplication.executor": "Run",
+    "git-widget-placeholder": "BE-Long",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Github/koifarmshop",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.koifarm.entity" />
