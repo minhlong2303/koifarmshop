@@ -3,7 +3,6 @@ package com.example.koifarm.api;
 import com.example.koifarm.entity.Orders;
 import com.example.koifarm.enums.OrderStatusEnum;
 import com.example.koifarm.model.OrderRequest;
-import com.example.koifarm.repository.KoiRepository;
 import com.example.koifarm.service.OrderService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;

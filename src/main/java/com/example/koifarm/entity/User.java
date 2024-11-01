@@ -111,4 +111,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "customer")
     private List<Consignment> consignments;
+
+    @OneToMany(mappedBy = "customer")
+    List<BatchKoiOrder> batchKoiOrders;
 }

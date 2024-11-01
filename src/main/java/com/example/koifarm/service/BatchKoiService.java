@@ -26,11 +26,11 @@ public class BatchKoiService {
     public BatchKoi create(BatchKoiRequest batchKoiRequest){
         BatchKoi batchKoi = new BatchKoi();
 //        batchKoi.setBatchKoiID(batchKoiRequest.getBatchKoiID());
-        batchKoi.setName(batchKoiRequest.getName());
+        batchKoi.setBatchName(batchKoiRequest.getName());
         batchKoi.setPrice(batchKoiRequest.getPrice());
         batchKoi.setQuantity(batchKoiRequest.getQuantity());
         batchKoi.setDescription(batchKoiRequest.getDescription());
-        batchKoi.setImage(batchKoiRequest.getImage());
+        batchKoi.setOrigin(batchKoiRequest.getOrigin());
 
         KoiSpecies koiSpecies = koiSpeciesRepository.findKoiSpeciesById(batchKoiRequest.getSpeciesId());
         if (koiSpecies == null){
@@ -49,7 +49,7 @@ public class BatchKoiService {
 
     //get
     public BatchKoi getBatchKoiById(UUID batchKoiID){
-        BatchKoi oldBatchKoi = batchKoiRepository.findBatchKoiBybatchKoiID(batchKoiID);
+        BatchKoi oldBatchKoi = batchKoiRepository.findBatchKoiByBatchKoiID(batchKoiID);
         if (oldBatchKoi == null){
             throw new EntityNotFoundException("BatchKoi not found!");
         }
@@ -60,7 +60,7 @@ public class BatchKoiService {
     public BatchKoi update(UUID batchKoiID, BatchKoi batchKoi){
         BatchKoi oldBatchKoi = getBatchKoiById(batchKoiID);
 
-        oldBatchKoi.setName(batchKoi.getName());
+        oldBatchKoi.setBatchName(batchKoi.getBatchName());
         oldBatchKoi.setPrice(batchKoi.getPrice());
         oldBatchKoi.setQuantity(batchKoi.getQuantity());
         oldBatchKoi.setDescription(batchKoi.getDescription());

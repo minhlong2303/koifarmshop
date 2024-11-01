@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BatchKoiRepository extends JpaRepository<BatchKoi, UUID> {
-    BatchKoi findBatchKoiBybatchKoiID(UUID batchKoiID);
+
+    BatchKoi findBatchKoiByBatchKoiID(UUID batchKoiID);
 
     List<BatchKoi> findBatchKoiByIsDeletedFalse();
 
