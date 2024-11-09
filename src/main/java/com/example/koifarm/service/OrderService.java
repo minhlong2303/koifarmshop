@@ -75,8 +75,7 @@ public class OrderService {
     }
 
     public List<Orders> get(){
-        User user = authenticationService.getCurrentUser();
-        List<Orders> orders = orderRepository.findOrdersByCustomer(user);
+        List<Orders> orders = orderRepository.findAll();
         return orders;
     }
 
