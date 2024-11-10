@@ -35,7 +35,16 @@ function ManageBatchKoi() {
   ];
   const formItem = (
     <>
-      <Form.Item label="Name" name="name">
+      <Form.Item
+        label="Name"
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: "Please enter batch koi name",
+          },
+        ]}
+      >
         <Input></Input>
       </Form.Item>
       <Form.Item

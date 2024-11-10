@@ -11,7 +11,7 @@ function ShopPage() {
   const fetchKoiFish = async () => {
     try {
       // const response = await api.get("koi");
-      const response = await api.get("koi");
+      const response = await api.get("/koi");
       setKoiFishs(response.data);
       //Bên back-end là response.data.content
     } catch (error) {
@@ -37,7 +37,7 @@ const Product = ({ koiFish }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleAddToCart = () => {
-    dispatch(addProduct(koiFish));
+    dispatch(addProduct({ ...koiFish, quantity: 1 }));
   };
   const handleViewDetail = () => {
     navigate(`/detail/${koiFish.koiID}`);

@@ -39,24 +39,22 @@ const ManageTemplate = ({ columns, DescriptionsForm, path, idKey }) => {
   const fetchData = async () => {
     try {
       const response = await api.get(path);
+      console.log(response.data);
+
       setDatas(response.data);
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const showDetailRecord = (record) => {
     setSelectedRecord(record);
     setShowModal(true);
   };
 
-  const handleDelete = async (idKey) => {
+  const handleDelete = async (id) => {
     try {
-      const response = await api.delete(`/${path}/${idKey}`);
+      const response = await api.delete(`${path}/${id}`);
       toast.success("Delete Successfully");
       fetchData();
     } catch (error) {
@@ -65,6 +63,9 @@ const ManageTemplate = ({ columns, DescriptionsForm, path, idKey }) => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div>
       <Modal

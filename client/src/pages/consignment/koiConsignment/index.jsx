@@ -4,23 +4,32 @@ import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import api from "../../../config/axios";
+import { useForm } from "antd/es/form/Form";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 function KoiConsignment() {
-  const [form] = Form.useForm();
+  const [form] = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (values) => {
-    setIsSubmitting(true);
-
-    // Giả lập gọi API sau khi submit
-    setTimeout(() => {
+  const handleSubmit = async (values) => {
+    try {
+      setIsSubmitting(true);
+      const response = await api.post("consignments", values);
+      toast.success("Đơn ký gửi đã được gửi thành công");
+    } catch (error) {
+      console.log(error);
+    } finally {
       setIsSubmitting(false);
-      toast.success("Đơn ký gửi đã được gửi thành công!");
-      form.resetFields(); // Reset lại form sau khi submit thành công
-    }, 1500);
+    }
+    // Giả lập gọi API sau khi submit
+    // setTimeout(() => {
+    //   setIsSubmitting(false);
+    //   toast.success("Đơn ký gửi đã được gửi thành công!");
+    //   form.resetFields(); // Reset lại form sau khi submit thành công
+    // }, 1500);
   };
 
   const handleUploadChange = (info) => {
@@ -70,7 +79,7 @@ function KoiConsignment() {
 
           <Col span={8}>
             <Form.Item
-              name="koiAge"
+              name="age"
               label="Năm sinh"
               rules={[
                 {
@@ -87,7 +96,7 @@ function KoiConsignment() {
         <Row gutter={16}>
           <Col span={8}>
             <Form.Item
-              name="koiGender"
+              name="gender"
               label="Giới tính"
               rules={[
                 { required: true, message: "Vui lòng chọn giới tính cá Koi" },
@@ -174,9 +183,9 @@ function KoiConsignment() {
             <Form.Item
               name="images"
               label="Hình ảnh"
-              rules={[
-                { required: true, message: "Vui lòng tải lên hình ảnh cá Koi" },
-              ]}
+              // rules={[
+              //   { required: true, message: "Vui lòng tải lên hình ảnh cá Koi" },
+              // ]}
             >
               <Upload
                 name="file"
@@ -191,9 +200,9 @@ function KoiConsignment() {
             <Form.Item
               name="video"
               label="Video"
-              rules={[
-                { required: true, message: "Vui lòng tải lên video cá Koi" },
-              ]}
+              // rules={[
+              //   { required: true, message: "Vui lòng tải lên video cá Koi" },
+              // ]}
             >
               <Upload
                 name="file"

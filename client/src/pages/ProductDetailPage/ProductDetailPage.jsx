@@ -26,7 +26,7 @@ function ProductDetailPage() {
   }, []);
 
   const handleAddToCart = (koiFish) => {
-    dispatch(addProduct(koiFish));
+    dispatch(addProduct({ ...koiFish, quantity: 1 }));
   };
 
   if (!koiFish) return <p>Loading...</p>;

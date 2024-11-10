@@ -30,7 +30,6 @@ function CartPage() {
   }
 
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const rowSelection = {
@@ -42,11 +41,12 @@ function CartPage() {
     return data.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [data]);
 
-  //Lưu ý chỗ này cần sửa nhiều để phù hợp với backend
   const handleBuy = async () => {
     try {
-      const selectedItems = data.filter((koi) =>
-        selectedRowKeys.includes(koi.koiID)
+      const selectedItems = data.filter(
+        (item) =>
+          selectedRowKeys.includes(item.koiID) ||
+          selectedRowKeys.includes(item.batchKoiID)
       );
       if (selectedItems.length === 0) {
         dispatch(clearOrder());
@@ -73,11 +73,14 @@ function CartPage() {
       title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
+      render: (_, item) =>
+        item.koiID ? `Cá Koi: ${item.name}` : `Lô cá Koi: ${item.name}`,
     },
     {
       title: "Giá",
       dataIndex: "price",
       key: "price",
+      render: (price) => `${price} vnđ`,
     },
     {
       title: "Số lượng",
@@ -87,38 +90,28 @@ function CartPage() {
     {
       title: "Tổng tiền",
       key: "totalPrice",
-      render: (koiFish) => {
-        return <span>{koiFish.price * koiFish.quantity}</span>;
+      render: (item) => {
+        return <span>{item.price * item.quantity} vnđ</span>;
       },
     },
   ];
 
   return (
-    <div
-      style={{
-        padding: "60px",
-      }}
-    >
+    <div style={{ padding: "60px" }}>
       <Button onClick={() => dispatch(clearAll())}>Xóa tất cả</Button>
       <Table
-        rowKey="koiID"
+        rowKey={(record) => record.koiID || record.batchKoiID}
         rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
-        pagination={false} // Không phân trang nếu bạn muốn hiển thị tất cả sản phẩm cùng một lúc
+        pagination={false}
         footer={() => (
           <div style={{ textAlign: "right", fontSize: "18px" }}>
-            <b>Tổng: </b> {totalAmount} {/* Hiển thị tổng số tiền */}
+            <b>Tổng: </b> {totalAmount} vnđ
           </div>
         )}
       />
-      <Button
-        onClick={() => {
-          handleBuy();
-        }}
-      >
-        Mua ngay
-      </Button>
+      <Button onClick={handleBuy}>Mua ngay</Button>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import "./index.scss";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/features/cartSlice";
 import { Image } from "antd";
+import { useNavigate } from "react-router-dom";
 function BatchKoiPage() {
   const [koiFishs, setKoiFishs] = useState([]);
   const fetchKoiFish = async () => {
@@ -34,18 +35,17 @@ function BatchKoiPage() {
 }
 const Product = ({ koiFish }) => {
   const dispatch = useDispatch();
-  const handleAddToCart = () => {
-    dispatch(addProduct(koiFish));
-  };
+  const navigate = useNavigate();
+
   return (
-    <div className="product">
+    <div
+      className="product"
+      onClick={() => navigate(`/batch-koi/${koiFish.batchKoiID}`)}
+    >
       <Image src={koiFish.image} alt="koi's picture"></Image>
       <h3>{koiFish.name}</h3>
       <p>{koiFish.quantity}</p>
       <span>{`${koiFish.price} vnđ`}</span>
-      <center>
-        <button onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
-      </center>
     </div>
   );
 };

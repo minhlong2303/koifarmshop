@@ -34,6 +34,7 @@ import BatchKoiPage from "./pages/BatchKoi/BatchKoiPage";
 import ManageBatchKoi from "./pages/admin/manage-batchKoi";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
+import BatchKoiDetail from "./pages/BatchKoiDetail/BatchKoiDetail";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -61,6 +62,10 @@ function App() {
         {
           path: "batch-koi",
           element: <BatchKoiPage></BatchKoiPage>,
+        },
+        {
+          path: "batch-koi/:batchKoiID",
+          element: <BatchKoiDetail></BatchKoiDetail>,
         },
         {
           path: "check-out",
