@@ -24,35 +24,87 @@ function KoiConsignment() {
     } finally {
       setIsSubmitting(false);
     }
-    // Giả lập gọi API sau khi submit
-    // setTimeout(() => {
-    //   setIsSubmitting(false);
-    //   toast.success("Đơn ký gửi đã được gửi thành công!");
-    //   form.resetFields(); // Reset lại form sau khi submit thành công
-    // }, 1500);
-  };
-
-  const handleUploadChange = (info) => {
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} tải lên thành công`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} tải lên thất bại.`);
-    }
   };
 
   return (
     <div className="form-container">
       <h2>Đơn đăng kí ký gửi-bán hộ cá Koi</h2>
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleSubmit}
-        initialValues={{
-          consignmentType: "",
-        }}
-      >
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Row gutter={16}>
-          <Col span={8}>
+          <Col span={12}>
+            <Form.Item
+              name="firstName"
+              label="Tên khách hàng"
+              rules={[
+                { required: true, message: "Vui lòng nhập tên khách hàng" },
+              ]}
+            >
+              <Input placeholder="Nhập tên khách hàng" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="lastName"
+              label="Họ khách hàng"
+              rules={[
+                { required: true, message: "Vui lòng nhập họ khách hàng" },
+              ]}
+            >
+              <Input placeholder="Nhập họ khách hàng" />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="phone"
+              label="Số điện thoại"
+              rules={[
+                { required: true, message: "Vui lòng nhập số điện thoại" },
+              ]}
+            >
+              <Input placeholder="Nhập số điện thoại" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[{ required: true, message: "Vui lòng nhập email" }]}
+            >
+              <Input type="email" placeholder="Nhập email" />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Form.Item
+          name="address"
+          label="Địa chỉ"
+          rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
+        >
+          <Input placeholder="Nhập địa chỉ" />
+        </Form.Item>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="inspectionMethod"
+              label="Phương pháp kiểm định"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn phương pháp kiểm định",
+                },
+              ]}
+            >
+              <Select placeholder="Chọn phương pháp kiểm định">
+                <Option value="online">Online</Option>
+                <Option value="offline">Offline</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
             <Form.Item
               name="consignmentType"
               label="Hình thức ký gửi"
@@ -66,8 +118,10 @@ function KoiConsignment() {
               </Select>
             </Form.Item>
           </Col>
+        </Row>
 
-          <Col span={8}>
+        <Row gutter={16}>
+          <Col span={12}>
             <Form.Item
               name="koiName"
               label="Tên cá Koi"
@@ -76,52 +130,9 @@ function KoiConsignment() {
               <Input placeholder="Nhập tên cá Koi" />
             </Form.Item>
           </Col>
-
-          <Col span={8}>
+          <Col span={12}>
             <Form.Item
-              name="age"
-              label="Năm sinh"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập năm sinh của cá Koi",
-                },
-              ]}
-            >
-              <Input placeholder="ví dụ: 2024, 2023,..." />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item
-              name="gender"
-              label="Giới tính"
-              rules={[
-                { required: true, message: "Vui lòng chọn giới tính cá Koi" },
-              ]}
-            >
-              <Select placeholder="Chọn giới tính cá Koi">
-                <Option value="male">Đực</Option>
-                <Option value="female">Cái</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            <Form.Item
-              name="koiOrigin"
-              label="Nguồn gốc"
-              rules={[{ required: true, message: "Vui lòng nhập nguồn gốc" }]}
-            >
-              <Input placeholder="Nhập nguồn gốc" />
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            <Form.Item
-              name="koiSpecies"
+              name="breed"
               label="Chủng loại"
               rules={[{ required: true, message: "Vui lòng nhập chủng loại" }]}
             >
@@ -131,29 +142,7 @@ function KoiConsignment() {
         </Row>
 
         <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item
-              name="koiTemperament"
-              label="Tính cách"
-              rules={[{ required: true, message: "Vui lòng nhập tính cách" }]}
-            >
-              <Input placeholder="ví dụ: hiền, hung dữ,..." />
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            <Form.Item
-              name="feedingAmount"
-              label="Lượng thức ăn/ngày"
-              rules={[
-                { required: true, message: "Vui lòng nhập lượng thức ăn/ngày" },
-              ]}
-            >
-              <Input placeholder="Nhập lượng thức ăn/ngày" />
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
+          <Col span={12}>
             <Form.Item
               name="size"
               label="Kích thước"
@@ -162,120 +151,67 @@ function KoiConsignment() {
               <Input placeholder="ví dụ: 100cm, 90cm,..." />
             </Form.Item>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item name="illnesses" label="Các bệnh đã từng bị (nếu có)">
-              <Input placeholder="ví dụ: chảy máu,..." />
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            <Form.Item name="note" label="Ghi chú">
-              <TextArea rows={3} placeholder="Nhập ghi chú" />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item
-              name="images"
-              label="Hình ảnh"
-              // rules={[
-              //   { required: true, message: "Vui lòng tải lên hình ảnh cá Koi" },
-              // ]}
-            >
-              <Upload
-                name="file"
-                listType="picture"
-                onChange={handleUploadChange}
-              >
-                <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              name="video"
-              label="Video"
-              // rules={[
-              //   { required: true, message: "Vui lòng tải lên video cá Koi" },
-              // ]}
-            >
-              <Upload
-                name="file"
-                listType="picture"
-                onChange={handleUploadChange}
-              >
-                <Button icon={<UploadOutlined />}>Chọn video</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-
-          <Col span={8}>
-            <Form.Item name="certificate" label="Giấy chứng nhận">
-              <Upload
-                name="file"
-                listType="picture"
-                onChange={handleUploadChange}
-              >
-                <Button icon={<UploadOutlined />}>
-                  Tải lên giấy chứng nhận
-                </Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="customerName"
-              label="Tên khách hàng"
-              rules={[
-                { required: true, message: "Vui lòng nhập tên khách hàng" },
-              ]}
+              name="age"
+              label="Năm sinh"
+              rules={[{ required: true, message: "Vui lòng nhập năm sinh" }]}
             >
-              <Input placeholder="Nhập tên khách hàng" />
-            </Form.Item>
-          </Col>
-
-          <Col span={12}>
-            <Form.Item
-              name="phone"
-              label="Số điện thoại"
-              rules={[
-                { required: true, message: "Vui lòng nhập số điện thoại" },
-              ]}
-            >
-              <Input placeholder="Nhập số điện thoại" />
+              <Input placeholder="Nhập năm sinh" />
             </Form.Item>
           </Col>
         </Row>
 
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="address"
-              label="Địa chỉ"
-              rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
-            >
-              <Input placeholder="Nhập địa chỉ" />
-            </Form.Item>
-          </Col>
+        <Form.Item
+          name="gender"
+          label="Giới tính"
+          rules={[{ required: true, message: "Vui lòng chọn giới tính" }]}
+        >
+          <Select placeholder="Chọn giới tính">
+            <Option value="male">Đực</Option>
+            <Option value="female">Cái</Option>
+          </Select>
+        </Form.Item>
 
-          <Col span={12}>
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[{ required: true, message: "Vui lòng nhập email" }]}
-            >
-              <Input type="email" placeholder="Nhập email" />
-            </Form.Item>
-          </Col>
-        </Row>
+        <Form.Item
+          name="expectedPrice"
+          label="Giá mong muốn"
+          rules={[{ required: true, message: "Vui lòng nhập giá mong muốn" }]}
+        >
+          <Input placeholder="Nhập giá mong muốn" />
+        </Form.Item>
+
+        <Form.Item
+          name="quantity"
+          label="Số lượng"
+          rules={[{ required: true, message: "Vui lòng nhập số lượng cá" }]}
+        >
+          <Input placeholder="Nhập số lượng cá" />
+        </Form.Item>
+
+        <Form.Item
+          name="careDuration"
+          label="Thời gian chăm sóc (ngày)"
+          rules={[
+            { required: true, message: "Vui lòng nhập thời gian chăm sóc" },
+          ]}
+        >
+          <Input placeholder="Nhập thời gian chăm sóc" />
+        </Form.Item>
+
+        <Form.Item
+          name="careFee"
+          label="Chi phí chăm sóc"
+          rules={[
+            { required: true, message: "Vui lòng nhập chi phí chăm sóc" },
+          ]}
+        >
+          <Input placeholder="Nhập chi phí chăm sóc" />
+        </Form.Item>
+
+        <Form.Item name="specialRequirements" label="Yêu cầu đặc biệt">
+          <TextArea rows={3} placeholder="Nhập yêu cầu đặc biệt nếu có" />
+        </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={isSubmitting}>
