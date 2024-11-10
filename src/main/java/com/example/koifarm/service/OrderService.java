@@ -225,7 +225,50 @@ public class OrderService {
         Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
 
+        // Lấy trạng thái hiện tại của đơn hàng
+        OrderStatusEnum currentStatus = order.getStatus();
+
+        // Kiểm tra nếu chuyển trạng thái không hợp lệ
+        if (isStatusChangeInvalid(currentStatus, status)) {
+            throw new IllegalStateException("Chuyển trạng thái không hợp lệ");
+        }
         order.setStatus(status);
+        return orderRepository.save(order);
+    }
+
+    // Kiểm tra chuyển trạng thái hợp lệ
+    private boolean isStatusChangeInvalid(OrderStatusEnum currentStatus, OrderStatusEnum newStatus) {
+        switch (currentStatus) {
+            case PENDING:
+                // Chỉ có thể chuyển từ PENDING sang PROCESSING hoặc CANCELLED
+                return newStatus != OrderStatusEnum.PROCESSING && newStatus != OrderStatusEnum.CANCELLED;
+
+            case PROCESSING:
+                // Chỉ có thể chuyển từ PROCESSING sang COMPLETED hoặc CANCELLED
+                return newStatus != OrderStatusEnum.COMPLETED && newStatus != OrderStatusEnum.CANCELLED;
+
+            case COMPLETED:
+            case CANCELLED:
+                // Không thể chuyển trạng thái nếu đã hoàn thành hoặc đã hủy
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    //Huy don hang
+    public Orders cancelOrder(UUID orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
+
+        // Kiểm tra nếu trạng thái đơn hàng là PENDING hoặc PROCESSING thì mới có thể hủy
+        if (order.getStatus() == OrderStatusEnum.COMPLETED || order.getStatus() == OrderStatusEnum.CANCELLED) {
+            throw new IllegalStateException("Không thể hủy đơn hàng đã hoàn thành hoặc đã bị hủy.");
+        }
+
+        // Cập nhật trạng thái đơn hàng thành CANCELLED
+        order.setStatus(OrderStatusEnum.CANCELLED);
         return orderRepository.save(order);
     }
 
