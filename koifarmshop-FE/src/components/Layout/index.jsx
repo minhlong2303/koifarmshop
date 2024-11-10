@@ -3,7 +3,7 @@ import React from "react";
 
 import { Outlet } from "react-router-dom";
 import Header from "../Header";
-import AppFooter from "../footer";
+import Footer from "../footer";
 
 function Layout() {
   return (
@@ -18,7 +18,7 @@ function Layout() {
       >
         <Outlet />
       </div>
-      <AppFooter></AppFooter>
+      <Footer></Footer>
     </div>
   );
 }

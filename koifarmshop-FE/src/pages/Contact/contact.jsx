@@ -1,10 +1,9 @@
-import React from "react";
-import { Layout, Menu, Form, Input, Button, Row, Col } from "antd";
-import { Link } from "react-router-dom"; // Assuming you are using react-router for routing
+
+import {Form, Input, Button, Row, Col } from "antd";
 import { MailOutlined, PhoneOutlined, UserOutlined } from "@ant-design/icons";
 import "antd/dist/reset.css";
 
-const { Header, Content, Footer } = Layout;
+
 
 const Contact = () => {
   const [form] = Form.useForm();
@@ -15,9 +14,9 @@ const Contact = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h2>Contact Us</h2>
+      <h2>Liên hệ</h2>
       <p>
-        If you have any questions, feel free to contact us using the form below.
+      Nếu bạn có bất kì câu hỏi nào hãy liên hệ với chúng tôi qua form bên dưới
       </p>
       <Row justify="center">
         <Col xs={24} sm={16} md={12} lg={8}>
@@ -28,49 +27,49 @@ const Contact = () => {
             style={{ textAlign: "left" }}
           >
             <Form.Item
-              label="Name"
+              label="Họ và tên"
               name="name"
-              rules={[{ required: true, message: "Please enter your name!" }]}
+              rules={[{ required: true, message: "Vui lòng nhập tên của bạn!" }]}
             >
-              <Input prefix={<UserOutlined />} placeholder="Enter your name" />
+              <Input prefix={<UserOutlined />} placeholder="Nhập tên của bạn" />
             </Form.Item>
             <Form.Item
               label="Email"
               name="email"
               rules={[
-                { required: true, message: "Please enter your email!" },
+                { required: true, message: "Vui lòng nhập Email của bạn!" },
                 { type: "email", message: "Please enter a valid email!" },
               ]}
             >
-              <Input prefix={<MailOutlined />} placeholder="Enter your email" />
+              <Input prefix={<MailOutlined />} placeholder="Nhập địa chỉ Email của bạn" />
             </Form.Item>
             <Form.Item
-              label="Phone"
+              label="Số điện thoại"
               name="phone"
               rules={[
                 {
                   required: true,
-                  message: "Please enter your phone number!",
+                  message: "Vui lòng nhập số điện thoại của bạn!",
                 },
               ]}
             >
               <Input
                 prefix={<PhoneOutlined />}
-                placeholder="Enter your phone number"
+                placeholder="Nhập số điện thoại của bạn"
               />
             </Form.Item>
             <Form.Item
-              label="Message"
+              label="Nội dung"
               name="message"
               rules={[
-                { required: true, message: "Please enter your message!" },
+                { required: true, message: "Vui lòng nhập nội dung!" },
               ]}
             >
-              <Input.TextArea rows={4} placeholder="Enter your message" />
+              <Input.TextArea rows={4} placeholder="Nhập nội dung của bạn" />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" block>
-                Submit
+                Gửi
               </Button>
             </Form.Item>
           </Form>

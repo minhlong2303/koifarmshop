@@ -12,6 +12,7 @@ import api from "../../config/axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/features/userSlice";
+import { loadCart } from "../../redux/features/cartSlice";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -47,11 +48,13 @@ function LoginPage() {
       const response = await api.post("login", values);
       console.log(response);
       dispatch(login(response.data));
+      const savedCart = JSON.parse(localStorage.getItem(`cart_${response.data.id}`)) || [];
+      dispatch(loadCart(savedCart)); // Dispatch giỏ hàng lưu trữ của người dùng
       const { role, token } = response.data;
       toast.success("Đăng nhập thành công!");
       localStorage.setItem("token", token);
       if (role === "MANAGER") {
-        navigate("/dashboard");
+        navigate("/manager");
       } else {
         navigate("/");
       }

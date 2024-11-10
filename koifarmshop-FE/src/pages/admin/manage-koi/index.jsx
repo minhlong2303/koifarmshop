@@ -1,29 +1,29 @@
-import React from "react";
 import { Form, Image, Input, InputNumber } from "antd";
 import CRUDPictureTemplate from "../../../components/crud-template/CrudWithPicture";
-
+import "./index.css";
 function ManageKoi() {
   const columns = [
     { title: "ID", dataIndex: "koiID", key: "koiID" },
     { title: "Name", dataIndex: "name", key: "name" }, //koiName => name
-    // {
-    //   title: "Image",
-    //   dataIndex: "image",
-    //   key: "image",
-    //   render: (image) => {
-    //     return <Image src={image} alt="KoiFish's picture" width={100} />;
-    //   },
-    // },
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+      render: (image) => {
+        return <Image src={image} alt="KoiFish's picture" width={100} />;
+      },
+    },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (price) => `${price} $`,
+      render: (price) => `${price} vnđ`,
     },
     // { title: "Quantity", dataIndex: "quantity", key: "quantity" },
   ];
 
   const formItems = (
+    // <Form labelCol={{ span: 24 }} className="manage-koi-scrollable-content">
     <>
       <Form.Item
         label="Koi Fish's name"
@@ -53,7 +53,7 @@ function ManageKoi() {
           {
             type: "number",
             min: 1,
-            max: 10000,
+            max: 99999999,
             message: "Price must be between 1 and 10,000",
           },
         ]}
@@ -134,25 +134,6 @@ function ManageKoi() {
       </Form.Item>
 
       <Form.Item
-        label="Koi Fish's age"
-        name="age"
-        rules={[
-          {
-            required: true,
-            message: "Please enter Koi Fish's age",
-          },
-          {
-            type: "number",
-            min: 1,
-            max: 20,
-            message: "Age must be between 1 and 20 years",
-          },
-        ]}
-      >
-        <InputNumber />
-      </Form.Item>
-
-      <Form.Item
         label="Koi Fish's size"
         name="size"
         rules={[
@@ -218,27 +199,26 @@ function ManageKoi() {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        label="Koi Fish's description"
-        name="description"
-        rules={[
-          {
-            min: 10,
-            message: "Description should be at least 10 characters",
-          },
-        ]}
-      >
-        <Input />
+      <Form.Item label="Koi Fish's description" name="description">
+        <Input.TextArea />
       </Form.Item>
 
       <Form.Item label="Koi Fish's Id" name="koiID" hidden>
         <Input />
       </Form.Item>
     </>
+    // </Form>
   );
 
   return (
-    <CRUDPictureTemplate columns={columns} formItems={formItems} path="koi" />
+    <div className="manage-koi-container">
+      <CRUDPictureTemplate
+        columns={columns}
+        formItems={formItems}
+        path="koi"
+        idKey="koiID"
+      />
+    </div>
   );
 }
 

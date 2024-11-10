@@ -1,25 +1,59 @@
+/* Giảm padding và kích thước của text box */
+input[type="text"], input[type="password"] {
+  padding: 8px; /* Giảm padding để input nhỏ hơn */
+  font-size: 14px; /* Giảm kích thước chữ */
+  margin-bottom: 12px; /* Giảm khoảng cách dưới giữa các text box */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
 
+/* Nút đăng ký với kích thước chữ nhỏ hơn và giảm khoảng cách */
 .register-button {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 100%;
-   
-    flex-direction: column;
-
+  margin-top: 16px; /* Giảm khoảng cách trên */
+  margin-bottom: 16px; /* Giảm khoảng cách dưới */
+  width: 100%;
+  padding: 10px; /* Giảm padding cho nút */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px; /* Giảm kích thước chữ */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
+.register-button:hover {
+  background-color: #0056b3; /* Hiệu ứng hover */
+}
 
+/* Liên kết đăng nhập */
 .signin-link {
-    margin-top: 20px;
-    text-align: center;
+  margin-top: 16px; /* Giảm khoảng cách trên */
+  text-align: center;
+  font-size: 13px; /* Giảm kích thước chữ */
 }
 
+.signin-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signin-link a:hover {
+  text-decoration: underline;
+}
+
+/* Bố cục hàng trong form với các phần tử */
 .form-row {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .form-row .ant-form-item {
-    flex: 0 0 48%; /* Chia mỗi form item chiếm 48% độ rộng */
-  }
+  display: flex;
+  justify-content: space-between;
+  gap: 4%; /* Khoảng cách giữa các phần tử trong hàng */
+  margin-bottom: 16px; /* Giảm khoảng cách dưới giữa các hàng */
+}
+
+.form-row .ant-form-item {
+  flex: 0 0 48%; /* Chia đều mỗi item chiếm 48% độ rộng */
+}

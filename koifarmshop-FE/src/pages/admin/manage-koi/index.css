@@ -1,0 +1,40 @@
+/* Outer container for ManageKoi, ensuring it takes up the full viewport */
+.manage-koi-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full height of the viewport */
+    overflow: hidden; /* Prevents any external overflow */
+    box-sizing: border-box;
+    padding: 20px;
+  }
+  
+  /* Scrollable content wrapper for main content */
+  .manage-koi-scrollable-content {
+    flex: 1;
+    overflow-y: auto; /* Allows vertical scrolling within content */
+    padding-right: 10px;
+  }
+  
+  /* Table wrapper to handle horizontal and vertical scrolling */
+  .ant-table-wrapper {
+    overflow: auto; /* Allows both horizontal and vertical scroll if needed */
+    margin-bottom: 20px;
+    max-height: 70vh; /* Limits table height, adjust as needed */
+  }
+  
+  /* Form wrapper with scroll if content exceeds the height */
+  .ant-form {
+    overflow-y: auto; /* Allows vertical scroll within the form */
+    max-height: fit-content; /* Limits form height, adjust as needed */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* General scrollbar styling for WebKit browsers */
+  .manage-koi-scrollable-content::-webkit-scrollbar,
+  .ant-form::-webkit-scrollbar,
+  .ant-table-wrapper::-webkit-scrollbar {
+    display: none; /* Hides scrollbar for a cleaner look */
+  }
+  

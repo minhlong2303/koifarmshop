@@ -10,21 +10,25 @@ const AboutUs = () => {
       <Row gutter={[16, 16]} justify="center" align="middle">
         <Col xs={24} md={18}>
           <Card className="about-us-card" bordered={false}>
-            <Title level={2}>About Us</Title>
+            <Title level={2}>Về chúng tôi</Title>
             <Paragraph>
-              Welcome to our Koi Fish business! We specialize in breeding and
-              selling premium Koi fish, providing our customers with the highest
-              quality fish for their ponds. Our expert team ensures that each Koi
-              is healthy, vibrant, and raised in a pristine environment.
+              Chào mừng đến với doanh nghiệp Cá Koi của chúng tôi! Chúng tôi chuyên về
+              nhân giống và bán cá Koi cao cấp, cung cấp cho khách hàng những loại cá
+              chất lượng cao nhất cho ao của họ. Đội ngũ chuyên gia của chúng tôi đảm
+              bảo rằng mỗi con cá Koi đều khỏe mạnh, tươi tắn và được nuôi trong môi
+              trường nguyên sơ.
             </Paragraph>
             <Paragraph>
-              Our mission is to bring tranquility and beauty to your pond with
-              our stunning collection of Koi fish. Whether you are a beginner or
-              a seasoned collector, we have the perfect Koi for you.
+              Sứ mệnh của chúng tôi là mang lại sự yên tĩnh và vẻ đẹp cho ao của bạn
+              với bộ sưu tập cá Koi tuyệt đẹp của chúng tôi. Cho dù bạn là người mới
+              bắt đầu hay là người sưu tập dày dạn kinh nghiệm, chúng tôi đều có
+              những chú cá Koi hoàn hảo dành cho bạn.
+
             </Paragraph>
             <Paragraph>
-              Contact us today to learn more about our Koi fish and how they can
-              transform your water garden into a serene sanctuary.
+              Hãy liên hệ với chúng tôi ngay hôm nay để tìm hiểu thêm về cá Koi của
+              chúng tôi và cách chúng có thể biến khu vườn nước của bạn thành nơi
+              ẩn náu thanh bình.
             </Paragraph>
           </Card>
         </Col>

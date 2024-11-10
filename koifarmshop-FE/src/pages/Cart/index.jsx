@@ -1,18 +1,35 @@
 import { Button, Image, Table } from "antd";
 import "./index.css";
-import React, { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearAll } from "../../redux/features/cartSlice";
-import api from "../../config/axios";
+import { useNavigate } from "react-router-dom";
+import { clearOrder, createOrder } from "../../redux/features/orderSlice";
 import { toast } from "react-toastify";
 
 function CartPage() {
+  const user = useSelector((store) => store.user);
+  const cart = useSelector((store) => store.cart);
+  const navigate = useNavigate();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const data = useSelector((store) => store.cart);
   const dispatch = useDispatch();
-  console.log(data);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(`cart_${user.id}`, JSON.stringify(cart));
+    }
+  }, [cart, user]);
+
+  if (!user || !user.token) {
+    return (
+      <div style={{ padding: "60px", textAlign: "center" }}>
+        Giỏ hàng trống. Vui lòng đăng nhập để thêm sản phẩm.
+      </div>
+    );
+  }
+
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const rowSelection = {
@@ -20,29 +37,32 @@ function CartPage() {
     onChange: onSelectChange,
   };
 
-  //Lưu ý chỗ này cần sửa nhiều để phù hợp với backend
+  const totalAmount = useMemo(() => {
+    return data.reduce((total, item) => total + item.price * item.quantity, 0);
+  }, [data]);
+
   const handleBuy = async () => {
     try {
-      const selectedItems = data.filter((koi) =>
-        selectedRowKeys.includes(koi.koiID)
+      const selectedItems = data.filter(
+        (item) =>
+          selectedRowKeys.includes(item.koiID) ||
+          selectedRowKeys.includes(item.batchKoiID)
       );
-
-      const detail = selectedItems.map((koi) => ({
-        koiId: koi.koiID,
-        quantity: koi.quantity,
-      }));
-      const response = await api.post("order", { detail });
-      // dispatch(clearAll()); //Cái này dùng để xóa Item mình vừa mới mua nào học xong sẽ update tiếp
-      toast.success("Create Order successfully");
+      if (selectedItems.length === 0) {
+        dispatch(clearOrder());
+        toast.warning("Bạn chưa chọn sản phẩm muốn mua");
+        return;
+      }
+      dispatch(createOrder(selectedItems));
+      navigate("/order");
     } catch (error) {
       console.log(error.response.data);
-      toast.error("Failed to create order");
     }
   };
 
   const columns = [
     {
-      title: "Image",
+      title: "Ảnh",
       dataIndex: "image",
       key: "image",
       render: (image) => {
@@ -50,36 +70,48 @@ function CartPage() {
       },
     },
     {
-      title: "Name",
+      title: "Tên sản phẩm",
       dataIndex: "name",
       key: "name",
+      render: (_, item) =>
+        item.koiID ? `Cá Koi: ${item.name}` : `Lô cá Koi: ${item.name}`,
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Giá",
+      dataIndex: "price",
+      key: "price",
+      render: (price) => `${price} vnđ`,
     },
     {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
+    },
+    {
+      title: "Tổng tiền",
+      key: "totalPrice",
+      render: (item) => {
+        return <span>{item.price * item.quantity} vnđ</span>;
+      },
     },
   ];
 
   return (
-    <div
-      style={{
-        padding: "60px",
-      }}
-    >
-      <Button onClick={() => dispatch(clearAll())}>Clear all</Button>
+    <div style={{ padding: "60px" }}>
+      <Button onClick={() => dispatch(clearAll())}>Xóa tất cả</Button>
       <Table
-        rowKey="koiID"
+        rowKey={(record) => record.koiID || record.batchKoiID}
         rowSelection={rowSelection}
         columns={columns}
         dataSource={data}
+        pagination={false}
+        footer={() => (
+          <div style={{ textAlign: "right", fontSize: "18px" }}>
+            <b>Tổng: </b> {totalAmount} vnđ
+          </div>
+        )}
       />
-      <Button onClick={handleBuy}>Buy</Button>
+      <Button onClick={handleBuy}>Mua ngay</Button>
     </div>
   );
 }

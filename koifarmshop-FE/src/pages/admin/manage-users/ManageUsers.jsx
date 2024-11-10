@@ -1,88 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { Button, Descriptions, Image, Modal, Table, theme } from "antd";
-import api from "../../../config/axios";
+import { Descriptions, Image } from "antd";
+
+import ManageTemplate from "../../../components/manage-template";
 
 const ManageUser = () => {
   const columns = [
     {
       title: "ID",
-      dataIndex: "customerID", 
-      key: "customerID",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Name",
-      dataIndex: ["firstName", "lastName"], 
+      dataIndex: ["firstName", "lastName"],
       key: "name",
       render: (text, record) => `${record.firstName} ${record.lastName}`,
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
     },
-    {
-      title: "Detail",
-      dataIndex: "customerID",
-      key: "customerID",
-      render: (id, user) => (
-        <Button type="primary" onClick={() => showDetailUser(user)}>
-          Detail
-        </Button>
-      ),
-    },
   ];
-
-  const [datas, setDatas] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  const fetchData = async () => {
-    try {
-      const response = await api.get("users");
-      setDatas(response.data);
-    } catch (error) {
-      console.log(error.response.data);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const showDetailUser = (user) => {
-    setSelectedUser(user);
-    setShowModal(true);
-  };
+  const userDetail = ({ record }) => (
+    <Descriptions bordered layout="vertical">
+      <Descriptions.Item label="ID">{record.id}</Descriptions.Item>
+      <Descriptions.Item label="Name">
+        {record.firstName} {record.lastName}
+      </Descriptions.Item>
+      <Descriptions.Item label="Phone Number">{record.phone}</Descriptions.Item>
+      <Descriptions.Item label="Email">{record.email}</Descriptions.Item>
+      <Descriptions.Item label="Image">
+        <Image src={record.profileIMG} alt="User's picture" width={100}></Image>
+      </Descriptions.Item>
+    </Descriptions>
+  );
 
   return (
     <div>
-      <Modal
-        title="User Detail"
-        open={showModal}
-        onCancel={() => setShowModal(false)}
-        onOk={() => setShowModal(false)}
-      >
-        {selectedUser && (
-          <Descriptions bordered layout="vertical">
-            <Descriptions.Item label="ID">
-              {selectedUser.customerID}
-            </Descriptions.Item>
-            <Descriptions.Item label="Name">
-              {selectedUser.firstName} {selectedUser.lastName}
-            </Descriptions.Item>
-            <Descriptions.Item label="Phone Number">
-              {selectedUser.phoneNumber}
-            </Descriptions.Item>
-            <Descriptions.Item label="Email">
-              {selectedUser.email}
-            </Descriptions.Item>
-            <Descriptions.Item label="Image">
-              <Image
-                src={selectedUser.profileIMG}
-                alt="User's picture"
-                width={100}
-              ></Image>
-            </Descriptions.Item>
-          </Descriptions>
-        )}
-      </Modal>
-      <Table dataSource={datas} columns={columns}></Table>
+      <ManageTemplate
+        columns={columns}
+        DescriptionsForm={userDetail}
+        path="user"
+        idKey="id"
+      ></ManageTemplate>
     </div>
   );
 };

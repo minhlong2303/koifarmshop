@@ -5,8 +5,7 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/login";
 import RegisterPage from "./pages/register";
-import Dashboard from "./components/dashboard";
-import Order from "./pages/PlaceOrder";
+
 import ManageServiceGroup from "./pages/admin/manage-service-group";
 import ManageKoi from "./pages/admin/manage-koi";
 import ManageKoiSpecies from "./pages/admin/manage-KoiSpecies";
@@ -20,6 +19,22 @@ import AboutUsPage from "./pages/AboutUsPage/AboutUsPage";
 import CartPage from "./pages/Cart";
 import ManageUsers from "./pages/admin/manage-users/ManageUsers";
 import HomePage from "./pages/home/HomePage";
+import AccountTemplate from "./components/account-template";
+import UserAccount from "./pages/account/userAccount";
+import Address from "./pages/account/address";
+import CartHistory from "./pages/account/cartHistory";
+import KoiConsignment from "./pages/consignment/koiConsignment";
+import Manager from "./components/manager";
+import SuccessPage from "./pages/success/SuccessPage";
+import ErrorPage from "./pages/error/ErrorPage";
+import OrderPage from "./pages/OrderPage/OrderPage";
+import HistoryPage from "./pages/history/HistoryPage";
+import OverviewPage from "./pages/admin/overview/OverviewPage";
+import BatchKoiPage from "./pages/BatchKoi/BatchKoiPage";
+import ManageBatchKoi from "./pages/admin/manage-batchKoi";
+import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
+import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
+import BatchKoiDetail from "./pages/BatchKoiDetail/BatchKoiDetail";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -41,6 +56,18 @@ function App() {
           element: <HomePage></HomePage>,
         },
         {
+          path: "/detail/:koiID",
+          element: <ProductDetailPage />,
+        },
+        {
+          path: "batch-koi",
+          element: <BatchKoiPage></BatchKoiPage>,
+        },
+        {
+          path: "batch-koi/:batchKoiID",
+          element: <BatchKoiDetail></BatchKoiDetail>,
+        },
+        {
           path: "check-out",
           element: <HomePage></HomePage>,
         },
@@ -59,8 +86,25 @@ function App() {
         {
           path: "cart",
           element: <CartPage></CartPage>,
+          // children: [{ path: "order", element: <OrderPage></OrderPage> }],
+        },
+        {
+          path: "order",
+          element: <OrderPage></OrderPage>,
+        },
+        {
+          path: "koiConsignment",
+          element: <KoiConsignment />,
         },
       ],
+    },
+    {
+      path: "success",
+      element: <SuccessPage></SuccessPage>,
+    },
+    {
+      path: "error",
+      element: <ErrorPage></ErrorPage>,
     },
     {
       path: "test",
@@ -74,14 +118,17 @@ function App() {
       path: "register",
       element: <RegisterPage />,
     },
+    {
+      path: "history",
+      element: <HistoryPage></HistoryPage>,
+    },
 
     {
-      path: "dashboard",
+      path: "manager",
       element: (
-        // <ProtectRouteAuth>
-        //   <Dashboard></Dashboard>
-        // </ProtectRouteAuth>
-        <Dashboard></Dashboard>
+        <ProtectRouteAuth>
+          <Manager />
+        </ProtectRouteAuth>
       ),
       children: [
         {
@@ -93,6 +140,10 @@ function App() {
           element: <ManageKoiSpecies />,
         },
         {
+          path: "batch-koi-manage",
+          element: <ManageBatchKoi></ManageBatchKoi>,
+        },
+        {
           path: "service",
           element: <ManageServiceGroup />,
         },
@@ -100,19 +151,40 @@ function App() {
           path: "users",
           element: <ManageUsers />,
         },
+        {
+          path: "manage-orders",
+          element: <ManageOrder></ManageOrder>,
+        },
+        {
+          path: "overview",
+          element: <OverviewPage></OverviewPage>,
+        },
       ],
     },
+
     {
-      path: "order",
+      path: "account-template",
       element: (
         <div>
-          <Order />
+          <AccountTemplate />
         </div>
       ),
+      children: [
+        {
+          path: "users",
+          element: <UserAccount />,
+        },
+        {
+          path: "address",
+          element: <Address />,
+        },
+        {
+          path: "cart",
+          element: <CartHistory />,
+        },
+      ],
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
-
 export default App;
