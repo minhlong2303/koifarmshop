@@ -25,6 +25,9 @@ public class Orders {
     @Enumerated(EnumType.STRING)
     OrderStatusEnum status;
 
+    @JsonIgnore
+    boolean isDeleted = false;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore

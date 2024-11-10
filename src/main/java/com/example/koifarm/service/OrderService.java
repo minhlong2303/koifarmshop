@@ -234,7 +234,14 @@ public class OrderService {
         Orders oldOrders = orderRepository.findOrdersById(orderId);
         if (oldOrders == null) throw new EntityNotFoundException("Orders not found!");
         return oldOrders;
+    }
 
+    //delete order
+    public Orders deleteOrder(UUID orderId){
+        Orders oldOrders = orderRepository.findOrdersById(orderId);
+        if (oldOrders == null) throw new EntityNotFoundException("Orders not found!");
+        oldOrders.setDeleted(true);
+        return orderRepository.save(oldOrders);
     }
 
 

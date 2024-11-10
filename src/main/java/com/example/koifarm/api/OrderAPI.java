@@ -49,6 +49,12 @@ public class OrderAPI {
         return ResponseEntity.ok(orders);
     }
 
+    @DeleteMapping("{orderId}")
+    public ResponseEntity delete(@PathVariable UUID orderId){
+        Orders deletedOrders = orderService.deleteOrder(orderId);
+        return ResponseEntity.ok(deletedOrders);
+    }
+
 
     //update orders status
     @PreAuthorize("hasAnyAuthority('MANAGER', 'STAFF')")
