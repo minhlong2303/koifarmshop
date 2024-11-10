@@ -89,24 +89,24 @@ function KoiConsignment() {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="inspectionMethod"
-              label="Phương pháp kiểm định"
+              name="consignmentType"
+              label="Loại ký gửi"
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn phương pháp kiểm định",
+                  message: "Vui lòng chọn loại ký gủi",
                 },
               ]}
             >
-              <Select placeholder="Chọn phương pháp kiểm định">
-                <Option value="online">Online</Option>
-                <Option value="offline">Offline</Option>
+              <Select placeholder="Chọn loại ký gửi">
+                <Option value="SALE">Ký gửi để bán</Option>
+                <Option value="CARE">Ký gửi để chăm sóc</Option>
               </Select>
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="consignmentType"
+              name="inspectionMethod"
               label="Hình thức ký gửi"
               rules={[
                 { required: true, message: "Vui lòng chọn hình thức ký gửi" },
@@ -154,10 +154,10 @@ function KoiConsignment() {
           <Col span={12}>
             <Form.Item
               name="age"
-              label="Năm sinh"
-              rules={[{ required: true, message: "Vui lòng nhập năm sinh" }]}
+              label="Tuổi"
+              rules={[{ required: true, message: "Vui lòng nhập tuổi" }]}
             >
-              <Input placeholder="Nhập năm sinh" />
+              <Input placeholder="Nhập tuổi" />
             </Form.Item>
           </Col>
         </Row>
