@@ -1,6 +1,5 @@
 package com.example.koifarm.repository;
 
-import com.example.koifarm.entity.BatchKoiOrder;
 import com.example.koifarm.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
