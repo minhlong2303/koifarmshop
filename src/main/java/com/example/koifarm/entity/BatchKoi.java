@@ -31,26 +31,24 @@ public class BatchKoi {
 
     @NotNull(message = "Quantity is required")
     @Min(value = 1, message = "Quantity must be at least 1")
-    private int quantity;
+    int quantityInBatch; // Số lượng cá trong lô
 
-    float  price;
+    boolean isAvailable = true;
+
+    @Positive(message = "Price must be greater than zero")
+    float batchKoiPrice;
 
     @NotBlank(message = "Breed is required")
-    private String breed;
+    String breed;
 
-    private String description;
+    String description;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Relationship with KoiSpecies
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "species_id")
     private KoiSpecies species;
-
-    // Relationship with BatchKoiOrderDetail
-    @OneToMany(mappedBy = "batchKoi")
-    private List<BatchKoiOrderDetail> orderDetails;
 }

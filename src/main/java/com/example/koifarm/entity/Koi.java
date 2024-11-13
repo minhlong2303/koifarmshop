@@ -7,7 +7,6 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +16,7 @@ import java.util.UUID;
 public class Koi {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO) // Consider AUTO if UUID strategy causes issues
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     UUID koiID;
 
@@ -36,10 +35,11 @@ public class Koi {
     String gender;
 
     @NotNull(message = "Size is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Size must be greater than 0")
+    @DecimalMin(value = "0.1", inclusive = true, message = "Size must be greater than 0")
     float size;
 
-    float  price;
+    @Positive(message = "Price must be greater than zero")
+    float price;
 
     @NotBlank(message = "Breed is required")
     String breed;
@@ -49,19 +49,21 @@ public class Koi {
     String description;
     String image;
 
+    String status = "available"; // Default status
+
+    boolean isAvailable = true;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     User user;
 
-    // Relationship with KoiSpecies
     @ManyToOne
     @JoinColumn(name = "species_id")
     @JsonIgnore
     KoiSpecies species;
 
-    @OneToMany(mappedBy = "koi")
+    @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
-
 
 }

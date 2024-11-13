@@ -21,7 +21,7 @@ public class BatchKoiAPI {
     @Autowired
     BatchKoiService batchKoiService;
 
-    @PreAuthorize("hasAuthority('STAFF')")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody BatchKoiRequest batchKoiRequest){
         BatchKoi newBatchKoi = batchKoiService.create(batchKoiRequest);

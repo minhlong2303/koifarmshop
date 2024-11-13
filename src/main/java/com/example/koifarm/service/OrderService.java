@@ -8,12 +8,10 @@ import com.example.koifarm.enums.TransactionEnum;
 import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.model.OrderDetailRequest;
 import com.example.koifarm.model.OrderRequest;
-import com.example.koifarm.repository.KoiRepository;
-import com.example.koifarm.repository.OrderRepository;
-import com.example.koifarm.repository.PaymentRepository;
-import com.example.koifarm.repository.UserRepository;
+import com.example.koifarm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -42,41 +40,77 @@ public class OrderService {
     @Autowired
     PaymentRepository paymentRepository;
 
-    public Orders create(OrderRequest orderRequest){
-        //lay thong tin nguoi vua tao order
+    @Autowired
+    BatchKoiRepository batchKoiRepository;
+
+    @Transactional
+    public Orders create(OrderRequest orderRequest) {
         User customer = authenticationService.getCurrentUser();
-        //create order
         Orders order = new Orders();
         List<OrderDetails> orderDetails = new ArrayList<>();
         float total = 0;
 
         order.setCustomer(customer);
-        order.setDate(new Date());
+        order.setDate(LocalDateTime.now());
         order.setStatus(OrderStatusEnum.PENDING);
 
-        for(OrderDetailRequest orderDetailRequest: orderRequest.getDetail()){
-            //lay id cua koi ma ng dung yeu cau mua
-            Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getKoiId());
-            OrderDetails orderDetail = new OrderDetails();
-            orderDetail.setQuantity(orderDetailRequest.getQuantity());
-            orderDetail.setPrice(koi.getPrice());
-            orderDetail.setOrders(order);
-            orderDetail.setKoi(koi);
+        for (OrderDetailRequest orderDetailRequest : orderRequest.getDetail()) {
+            if (orderDetailRequest.isBatch()) {
+                // Xử lý lô cá
+                BatchKoi batchKoi = batchKoiRepository.findById(orderDetailRequest.getItemId())
+                        .orElseThrow(() -> new IllegalArgumentException("Batch Koi not found"));
 
-            orderDetails.add(orderDetail);
-            total += koi.getPrice() * orderDetailRequest.getQuantity();
+                if (!batchKoi.isAvailable()) {
+                    throw new IllegalStateException("Batch Koi is no longer available.");
+                }
+
+                OrderDetails orderDetail = new OrderDetails();
+                orderDetail.setQuantity(orderDetailRequest.getQuantity());
+                orderDetail.setPrice(batchKoi.getBatchKoiPrice() * orderDetailRequest.getQuantity());
+                orderDetail.setOrders(order);
+                orderDetail.setBatchKoi(batchKoi);
+
+                orderDetails.add(orderDetail);
+                total += batchKoi.getBatchKoiPrice() * orderDetailRequest.getQuantity();
+
+                batchKoi.setAvailable(false); // Đánh dấu lô cá đã bán
+                batchKoiRepository.save(batchKoi);
+
+            } else {
+                // Xử lý cá thể
+                Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getItemId());
+                if (!koi.getStatus().equals("available")) {
+                    throw new IllegalStateException("Koi fish is no longer available.");
+                }
+
+                OrderDetails orderDetail = new OrderDetails();
+                orderDetail.setQuantity(1); // Mỗi cá thể chỉ có 1 số lượng
+                orderDetail.setPrice(koi.getPrice());
+                orderDetail.setOrders(order);
+                orderDetail.setKoi(koi);
+
+                orderDetails.add(orderDetail);
+                total += koi.getPrice();
+
+                koi.setStatus("sold");
+                koiRepository.save(koi);
+            }
         }
 
         order.setOrderDetails(orderDetails);
         order.setTotal(total);
 
         return orderRepository.save(order);
-
     }
+
 
     public List<Orders> get(){
         User user = authenticationService.getCurrentUser();
         List<Orders> orders = orderRepository.findOrdersByCustomer(user);
+
+        // Sắp xếp theo thứ tự ngày từ nhỏ đến lớn
+        orders.sort(Comparator.comparing(Orders::getDate));
+
         return orders;
     }
 
@@ -87,7 +121,7 @@ public class OrderService {
 
         //tao orders
         Orders orders = create(orderRequest);
-        //
+        // Tính tổng tiền và thiết lập URL thanh toán
         float money = orders.getTotal()*100;
         String amount = String.valueOf((int) money);
 
@@ -152,10 +186,17 @@ public class OrderService {
         return result.toString();
     }
 
+    @Transactional(rollbackFor = { IllegalStateException.class, RuntimeException.class })
+
     public void createTransaction(UUID uuid){
         //tim order
         Orders orders = orderRepository.findById(uuid)
                 .orElseThrow(()->new EntityNotFoundException("Order not found!"));
+
+        // Kiểm tra trạng thái đơn hàng, nếu đã thanh toán rồi thì không cho thanh toán lại
+        if (orders.getStatus() == OrderStatusEnum.COMPLETED) {
+            throw new IllegalStateException("Order has already been paid.");
+        }
 
         // Check if a payment already exists for this order
         if (orders.getPayment() != null) {
@@ -165,7 +206,7 @@ public class OrderService {
         //tao payment
         Payment payment = new Payment();
         payment.setOrders(orders);
-        payment.setCreateAt(new Date());
+        payment.setCreateAt(LocalDateTime.now());
         payment.setPayment_method(PaymentEnums.BANKING);
         payment.setTotal(orders.getTotal());
 
@@ -225,6 +266,11 @@ public class OrderService {
     public Orders updateOrderStatus(UUID orderId, OrderStatusEnum status) {
         Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
+
+        // Chỉ có thể cập nhật thành COMPLETE nếu trạng thái hiện tại chưa phải là COMPLETE
+        if (order.getStatus() == OrderStatusEnum.COMPLETED) {
+            throw new IllegalStateException("Order is already complete and cannot be updated.");
+        }
 
         order.setStatus(status);
         return orderRepository.save(order);

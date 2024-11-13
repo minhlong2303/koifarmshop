@@ -24,7 +24,4 @@ public class Feedback {
     @JoinColumn(name = "shop_id")
     User shop;
 
-
-
-
 }

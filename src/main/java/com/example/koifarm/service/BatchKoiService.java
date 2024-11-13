@@ -27,8 +27,8 @@ public class BatchKoiService {
         BatchKoi batchKoi = new BatchKoi();
 //        batchKoi.setBatchKoiID(batchKoiRequest.getBatchKoiID());
         batchKoi.setBatchName(batchKoiRequest.getName());
-        batchKoi.setPrice(batchKoiRequest.getPrice());
-        batchKoi.setQuantity(batchKoiRequest.getQuantity());
+        batchKoi.setBatchKoiPrice(batchKoiRequest.getPrice());
+        batchKoi.setQuantityInBatch(batchKoiRequest.getQuantity());
         batchKoi.setDescription(batchKoiRequest.getDescription());
         batchKoi.setOrigin(batchKoiRequest.getOrigin());
 
@@ -61,8 +61,8 @@ public class BatchKoiService {
         BatchKoi oldBatchKoi = getBatchKoiById(batchKoiID);
 
         oldBatchKoi.setBatchName(batchKoi.getBatchName());
-        oldBatchKoi.setPrice(batchKoi.getPrice());
-        oldBatchKoi.setQuantity(batchKoi.getQuantity());
+        oldBatchKoi.setBatchKoiPrice(batchKoi.getBatchKoiPrice());
+        oldBatchKoi.setQuantityInBatch(batchKoi.getQuantityInBatch());
         oldBatchKoi.setDescription(batchKoi.getDescription());
 
         return batchKoiRepository.save(oldBatchKoi);
