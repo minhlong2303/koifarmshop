@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 public class ConsignmentService {
+
     @Autowired
     ConsignmentRepository consignmentRepository;
 
@@ -29,30 +30,38 @@ public class ConsignmentService {
 
         Consignment consignment = new Consignment();
 
-        // Thiết lập các thuộc tính từ yêu cầu
+        // Thiết lập thông tin khách hàng
+        consignment.setFirstName(consignmentRequest.getFirstName());
+        consignment.setLastName(consignmentRequest.getLastName());
+        consignment.setPhone(consignmentRequest.getPhone());
+        consignment.setEmail(consignmentRequest.getEmail());
+        consignment.setAddress(consignmentRequest.getAddress());
+
+        // Thiết lập thông tin cá Koi
         consignment.setKoiName(consignmentRequest.getKoiName());
         consignment.setBreed(consignmentRequest.getBreed());
         consignment.setSize(consignmentRequest.getSize());
         consignment.setAge(consignmentRequest.getAge());
         consignment.setGender(consignmentRequest.getGender());
-        consignment.setExpectedPrice(consignmentRequest.getExpectedPrice());
-        consignment.setQuantity(consignmentRequest.getQuantity());
-        consignment.setCareDuration(consignmentRequest.getCareDuration());
-        consignment.setCareFee(consignmentRequest.getCareFee());
-        consignment.setSpecialRequirements(consignmentRequest.getSpecialRequirements());
 
-        // Xử lý loại consignments
+        // Thiết lập các thông tin ký gửi
         try {
             consignment.setConsignmentType(ConsignmentType.valueOf(consignmentRequest.getConsignmentType().toUpperCase()));
         } catch (IllegalArgumentException e) {
             throw new InvalidConsignmentTypeException("Loại consignments không hợp lệ: " + consignmentRequest.getConsignmentType());
         }
 
-        consignment.setAddress(consignmentRequest.getAddress());
         consignment.setInspectionMethod(consignmentRequest.getInspectionMethod());
+
+        // Thiết lập ảnh
+        consignment.setKoiImageUrl(consignmentRequest.getKoiImageUrl());
+        consignment.setCertificateImageUrl(consignmentRequest.getCertificateImageUrl());
+
+        // Thông tin khác
         consignment.setCreatedDate(LocalDateTime.now());
         consignment.setCustomer(customer); // Gán người dùng hiện tại vào consignments
 
+        // Lưu thông tin consignments vào cơ sở dữ liệu
         return consignmentRepository.save(consignment);
     }
 

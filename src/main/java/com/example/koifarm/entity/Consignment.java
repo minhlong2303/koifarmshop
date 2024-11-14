@@ -3,6 +3,7 @@ package com.example.koifarm.entity;
 import com.example.koifarm.enums.ConsignmentType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,26 @@ import java.util.UUID;
 public class Consignment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    UUID id;
+    private UUID id;
 
+    // Thông tin khách hàng
+    @Column(length = 50, nullable = false)
+    private String firstName;
+
+    @Column(length = 50, nullable = false)
+    private String lastName;
+
+    @Column(length = 15, nullable = false)
+    @Pattern(regexp = "^((\\+84)|0)[3|5|7|8|9][0-9]{8}$", message = "Invalid phone!")
+    private String phone;
+
+    @Column(length = 100, nullable = false)
+    private String email;
+
+    @Column(length = 100, nullable = false)
+    private String address;
+
+    // Thông tin cá Koi
     @Column(length = 100, nullable = false)
     private String koiName;
 
@@ -27,15 +46,23 @@ public class Consignment {
     private String size;
 
     private int age;
-    private String gender;
-    private double expectedPrice;
-    private int quantity;
-    private int careDuration;
-    private double careFee;
-    private String specialRequirements;
 
+    @Column(length = 10)
+    private String gender;
+
+    // Hình thức và loại ký gửi
     @Enumerated(EnumType.STRING)
     private ConsignmentType consignmentType;
+
+    @Column(length = 20)
+    private String inspectionMethod;
+
+    // Thông tin hình ảnh
+    @Column
+    private String koiImageUrl;
+
+    @Column
+    private String certificateImageUrl;
 
     private LocalDateTime createdDate = LocalDateTime.now(); // Khởi tạo mặc định
 
@@ -43,11 +70,4 @@ public class Consignment {
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private User customer;
-
-    // Other fields (e.g., address, inspectionMethod, etc.)
-    private String address;
-
-    private LocalDateTime inspectionDate;
-
-    private String inspectionMethod;
 }
