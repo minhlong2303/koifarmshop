@@ -2,7 +2,7 @@ import { Button, Image, Table } from "antd";
 import "./index.css";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAll } from "../../redux/features/cartSlice";
+import { clearAll, removeFromCart } from "../../redux/features/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { clearOrder, createOrder } from "../../redux/features/orderSlice";
 import { toast } from "react-toastify";
@@ -94,7 +94,20 @@ function CartPage() {
         return <span>{item.price * item.quantity} vnđ</span>;
       },
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, item) => (
+        <Button type="primary" danger onClick={() => handleRemove(item)}>
+          Xóa
+        </Button>
+      ),
+    },
   ];
+  const handleRemove = (item) => {
+    dispatch(removeFromCart(item));
+    toast.success("Đã xóa sản phẩm khỏi giỏ hàng");
+  };
 
   return (
     <div style={{ padding: "60px" }}>

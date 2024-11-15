@@ -56,6 +56,10 @@ function App() {
           element: <HomePage></HomePage>,
         },
         {
+          path: "history",
+          element: <HistoryPage></HistoryPage>,
+        },
+        {
           path: "/detail/:koiID",
           element: <ProductDetailPage />,
         },
@@ -118,10 +122,10 @@ function App() {
       path: "register",
       element: <RegisterPage />,
     },
-    {
-      path: "history",
-      element: <HistoryPage></HistoryPage>,
-    },
+    // {
+    //   path: "history",
+    //   element: <HistoryPage></HistoryPage>,
+    // },
 
     {
       path: "manager",

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Form, Input, Button, Select, Upload, message, Row, Col } from "antd";
+import { Form, Input, Button, Select, Upload, Row, Col, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import api from "../../../config/axios";
 import { useForm } from "antd/es/form/Form";
+import uploadFile from "../../../utils/file";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -13,22 +14,90 @@ const { TextArea } = Input;
 function KoiConsignment() {
   const [form] = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [koiImageList, setKoiImageList] = useState([]); // Dùng riêng cho ảnh cá Koi
+  const [certificateImageList, setCertificateImageList] = useState([]);
   const handleSubmit = async (values) => {
     try {
+      const formData = new FormData();
       setIsSubmitting(true);
-      const response = await api.post("consignments", values);
+      if (koiImageList.length > 0) {
+        const fileKoiImage = koiImageList[0];
+        const koiUrl = await uploadFile(fileKoiImage.originFileObj);
+        values.koiImageUrl = koiUrl;
+      }
+      if (certificateImageList.length > 0) {
+        const fileCertificateList = certificateImageList[0];
+        const certificateUrl = await uploadFile(
+          fileCertificateList.originFileObj
+        );
+        values.certificateImageUrl = certificateUrl;
+      }
+      // // Append form fields to formData
+      // Object.keys(values).forEach((key) => {
+      //   formData.append(key, values[key]);
+      // });
+
+      // // Append file fields to formData
+      // if (values.koiImage?.file) {
+      //   formData.append("koiImage", values.koiImage.file.originFileObj);
+      // }
+      // if (values.certificateImage?.file) {
+      //   formData.append(
+      //     "certificateImage",
+      //     values.certificateImage.file.originFileObj
+      //   );
+      // }
+
+      await api.post("consignments", values);
       toast.success("Đơn ký gửi đã được gửi thành công");
     } catch (error) {
       console.log(error);
+      toast.error("Có lỗi xảy ra khi gửi đơn ký gửi");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+  };
+  const handleKoiImageChange = ({ fileList: newFileList }) =>
+    setKoiImageList(newFileList);
+  const handleCertificateImageChange = ({ fileList: newFileList }) =>
+    setCertificateImageList(newFileList);
+  const uploadButton = (
+    <button
+      style={{
+        border: 0,
+        background: "none",
+      }}
+      type="button"
+    >
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </button>
+  );
   return (
     <div className="form-container">
-      <h2>Đơn đăng kí ký gửi-bán hộ cá Koi</h2>
+      <h2>Đơn đăng kí ký gửi - Bán hộ cá Koi</h2>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Row gutter={16}>
           <Col span={12}>
@@ -91,16 +160,11 @@ function KoiConsignment() {
             <Form.Item
               name="consignmentType"
               label="Loại ký gửi"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng chọn loại ký gủi",
-                },
-              ]}
+              rules={[{ required: true, message: "Vui lòng chọn loại ký gửi" }]}
             >
               <Select placeholder="Chọn loại ký gửi">
-                <Option value="SALE">Ký gửi để bán</Option>
-                <Option value="CARE">Ký gửi để chăm sóc</Option>
+                <Option value="offline">Ký gửi Offline</Option>
+                <Option value="online">Ký gửi Online</Option>
               </Select>
             </Form.Item>
           </Col>
@@ -114,7 +178,6 @@ function KoiConsignment() {
             >
               <Select placeholder="Chọn hình thức ký gửi">
                 <Option value="online">Ký gửi cá Koi Online</Option>
-                <Option value="offline">Ký gửi cá Koi Offline</Option>
               </Select>
             </Form.Item>
           </Col>
@@ -174,43 +237,38 @@ function KoiConsignment() {
         </Form.Item>
 
         <Form.Item
-          name="expectedPrice"
-          label="Giá mong muốn"
-          rules={[{ required: true, message: "Vui lòng nhập giá mong muốn" }]}
+          name="koiImageUrl"
+          label="Ảnh cá Koi"
+          valuePropName="file"
+          getValueFromEvent={(e) => (Array.isArray(e) ? e[0] : e)}
+          rules={[{ required: true, message: "Vui lòng tải lên ảnh cá Koi" }]}
         >
-          <Input placeholder="Nhập giá mong muốn" />
+          <Upload
+            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+            listType="picture-card"
+            fileList={koiImageList}
+            onPreview={handlePreview}
+            onChange={handleKoiImageChange}
+          >
+            {koiImageList.length >= 8 ? null : uploadButton}
+          </Upload>
         </Form.Item>
 
         <Form.Item
-          name="quantity"
-          label="Số lượng"
-          rules={[{ required: true, message: "Vui lòng nhập số lượng cá" }]}
+          name="certificateImageUrl"
+          label="Chứng nhận của cá Koi (Nếu có)"
+          valuePropName="file"
+          getValueFromEvent={(e) => (Array.isArray(e) ? e[0] : e)}
         >
-          <Input placeholder="Nhập số lượng cá" />
-        </Form.Item>
-
-        <Form.Item
-          name="careDuration"
-          label="Thời gian chăm sóc (ngày)"
-          rules={[
-            { required: true, message: "Vui lòng nhập thời gian chăm sóc" },
-          ]}
-        >
-          <Input placeholder="Nhập thời gian chăm sóc" />
-        </Form.Item>
-
-        <Form.Item
-          name="careFee"
-          label="Chi phí chăm sóc"
-          rules={[
-            { required: true, message: "Vui lòng nhập chi phí chăm sóc" },
-          ]}
-        >
-          <Input placeholder="Nhập chi phí chăm sóc" />
-        </Form.Item>
-
-        <Form.Item name="specialRequirements" label="Yêu cầu đặc biệt">
-          <TextArea rows={3} placeholder="Nhập yêu cầu đặc biệt nếu có" />
+          <Upload
+            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+            listType="picture-card"
+            fileList={certificateImageList}
+            onPreview={handlePreview}
+            onChange={handleCertificateImageChange}
+          >
+            {certificateImageList.length >= 8 ? null : uploadButton}
+          </Upload>
         </Form.Item>
 
         <Form.Item>
@@ -219,6 +277,19 @@ function KoiConsignment() {
           </Button>
         </Form.Item>
       </Form>
+      {previewImage && (
+        <Image
+          wrapperStyle={{
+            display: "none",
+          }}
+          preview={{
+            visible: previewOpen,
+            onVisibleChange: (visible) => setPreviewOpen(visible),
+            afterOpenChange: (visible) => !visible && setPreviewImage(""),
+          }}
+          src={previewImage}
+        />
+      )}
     </div>
   );
 }

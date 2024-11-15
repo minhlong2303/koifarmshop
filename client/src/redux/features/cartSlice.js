@@ -25,19 +25,30 @@ const cartSlice = createSlice({
       return [];
     },
     removeSelected: (state, action) => {
-      const idsToRemove = action.payload;
       return state.filter(
         (item) =>
-          !idsToRemove.includes(item.koiID) &&
-          !idsToRemove.includes(item.batchKoiID)
+          !action.payload.includes(item.koiID) &&
+          !action.payload.includes(item.batchKoiID)
       );
     },
     loadCart: (state, action) => {
       return action.payload;
     },
+    // Thêm action để xóa từng sản phẩm
+    removeFromCart: (state, action) => {
+      const { koiID, batchKoiID } = action.payload;
+      return state.filter(
+        (item) => item.koiID !== koiID && item.batchKoiID !== batchKoiID
+      );
+    },
   },
 });
 
-export const { addProduct, clearAll, removeSelected, loadCart } =
-  cartSlice.actions;
+export const {
+  addProduct,
+  clearAll,
+  removeSelected,
+  loadCart,
+  removeFromCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;

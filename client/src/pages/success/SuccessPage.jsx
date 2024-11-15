@@ -1,3 +1,4 @@
+// SuccessPage.js
 import { Button, Result } from "antd";
 import React, { useEffect } from "react";
 import useGetParams from "../../hooks/useGetParams";
@@ -13,6 +14,7 @@ function SuccessPage() {
   const params = useGetParams();
   const orderID = params("orderID");
   const vnp_TransactionStatus = params("vnp_TransactionStatus");
+
   const postOrderID = async () => {
     try {
       const response = await api.post(`/order/pay?orderID=${orderID}`);
@@ -23,27 +25,39 @@ function SuccessPage() {
       return [];
     }
   };
+
+  const getOrderDetail = async () => {
+    try {
+      const response = await api.get(`/oder/${orderID}`);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  };
+
   useEffect(() => {
     const handlePaymentStatus = async () => {
       if (vnp_TransactionStatus === "00") {
-        const products = await postOrderID(); // Wait for the response
-        if (Array.isArray(products)) {
-          console.log(
-            "Products to remove:",
-            products.map((product) => product.koiID)
-          );
-          dispatch(removeSelected(products.map((product) => product.koiID)));
+        const products = await postOrderID();
+        const koi = await getOrderDetail();
+        console.log("Danh sách sản phẩm đã mua:", koi); // Kiểm tra dữ liệu trả về
+        if (Array.isArray(koi) && products.length > 0) {
+          const idsToRemove = koi.map((product) => product.koiID);
+          console.log("IDs cần xóa:", idsToRemove); // Kiểm tra IDs truyền vào
+          dispatch(removeSelected(idsToRemove));
         }
-        console.log("Order cleared");
+
         dispatch(clearOrder());
       } else {
-        // Redirect to error page if payment failed
         navigate("/error");
       }
     };
 
-    handlePaymentStatus(); // Call the async function inside useEffect
-  }, [orderID, vnp_TransactionStatus]);
+    handlePaymentStatus();
+  }, [orderID, vnp_TransactionStatus, dispatch, navigate]);
+
   return (
     <div>
       <Result
