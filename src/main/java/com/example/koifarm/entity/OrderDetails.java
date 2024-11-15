@@ -18,6 +18,15 @@ public class OrderDetails {
     float price;
     int quantity;
 
+    @Transient
+    private UUID koiId;
+
+    // Getter cho koiId
+    public UUID getKoiId() {
+        // Nếu koi không phải null, lấy koiId từ đối tượng koi
+        return koi != null ? koi.getKoiID() : null;
+    }
+
     @ManyToOne
             @JoinColumn(name = "order_id")
             @JsonIgnore

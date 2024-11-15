@@ -63,6 +63,7 @@ public class OrderService {
             orderDetail.setPrice(koi.getPrice());
             orderDetail.setOrders(order);
             orderDetail.setKoi(koi);
+            //orderDetail.setKoiId(koi.getKoiID());
 
             orderDetails.add(orderDetail);
             total += koi.getPrice() * orderDetailRequest.getQuantity();
