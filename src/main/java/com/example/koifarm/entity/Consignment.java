@@ -1,62 +1,56 @@
 package com.example.koifarm.entity;
 
-import com.example.koifarm.enums.ConsignmentType;
+import com.example.koifarm.enums.OrderStatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Setter
 @Getter
+@Setter
+@Entity
+@Data
 public class Consignment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)  // Sử dụng UUID nếu cần
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    UUID consignmentID;
 
-    @NotBlank(message = "Koi name is required")
-    @Column(length = 100, nullable = false)
-    String koiName;
+    @NotBlank(message = "Customer Name is required")
+    String customerName;
 
-    @Column(length = 50)
-    String breed;
+    @NotBlank(message = "Koi Description is required")
+    String koiDescription;  // Mô tả về cá koi (bao gồm giống cá, kích thước, giới tính, v.v.)
 
-    @Column(length = 20)
-    String size;
-
-    int age;
-    String gender;
-    double expectedPrice;
-    int quantity;
-
-    @Min(value = 1, message = "Care duration must be at least 1")
-    int careDuration;
-
-    @Positive(message = "Care fee must be greater than zero")
-    double careFee;
-
-    String specialRequirements;
+    @Positive(message = "Requested Price must be greater than zero")
+    BigDecimal requestedPrice;  // Giá trị mong muốn bán của khách hàng
 
     @Enumerated(EnumType.STRING)
-    ConsignmentType consignmentType;
-
-    LocalDateTime createdDate = LocalDateTime.now();
+    @Column(nullable = false)
+    private OrderStatusEnum status = OrderStatusEnum.PENDING; // Trạng thái ban đầu là PENDING
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    User customer;
+    private User user;  // Liên kết với người dùng (khách hàng)
 
-    String address;
+    @OneToMany(mappedBy = "consignment", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Koi> kois;  // Liên kết với danh sách cá koi đã ký gửi
 
-    LocalDateTime inspectionDate;
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    @JsonIgnore
+    private User manager;  // Người quản lý (manager) sẽ xử lý việc duyệt ký gửi
 
-    String inspectionMethod;
+
 }
+

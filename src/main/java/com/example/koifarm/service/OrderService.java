@@ -55,46 +55,19 @@ public class OrderService {
         order.setStatus(OrderStatusEnum.PENDING);
 
         for (OrderDetailRequest orderDetailRequest : orderRequest.getDetail()) {
+            OrderDetails orderDetail = new OrderDetails();
+            orderDetail.setOrders(order);
+            orderDetail.setQuantity(orderDetailRequest.getQuantity());
+
             if (orderDetailRequest.isBatch()) {
                 // Xử lý lô cá
-                BatchKoi batchKoi = batchKoiRepository.findById(orderDetailRequest.getItemId())
-                        .orElseThrow(() -> new IllegalArgumentException("Batch Koi not found"));
-
-                if (!batchKoi.isAvailable()) {
-                    throw new IllegalStateException("Batch Koi is no longer available.");
-                }
-
-                OrderDetails orderDetail = new OrderDetails();
-                orderDetail.setQuantity(orderDetailRequest.getQuantity());
-                orderDetail.setPrice(batchKoi.getBatchKoiPrice() * orderDetailRequest.getQuantity());
-                orderDetail.setOrders(order);
-                orderDetail.setBatchKoi(batchKoi);
-
-                orderDetails.add(orderDetail);
-                total += batchKoi.getBatchKoiPrice() * orderDetailRequest.getQuantity();
-
-                batchKoi.setAvailable(false); // Đánh dấu lô cá đã bán
-                batchKoiRepository.save(batchKoi);
-
+                total += processBatchKoi(orderDetailRequest, orderDetail);
             } else {
                 // Xử lý cá thể
-                Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getItemId());
-                if (!koi.getStatus().equals("available")) {
-                    throw new IllegalStateException("Koi fish is no longer available.");
-                }
-
-                OrderDetails orderDetail = new OrderDetails();
-                orderDetail.setQuantity(1); // Mỗi cá thể chỉ có 1 số lượng
-                orderDetail.setPrice(koi.getPrice());
-                orderDetail.setOrders(order);
-                orderDetail.setKoi(koi);
-
-                orderDetails.add(orderDetail);
-                total += koi.getPrice();
-
-                koi.setStatus("sold");
-                koiRepository.save(koi);
+                total += processIndividualKoi(orderDetailRequest, orderDetail);
             }
+
+            orderDetails.add(orderDetail);
         }
 
         order.setOrderDetails(orderDetails);
@@ -102,6 +75,48 @@ public class OrderService {
 
         return orderRepository.save(order);
     }
+
+    private float processBatchKoi(OrderDetailRequest orderDetailRequest, OrderDetails orderDetail) {
+        BatchKoi batchKoi = batchKoiRepository.findById(orderDetailRequest.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("Batch Koi not found"));
+
+        if (!batchKoi.isAvailable()) {
+            throw new IllegalStateException("Batch Koi is no longer available.");
+        }
+
+        // Gán giá trị cho itemType
+        orderDetail.setItemType("batch");  // Gán giá trị cho itemType
+        orderDetail.setPrice(batchKoi.getPrice() * orderDetailRequest.getQuantity());
+
+        // Chờ thanh toán hoàn tất để cập nhật trạng thái
+        orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
+
+        batchKoiRepository.save(batchKoi);
+
+        return batchKoi.getPrice() * orderDetailRequest.getQuantity();
+    }
+
+    private float processIndividualKoi(OrderDetailRequest orderDetailRequest, OrderDetails orderDetail) {
+        Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("Koi not found"));
+
+        if (!koi.getStatus().equals("available")) {
+            throw new IllegalStateException("Koi fish is no longer available.");
+        }
+
+        // Gán giá trị cho itemType
+        orderDetail.setItemType("individual");  // Gán giá trị cho itemType
+        orderDetail.setPrice(koi.getPrice());
+
+        // Chờ thanh toán hoàn tất để cập nhật trạng thái
+        orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
+
+        koiRepository.save(koi);
+
+        return koi.getPrice();
+    }
+
+
 
 
     public List<Orders> get(){
@@ -187,23 +202,22 @@ public class OrderService {
     }
 
     @Transactional(rollbackFor = { IllegalStateException.class, RuntimeException.class })
-
-    public void createTransaction(UUID uuid){
-        //tim order
+    public void createTransaction(UUID uuid) {
+        // Lấy đơn hàng từ repository
         Orders orders = orderRepository.findById(uuid)
-                .orElseThrow(()->new EntityNotFoundException("Order not found!"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
 
         // Kiểm tra trạng thái đơn hàng, nếu đã thanh toán rồi thì không cho thanh toán lại
         if (orders.getStatus() == OrderStatusEnum.COMPLETED) {
             throw new IllegalStateException("Order has already been paid.");
         }
 
-        // Check if a payment already exists for this order
+        // Kiểm tra xem đã có payment chưa
         if (orders.getPayment() != null) {
             throw new RuntimeException("Payment already exists for this order.");
         }
 
-        //tao payment
+        // Tạo mới payment
         Payment payment = new Payment();
         payment.setOrders(orders);
         payment.setCreateAt(LocalDateTime.now());
@@ -213,9 +227,9 @@ public class OrderService {
         paymentRepository.save(payment);
 
         Set<Transactions> transactionsSet = new HashSet<>();
-        //tao transaction
+
+        // Tạo transaction từ VNPAY cho khách hàng
         Transactions transactions1 = new Transactions();
-        //VNPAY TO CUSTOMER
         User customer = authenticationService.getCurrentUser();
         transactions1.setFrom(null);
         transactions1.setTo(customer);
@@ -224,20 +238,20 @@ public class OrderService {
         transactions1.setDescription("NAP TIEN VNPAY TO CUSTOMER");
         transactionsSet.add(transactions1);
 
+        // Tạo transaction từ khách hàng đến quản lý
         Transactions transactions2 = new Transactions();
-        //CUSTOMER TO MANAGER
         User manager = userRepository.findUserByRole(Role.MANAGER);
         transactions2.setFrom(customer);
         transactions2.setTo(manager);
         transactions2.setPayment(payment);
         transactions2.setStatus(TransactionEnum.SUCCESS);
         transactions2.setDescription("CUSTOMER TO MANAGER");
-        float newBalance = manager.getBalance() + orders.getTotal()*0.1f;  //10% cua he thong
+        float newBalance = manager.getBalance() + orders.getTotal() * 0.1f;  //10% hệ thống
         transactions2.setAmount(newBalance);
         manager.setBalance(newBalance);
-        transactionsSet.add(transactions2); //add to transacrionSet
+        transactionsSet.add(transactions2);
 
-        //MANAGER TO OWNER
+        // Tạo transaction từ quản lý đến chủ sở hữu
         Transactions transactions3 = new Transactions();
         transactions3.setPayment(payment);
         transactions3.setStatus(TransactionEnum.SUCCESS);
@@ -245,36 +259,45 @@ public class OrderService {
         transactions3.setFrom(manager);
         User owner = orders.getOrderDetails().get(0).getKoi().getUser();
         transactions3.setTo(owner);
-        float newShopBalance = owner.getBalance()+ orders.getTotal()*(1-0.1f);
+        float newShopBalance = owner.getBalance() + orders.getTotal() * (1 - 0.1f);
         transactions3.setAmount(newShopBalance);
         owner.setBalance(newShopBalance);
         transactionsSet.add(transactions3);
 
-        // Save payment and transactions
+        // Lưu các transaction và cập nhật trạng thái của payment
         payment.setTransactions(transactionsSet);
+        orders.setPayment(payment); // Liên kết payment với đơn hàng
 
-        orders.setPayment(payment); // Set the payment for the order
-        orderRepository.save(orders); // Save the order with the payment
+        // Cập nhật trạng thái đơn hàng sau khi thanh toán thành công
+        orders.setStatus(OrderStatusEnum.COMPLETED);  // Đặt trạng thái đơn hàng thành "COMPLETED"
 
+        orderRepository.save(orders); // Lưu đơn hàng với payment đã cập nhật
         userRepository.save(manager);
         userRepository.save(owner);
         paymentRepository.save(payment);
-
     }
 
-    //Update Status
+
+    // Cập nhật trạng thái đơn hàng, chỉ cho phép chuyển sang COMPLETED sau khi thanh toán hoàn tất
     public Orders updateOrderStatus(UUID orderId, OrderStatusEnum status) {
         Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
 
-        // Chỉ có thể cập nhật thành COMPLETE nếu trạng thái hiện tại chưa phải là COMPLETE
-        if (order.getStatus() == OrderStatusEnum.COMPLETED) {
-            throw new IllegalStateException("Order is already complete and cannot be updated.");
+        // Kiểm tra nếu trạng thái là "PROCESSING" mới cho phép cập nhật
+        if (order.getStatus() != OrderStatusEnum.PROCESSING) {
+            throw new IllegalStateException("Order must be completed (payment successful) before changing status.");
         }
 
-        order.setStatus(status);
+        // Nếu trạng thái yêu cầu là COMPLETED thì cập nhật
+        if (status == OrderStatusEnum.COMPLETED) {
+            order.setStatus(OrderStatusEnum.COMPLETED);
+        } else {
+            throw new IllegalStateException("Invalid status update request.");
+        }
+
         return orderRepository.save(order);
     }
+
 
 
 }

@@ -26,6 +26,6 @@ public class KoiSpecies {
     List<Koi> kois;
 
     // One-to-Many relationship with BatchKoi
-    @OneToMany(mappedBy = "species", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<BatchKoi> batchKois;
+    @OneToMany(mappedBy = "species")
+     List<BatchKoi> batchKois;
 }

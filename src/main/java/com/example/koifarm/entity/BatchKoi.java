@@ -1,54 +1,51 @@
 package com.example.koifarm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
 @Entity
+@Data
 public class BatchKoi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID batchKoiID;
 
-    @JsonIgnore
-    private boolean isDeleted = false;
-
-    @NotBlank(message = "Batch name is required")
+    @NotBlank(message = "Name is required")
     @Column(unique = true)
-    private String batchName;
+    private String name;
 
-    @NotBlank(message = "Origin is required")
-    private String origin;
+    @Column(nullable = false)
+    private int quantity;
 
-    @NotNull(message = "Quantity is required")
-    @Min(value = 1, message = "Quantity must be at least 1")
-    int quantityInBatch; // Số lượng cá trong lô
+    @Column(nullable = false)
+    private float price;
 
-    boolean isAvailable = true;
+    private String description;
+    private String image;
 
-    @Positive(message = "Price must be greater than zero")
-    float batchKoiPrice;
-
-    @NotBlank(message = "Breed is required")
-    String breed;
-
-    String description;
+    @ManyToOne
+    @JoinColumn(name = "species_id")
+    @JsonIgnore
+    private KoiSpecies species;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    boolean isDeleted = false;
+
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "species_id")
-    private KoiSpecies species;
+    @JsonIgnore
+    boolean isAvailable = true;
+
+    String status = "available"; // Default status
 }

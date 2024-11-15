@@ -1,67 +1,52 @@
 package com.example.koifarm.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import com.example.koifarm.entity.User;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 public class ConsignmentRequest {
+    @NotBlank(message = "Name is required")
+    private String name;
 
-    @NotBlank(message = "First name cannot be blank")
-    private String firstName;
+    @NotBlank(message = "Origin is required")
+    private String origin;
 
-    @NotBlank(message = "Last name cannot be blank")
-    private String lastName;
-
-    @NotBlank(message = "Phone cannot be blank")
-    @Size(min = 10, max = 15, message = "Phone number must be between 10 and 15 characters")
-    private String phone;
-
-    @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Invalid email format")
-    private String email;
-
-    @NotBlank(message = "Address cannot be blank")
-    private String address;
-
-    private LocalDateTime date; // Có thể cần thêm validation nếu cần thiết
-
-    @NotBlank(message = "Inspection method cannot be blank")
-    private String inspectionMethod;
-
-    @NotBlank(message = "Consignment type cannot be blank")
-    private String consignmentType; // Xem xét chuyển sang kiểu enum nếu có thể
-
-    @NotBlank(message = "Koi name cannot be blank")
-    private String koiName;
-
-    @NotBlank(message = "Breed cannot be blank")
-    private String breed;
-
-    @NotBlank(message = "Size cannot be blank")
-    private String size;
-
-    @Positive(message = "Age must be a positive number")
-    private int age;
-
-    @NotBlank(message = "Gender cannot be blank")
+    @NotBlank(message = "Gender is required")
+    @Pattern(regexp = "Male|Female", message = "Gender must be either 'Male' or 'Female'")
     private String gender;
 
-    @Positive(message = "Expected price must be a positive number")
-    private double expectedPrice;
+    @NotNull(message = "Size is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Size must be greater than 0")
+    private BigDecimal size;
 
-    @Positive(message = "Quantity must be a positive number")
+    @DecimalMin(value = "0.01", inclusive = false, message = "Price must be greater than 0")
+    @DecimalMax(value = "99999999.99", message = "Price must be less than or equal to 99999999.99")
+    private float expectedPrice;
+
+    @NotBlank(message = "Breed is required")
+    private String  breed;
+
+    private String location;
+    private String owner;
+    private String description;
+    private String image;
+
     private int quantity;
 
-    @Positive(message = "Care duration must be a positive number")
-    private int careDuration;
-
-    @Positive(message = "Care fee must be a positive number")
-    private double careFee;
-
     private String specialRequirements;
+
+    private LocalDateTime createdDate;
+
+    @NotNull(message = "Customer information is required")
+    private User customer;
+
+    private String address;
+    private LocalDateTime inspectionDate;
+    private String inspectionMethod;
+    @NotNull(message = "Koi species ID is required")
+    private Long koiSpeciesId;
 }

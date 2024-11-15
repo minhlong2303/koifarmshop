@@ -1,5 +1,6 @@
 package com.example.koifarm.service;
 
+import com.example.koifarm.entity.Consignment;
 import com.example.koifarm.entity.Koi;
 import com.example.koifarm.entity.KoiSpecies;
 import com.example.koifarm.entity.User;
@@ -27,6 +28,12 @@ public class KoiService {
 
     @Autowired
     KoiSpeciesRepository koiSpeciesRepository;
+
+    public void createKoi(Koi koi) {
+        // Lưu cá koi vào cơ sở dữ liệu (hoặc các xử lý liên quan)
+        // Đây là ví dụ, bạn có thể cần thêm logic cho việc tạo cá koi
+    }
+
     //create
     public Koi create(KoiRequest koiRequest){
         Koi koi = modelMapper.map(koiRequest, Koi.class);
@@ -80,9 +87,9 @@ public class KoiService {
     }
 
     public Koi getKoiById(UUID koiID){
-        Koi oldKoi = koiRepository.findKoiByKoiID(koiID);
-        if (oldKoi == null) throw new EntityNotFoundException("Koi not found!");
-        return oldKoi;
+        Koi koi = koiRepository.findKoiByKoiID(koiID)
+                .orElseThrow(() -> new EntityNotFoundException("Koi not found!"));
+        return koi;
     }
 
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Data
 public class Koi {
 
     @Id
@@ -66,4 +68,8 @@ public class Koi {
     @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
 
+    @ManyToOne
+    @JoinColumn(name = "consignment_id")
+    @JsonIgnore
+    Consignment consignment;
 }

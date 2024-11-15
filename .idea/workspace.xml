@@ -4,38 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="update all">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_1_2024_12_25_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_1_2024_12_25_PM__Changes_.xml" afterDir="false" />
+    <list default="true" id="994adca9-670b-4a99-88be-52280c101c6e" name="Changes" comment="fix order">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/api/BatchKoiOrderAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/api/BatchKoiOrderAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/repository/BatchKoiOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/repository/BatchKoiOrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/service/BatchKoiOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/service/BatchKoiOrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/api/ConsignmentAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/api/ConsignmentAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/entity/Consignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/entity/Consignment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/repository/ConsignmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/repository/ConsignmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/service/ConsignmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/koifarmshop/src/main/java/com/example/koifarm/service/ConsignmentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/BatchKoiAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/BatchKoiAPI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/BatchKoiOrderAPI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/ConsignmentAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/ConsignmentAPI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/api/KoiAPI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/BatchKoi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/BatchKoi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/BatchKoiOrder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/BatchKoiOrderDetail.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Consignment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Consignment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Feedback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Feedback.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Koi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Koi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/KoiSpecies.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/KoiSpecies.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/OrderDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/OrderDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Orders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/Payment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/BatchKoiOrderDetailRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/BatchKoiOrderRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/enums/ConsignmentType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/BatchKoiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/BatchKoiRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/ConsignmentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/ConsignmentRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/OrderDetailRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/model/OrderDetailRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/BatchKoiOrderRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/OrderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/BatchKoiOrderService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/ConsignmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/ConsignmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiSpeciesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/repository/KoiSpeciesRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/BatchKoiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/BatchKoiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/ConsignmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/ConsignmentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/KoiService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/koifarm/service/OrderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/KoiSpecies.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/KoiSpecies.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/OrderDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/OrderDetails.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/Orders.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/entity/Orders.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/OrderDetailRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/model/OrderDetailRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/repository/OrderRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/repository/OrderRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/OrderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/koifarm/service/OrderService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,29 +120,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.koifarm.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.KoifarmApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;BE-Long&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Github/koifarmshop&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.koifarm.executor": "Run",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JAR Application.koifarm-0.0.1-SNAPSHOT.jar.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.KoifarmApplication.executor": "Run",
+    "git-widget-placeholder": "BE-Long",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Github/koifarmshop",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.example.koifarm.entity" />
@@ -221,7 +217,8 @@
       <workItem from="1731290095266" duration="727000" />
       <workItem from="1731482874566" duration="4691000" />
       <workItem from="1731491913023" duration="2153000" />
-      <workItem from="1731494287486" duration="2363000" />
+      <workItem from="1731494287486" duration="2399000" />
+      <workItem from="1731648106240" duration="12109000" />
     </task>
     <task id="LOCAL-00001" summary="JWT va phan quyen">
       <option name="closed" value="true" />
@@ -463,7 +460,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730262414897</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="fix order">
+      <option name="closed" value="true" />
+      <created>1731497709268</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1731497709268</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +560,8 @@
     <MESSAGE value="update feedback" />
     <MESSAGE value="update consignment" />
     <MESSAGE value="update all" />
-    <option name="LAST_COMMIT_MESSAGE" value="update all" />
+    <MESSAGE value="fix order" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix order" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -26,7 +26,7 @@ public class BatchKoiRequest {
     @Column(nullable = false)
     private float price;
 
-    String description;
-    String origin;
+    private String description;
+    private String image;
     long speciesId;
 }

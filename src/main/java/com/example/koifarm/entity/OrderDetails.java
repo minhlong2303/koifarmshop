@@ -21,8 +21,10 @@ public class OrderDetails {
     @NotNull(message = "Quantity is required")
     int quantity;
 
-    @NotBlank(message = "Item type is required")
-    String itemType;
+    @NotNull(message = "Item type is required")
+    private String itemType;
+
+    String status = "available"; // Default status
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
