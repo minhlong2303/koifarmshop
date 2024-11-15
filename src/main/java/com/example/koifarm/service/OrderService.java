@@ -8,16 +8,13 @@ import com.example.koifarm.enums.TransactionEnum;
 import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.model.OrderDetailRequest;
 import com.example.koifarm.model.OrderRequest;
-import com.example.koifarm.repository.KoiRepository;
-import com.example.koifarm.repository.OrderRepository;
-import com.example.koifarm.repository.PaymentRepository;
-import com.example.koifarm.repository.UserRepository;
+import com.example.koifarm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -43,30 +40,34 @@ public class OrderService {
     @Autowired
     PaymentRepository paymentRepository;
 
-    public Orders create(OrderRequest orderRequest){
-        //lay thong tin nguoi vua tao order
+    @Autowired
+    BatchKoiRepository batchKoiRepository;
+
+    @Transactional
+    public Orders create(OrderRequest orderRequest) {
         User customer = authenticationService.getCurrentUser();
-        //create order
         Orders order = new Orders();
         List<OrderDetails> orderDetails = new ArrayList<>();
         float total = 0;
 
         order.setCustomer(customer);
-        order.setDate(new Date());
+        order.setDate(LocalDateTime.now());
         order.setStatus(OrderStatusEnum.PENDING);
 
-        for(OrderDetailRequest orderDetailRequest: orderRequest.getDetail()){
-            //lay id cua koi ma ng dung yeu cau mua
-            Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getKoiId());
+        for (OrderDetailRequest orderDetailRequest : orderRequest.getDetail()) {
             OrderDetails orderDetail = new OrderDetails();
-            orderDetail.setQuantity(orderDetailRequest.getQuantity());
-            orderDetail.setPrice(koi.getPrice());
             orderDetail.setOrders(order);
-            orderDetail.setKoi(koi);
-            //orderDetail.setKoiId(koi.getKoiID());
+            orderDetail.setQuantity(orderDetailRequest.getQuantity());
+
+            if (orderDetailRequest.isBatch()) {
+                // Xử lý lô cá
+                total += processBatchKoi(orderDetailRequest, orderDetail);
+            } else {
+                // Xử lý cá thể
+                total += processIndividualKoi(orderDetailRequest, orderDetail);
+            }
 
             orderDetails.add(orderDetail);
-            total += koi.getPrice() * orderDetailRequest.getQuantity();
         }
 
         order.setOrderDetails(orderDetails);
@@ -75,8 +76,56 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
+    private float processBatchKoi(OrderDetailRequest orderDetailRequest, OrderDetails orderDetail) {
+        BatchKoi batchKoi = batchKoiRepository.findById(orderDetailRequest.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("Batch Koi not found"));
+
+        if (!batchKoi.isAvailable()) {
+            throw new IllegalStateException("Batch Koi is no longer available.");
+        }
+
+        // Gán giá trị cho itemType
+        orderDetail.setItemType("batch");  // Gán giá trị cho itemType
+        orderDetail.setPrice(batchKoi.getPrice() * orderDetailRequest.getQuantity());
+
+        // Chờ thanh toán hoàn tất để cập nhật trạng thái
+        orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
+
+        batchKoiRepository.save(batchKoi);
+
+        return batchKoi.getPrice() * orderDetailRequest.getQuantity();
+    }
+
+    private float processIndividualKoi(OrderDetailRequest orderDetailRequest, OrderDetails orderDetail) {
+        Koi koi = koiRepository.findById(orderDetailRequest.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("Koi not found"));
+
+        if (!koi.getStatus().equals("available")) {
+            throw new IllegalStateException("Koi fish is no longer available.");
+        }
+
+        // Gán giá trị cho itemType
+        orderDetail.setItemType("individual");  // Gán giá trị cho itemType
+        orderDetail.setPrice(koi.getPrice());
+
+        // Chờ thanh toán hoàn tất để cập nhật trạng thái
+        orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
+
+        koiRepository.save(koi);
+
+        return koi.getPrice();
+    }
+
+
+
+
     public List<Orders> get(){
-        List<Orders> orders = orderRepository.findAll();
+        User user = authenticationService.getCurrentUser();
+        List<Orders> orders = orderRepository.findOrdersByCustomer(user);
+
+        // Sắp xếp theo thứ tự ngày từ nhỏ đến lớn
+        orders.sort(Comparator.comparing(Orders::getDate));
+
         return orders;
     }
 
@@ -87,7 +136,7 @@ public class OrderService {
 
         //tao orders
         Orders orders = create(orderRequest);
-        //
+        // Tính tổng tiền và thiết lập URL thanh toán
         float money = orders.getTotal()*100;
         String amount = String.valueOf((int) money);
 
@@ -152,29 +201,35 @@ public class OrderService {
         return result.toString();
     }
 
-    public void createTransaction(UUID uuid){
-        //tim order
+    @Transactional(rollbackFor = { IllegalStateException.class, RuntimeException.class })
+    public void createTransaction(UUID uuid) {
+        // Lấy đơn hàng từ repository
         Orders orders = orderRepository.findById(uuid)
-                .orElseThrow(()->new EntityNotFoundException("Order not found!"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
 
-        // Check if a payment already exists for this order
+        // Kiểm tra trạng thái đơn hàng, nếu đã thanh toán rồi thì không cho thanh toán lại
+        if (orders.getStatus() == OrderStatusEnum.COMPLETED) {
+            throw new IllegalStateException("Order has already been paid.");
+        }
+
+        // Kiểm tra xem đã có payment chưa
         if (orders.getPayment() != null) {
             throw new RuntimeException("Payment already exists for this order.");
         }
 
-        //tao payment
+        // Tạo mới payment
         Payment payment = new Payment();
         payment.setOrders(orders);
-        payment.setCreateAt(new Date());
+        payment.setCreateAt(LocalDateTime.now());
         payment.setPayment_method(PaymentEnums.BANKING);
         payment.setTotal(orders.getTotal());
 
         paymentRepository.save(payment);
 
         Set<Transactions> transactionsSet = new HashSet<>();
-        //tao transaction
+
+        // Tạo transaction từ VNPAY cho khách hàng
         Transactions transactions1 = new Transactions();
-        //VNPAY TO CUSTOMER
         User customer = authenticationService.getCurrentUser();
         transactions1.setFrom(null);
         transactions1.setTo(customer);
@@ -183,20 +238,20 @@ public class OrderService {
         transactions1.setDescription("NAP TIEN VNPAY TO CUSTOMER");
         transactionsSet.add(transactions1);
 
+        // Tạo transaction từ khách hàng đến quản lý
         Transactions transactions2 = new Transactions();
-        //CUSTOMER TO MANAGER
         User manager = userRepository.findUserByRole(Role.MANAGER);
         transactions2.setFrom(customer);
         transactions2.setTo(manager);
         transactions2.setPayment(payment);
         transactions2.setStatus(TransactionEnum.SUCCESS);
         transactions2.setDescription("CUSTOMER TO MANAGER");
-        float newBalance = manager.getBalance() + orders.getTotal()*0.1f;  //10% cua he thong
+        float newBalance = manager.getBalance() + orders.getTotal() * 0.1f;  //10% hệ thống
         transactions2.setAmount(newBalance);
         manager.setBalance(newBalance);
-        transactionsSet.add(transactions2); //add to transacrionSet
+        transactionsSet.add(transactions2);
 
-        //MANAGER TO OWNER
+        // Tạo transaction từ quản lý đến chủ sở hữu
         Transactions transactions3 = new Transactions();
         transactions3.setPayment(payment);
         transactions3.setStatus(TransactionEnum.SUCCESS);
@@ -204,7 +259,7 @@ public class OrderService {
         transactions3.setFrom(manager);
         User owner = orders.getOrderDetails().get(0).getKoi().getUser();
         transactions3.setTo(owner);
-        float newShopBalance = owner.getBalance()+ orders.getTotal()*(1-0.1f);
+        float newShopBalance = owner.getBalance() + orders.getTotal() * (1 - 0.1f);
         transactions3.setAmount(newShopBalance);
         owner.setBalance(newShopBalance);
         transactionsSet.add(transactions3);
@@ -213,13 +268,12 @@ public class OrderService {
         payment.setTransactions(transactionsSet);
 
         orders.setPayment(payment); // Set the payment for the order
-        orderRepository.save(orders); // Save the order with the payment
-
         userRepository.save(manager);
         userRepository.save(owner);
         paymentRepository.save(payment);
-
+        orderRepository.save(orders); // Save the order with the payment
     }
+
 
     //Update Status
     public Orders updateOrderStatus(UUID orderId, OrderStatusEnum status) {
@@ -287,6 +341,5 @@ public class OrderService {
         oldOrders.setDeleted(true);
         return orderRepository.save(oldOrders);
     }
-
 
 }

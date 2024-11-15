@@ -2,6 +2,7 @@ package com.example.koifarm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,16 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
+    @NotNull(message = "Price is required")
     float price;
+
+    @NotNull(message = "Quantity is required")
     int quantity;
+
+    @NotNull(message = "Item type is required")
+    private String itemType;
+
+    String status = "available"; // Default status
 
     @Transient
     private UUID koiId;
@@ -36,4 +45,9 @@ public class OrderDetails {
     @JoinColumn(name = "koi_id")
             @JsonIgnore
     Koi koi;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "batchkoi_id")
+    @JsonIgnore
+    BatchKoi batchKoi;
 }

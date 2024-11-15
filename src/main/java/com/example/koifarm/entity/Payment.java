@@ -3,10 +3,12 @@ package com.example.koifarm.entity;
 import com.example.koifarm.enums.PaymentEnums;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -17,8 +19,11 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    Date createAt;
+    @NotNull(message = "Creation date is required")
+    LocalDateTime createAt;
 
+    @NotNull(message = "Total is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Total must be greater than zero")
     float total;
 
     @Enumerated(EnumType.STRING)
@@ -32,8 +37,10 @@ public class Payment {
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     Set<Transactions> transactions;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "batchkoiorder_id", referencedColumnName = "id")
-    @JsonIgnore
-    BatchKoiOrder batchKoiOrder;
+    @PrePersist
+    public void onPrePersist() {
+        if (this.createAt == null) {
+            this.createAt = LocalDateTime.now();
+        }
+    }
 }

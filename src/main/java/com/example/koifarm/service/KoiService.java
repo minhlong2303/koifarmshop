@@ -79,10 +79,9 @@ public class KoiService {
         return koiRepository.save(oldKoi);
     }
 
-    public Koi getKoiById(UUID koiID){
-        Koi oldKoi = koiRepository.findKoiByKoiID(koiID);
-        if (oldKoi == null) throw new EntityNotFoundException("Koi not found!");
-        return oldKoi;
+    public Koi getKoiById(UUID koiID) {
+        return koiRepository.findKoiByKoiID(koiID)
+                .orElseThrow(() -> new EntityNotFoundException("Koi not found!"));
     }
 
 

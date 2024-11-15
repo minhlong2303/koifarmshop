@@ -49,6 +49,10 @@ public class Koi {
     private String description;
     private String image;
 
+    String status = "available"; // Default status
+
+    boolean isAvailable = true;
+
     @ManyToOne
         @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -60,8 +64,7 @@ public class Koi {
             @JsonIgnore
     KoiSpecies species;
 
-    @OneToMany(mappedBy = "koi")
+    @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
-
 
 }

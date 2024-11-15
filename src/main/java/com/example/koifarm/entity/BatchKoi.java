@@ -39,13 +39,14 @@ public class BatchKoi {
     @JsonIgnore
     boolean isDeleted = false;
 
-    // Relationship with BatchKoiOrderDetail
-    @OneToMany(mappedBy = "batchKoi")
-    private List<BatchKoiOrderDetail> orderDetails;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @JsonIgnore
+    boolean isAvailable = true;
+
+    String status = "available"; // Default status
 
 }

@@ -22,8 +22,8 @@ public class ConsignmentRequest {
     private String gender;
 
     // Hình thức và loại ký gửi
-    private String consignmentType;  // "offline" hoặc "online"
-    private String inspectionMethod;
+    private String consignmentType;  // "SALE"
+    private String inspectionMethod;    //online
 
     // Thông tin hình ảnh
     private String koiImageUrl;  // URL của ảnh cá Koi

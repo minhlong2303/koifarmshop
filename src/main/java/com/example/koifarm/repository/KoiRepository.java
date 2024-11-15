@@ -7,11 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface KoiRepository extends JpaRepository<Koi, UUID> {
     //DAT TEN FUNCTION THEO DINH DANG JPA CUNG CAP
-    Koi findKoiByKoiID(UUID koiID);
+    //Koi findKoiByKoiID(UUID koiID);
+    Optional<Koi> findKoiByKoiID(UUID koiID);
 
     //lay danh sach koi chua bi xoa
     List<Koi>  findKoiByIsDeletedFalse();
