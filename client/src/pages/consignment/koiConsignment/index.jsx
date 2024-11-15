@@ -163,8 +163,7 @@ function KoiConsignment() {
               rules={[{ required: true, message: "Vui lòng chọn loại ký gửi" }]}
             >
               <Select placeholder="Chọn loại ký gửi">
-                <Option value="offline">Ký gửi Offline</Option>
-                <Option value="online">Ký gửi Online</Option>
+                <Option value="SALE">Ký gửi Cá Koi để bán</Option>
               </Select>
             </Form.Item>
           </Col>
