@@ -28,7 +28,7 @@ function SuccessPage() {
 
   const getOrderDetail = async () => {
     try {
-      const response = await api.get(`/oder/${orderID}`);
+      const response = await api.get(`/order/${orderID}`);
       console.log(response);
       return response.data;
     } catch (error) {
@@ -40,12 +40,14 @@ function SuccessPage() {
   useEffect(() => {
     const handlePaymentStatus = async () => {
       if (vnp_TransactionStatus === "00") {
-        const products = await postOrderID();
-        const koi = await getOrderDetail();
-        console.log("Danh sách sản phẩm đã mua:", koi); // Kiểm tra dữ liệu trả về
-        if (Array.isArray(koi) && products.length > 0) {
-          const idsToRemove = koi.map((product) => product.koiID);
-          console.log("IDs cần xóa:", idsToRemove); // Kiểm tra IDs truyền vào
+        await postOrderID();
+        const orderDetails = await getOrderDetail();
+
+        if (orderDetails && orderDetails.orderDetails) {
+          const idsToRemove = orderDetails.orderDetails.map(
+            (item) => item.koiId
+          );
+          console.log("IDs cần xóa:", idsToRemove); // Kiểm tra danh sách IDs
           dispatch(removeSelected(idsToRemove));
         }
 
