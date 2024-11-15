@@ -2,7 +2,6 @@ package com.example.koifarm.service;
 
 import com.example.koifarm.entity.Consignment;
 import com.example.koifarm.entity.User;
-import com.example.koifarm.enums.ConsignmentType;
 import com.example.koifarm.exception.InvalidConsignmentTypeException;
 import com.example.koifarm.model.ConsignmentRequest;
 import com.example.koifarm.repository.ConsignmentRepository;

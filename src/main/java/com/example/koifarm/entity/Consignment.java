@@ -1,6 +1,5 @@
 package com.example.koifarm.entity;
 
-import com.example.koifarm.enums.ConsignmentType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
