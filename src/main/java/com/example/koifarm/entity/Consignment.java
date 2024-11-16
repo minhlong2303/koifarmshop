@@ -29,7 +29,7 @@ public class Consignment {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ConsignmentStatus status = ConsignmentStatus.PROCESSING; // Trạng thái mặc định là PROCESSING
+    private ConsignmentStatus consignmentStatus = ConsignmentStatus.PROCESSING; // Trạng thái mặc định là PROCESSING
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now(); // Thời gian tạo

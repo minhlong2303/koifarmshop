@@ -1,6 +1,5 @@
 package com.example.koifarm.service;
 
-import com.example.koifarm.entity.Consignment;
 import com.example.koifarm.entity.Koi;
 import com.example.koifarm.entity.KoiSpecies;
 import com.example.koifarm.entity.User;

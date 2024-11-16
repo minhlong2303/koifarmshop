@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Data
-public class Koi {
+public class Koi extends Consignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Consider AUTO if UUID strategy causes issues
