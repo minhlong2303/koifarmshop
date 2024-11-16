@@ -109,11 +109,13 @@ public class User implements UserDetails {
 
     float balance = 0;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "user")
     private List<Consignment> consignments;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     List<BatchKoi> batchKois;
+
+
 
 }

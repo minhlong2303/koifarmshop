@@ -68,8 +68,8 @@ public class Koi {
     @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
 
-    @ManyToOne
-    @JoinColumn(name = "consignment_id")
+    // Thêm thuộc tính consignment này
+    @OneToOne(mappedBy = "koi")
     @JsonIgnore
     Consignment consignment;
 }

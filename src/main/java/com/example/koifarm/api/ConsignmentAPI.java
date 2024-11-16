@@ -1,56 +1,35 @@
 package com.example.koifarm.api;
 
 import com.example.koifarm.entity.Consignment;
-import com.example.koifarm.enums.OrderStatusEnum;
+import com.example.koifarm.model.ConsignmentRequest;
 import com.example.koifarm.service.ConsignmentService;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/consignments")
-@CrossOrigin("*") // cho phép truy cập từ FE
-@SecurityRequirement(name = "api")
 public class ConsignmentAPI {
 
     @Autowired
     private ConsignmentService consignmentService;
 
-    // Tạo mới Consignment
+    // Create a new consignment
     @PostMapping
-    public ResponseEntity<Consignment> createConsignment(@Valid @RequestBody Consignment consignment) {
-        Consignment createdConsignment = consignmentService.createConsignment(consignment);
+    public ResponseEntity<Consignment> createConsignment(@RequestBody ConsignmentRequest consignmentRequest) {
+        Consignment createdConsignment = consignmentService.createConsignment(consignmentRequest);
         return ResponseEntity.ok(createdConsignment);
     }
 
-    // Cập nhật trạng thái Consignment
-    @PutMapping("/{consignmentId}/status")
-    public ResponseEntity<Consignment> updateConsignmentStatus(
-            @PathVariable UUID consignmentId,
-            @RequestParam OrderStatusEnum status) {
-        Consignment updatedConsignment = consignmentService.updateConsignmentStatus(consignmentId, status);
-        return ResponseEntity.ok(updatedConsignment);
-    }
-
-    // Lấy danh sách tất cả Consignments
+    // Get all consignments
     @GetMapping
     public ResponseEntity<List<Consignment>> getAllConsignments() {
         List<Consignment> consignments = consignmentService.getAllConsignments();
         return ResponseEntity.ok(consignments);
     }
 
-    // Lấy chi tiết một Consignment
-    @GetMapping("/{consignmentId}")
-    public ResponseEntity<Consignment> getConsignmentById(@PathVariable UUID consignmentId) {
-        Consignment consignment = consignmentService.getConsignmentById(consignmentId);
-        return ResponseEntity.ok(consignment);
-    }
+
 }
-
-
