@@ -1,6 +1,7 @@
 package com.example.koifarm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,23 +31,32 @@ public class OrderDetails {
     @Transient
     private UUID koiId;
 
-    // Getter cho koiId
+    // Getter cho koiId để hiển thị
+    @JsonProperty("koiId")
     public UUID getKoiId() {
-        // Nếu koi không phải null, lấy koiId từ đối tượng koi
         return koi != null ? koi.getKoiID() : null;
     }
 
-    @ManyToOne
-            @JoinColumn(name = "order_id")
-            @JsonIgnore
+    @Transient
+    private UUID batchKoiId;
+
+    // Getter cho batchKoiId để hiển thị
+    @JsonProperty("batchKoiId")
+    public UUID getBatchKoiId() {
+        return batchKoi != null ? batchKoi.getBatchKoiID() : null;
+    }
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "order_id")
+    @JsonIgnore
     Orders orders;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "koi_id")
-            @JsonIgnore
+    @JsonIgnore
     Koi koi;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "batchkoi_id")
     @JsonIgnore
     BatchKoi batchKoi;

@@ -10,20 +10,17 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @NotNull(message = "Creation date is required")
     LocalDateTime createAt;
-
-    @NotNull(message = "Total is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Total must be greater than zero")
     float total;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +28,7 @@ public class Payment {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-            @JsonIgnore
+    @JsonIgnore
     Orders orders;
 
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)

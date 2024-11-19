@@ -21,11 +21,8 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    @NotNull(message = "Date is required")
     LocalDateTime date;
 
-    @NotNull(message = "Total is required")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Total must be greater than zero")
     float total;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +40,8 @@ public class Orders {
     List<OrderDetails> orderDetails;
 
     @OneToOne(mappedBy = "orders", cascade = CascadeType.ALL)
-    private Payment payment;
+    @JsonIgnore
+    Payment payment;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     List<Feedback> feedbacks;

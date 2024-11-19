@@ -43,6 +43,9 @@ public class OrderService {
     @Autowired
     BatchKoiRepository batchKoiRepository;
 
+    @Autowired
+    TransactionRepository transactionRepository;
+
     @Transactional
     public Orders create(OrderRequest orderRequest) {
         User customer = authenticationService.getCurrentUser();
@@ -87,6 +90,7 @@ public class OrderService {
         // Gán giá trị cho itemType
         orderDetail.setItemType("batch");  // Gán giá trị cho itemType
         orderDetail.setPrice(batchKoi.getPrice() * orderDetailRequest.getQuantity());
+        orderDetail.setBatchKoiId(batchKoi.getBatchKoiID());
 
         // Chờ thanh toán hoàn tất để cập nhật trạng thái
         orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
@@ -107,6 +111,7 @@ public class OrderService {
         // Gán giá trị cho itemType
         orderDetail.setItemType("individual");  // Gán giá trị cho itemType
         orderDetail.setPrice(koi.getPrice());
+        orderDetail.setKoiId(koi.getKoiID());
 
         // Chờ thanh toán hoàn tất để cập nhật trạng thái
         orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
@@ -246,32 +251,19 @@ public class OrderService {
         transactions2.setPayment(payment);
         transactions2.setStatus(TransactionEnum.SUCCESS);
         transactions2.setDescription("CUSTOMER TO MANAGER");
-        float newBalance = manager.getBalance() + orders.getTotal() * 0.1f;  //10% hệ thống
+        float newBalance = manager.getBalance() + orders.getTotal();
         transactions2.setAmount(newBalance);
         manager.setBalance(newBalance);
         transactionsSet.add(transactions2);
 
-        // Tạo transaction từ quản lý đến chủ sở hữu
-        Transactions transactions3 = new Transactions();
-        transactions3.setPayment(payment);
-        transactions3.setStatus(TransactionEnum.SUCCESS);
-        transactions3.setDescription("MANAGER TO OWNER");
-        transactions3.setFrom(manager);
-        User owner = orders.getOrderDetails().get(0).getKoi().getUser();
-        transactions3.setTo(owner);
-        float newShopBalance = owner.getBalance() + orders.getTotal() * (1 - 0.1f);
-        transactions3.setAmount(newShopBalance);
-        owner.setBalance(newShopBalance);
-        transactionsSet.add(transactions3);
-
-        // Save payment and transactions
+        // Lưu các transaction và cập nhật trạng thái của payment
         payment.setTransactions(transactionsSet);
+        orders.setPayment(payment); // Liên kết payment với đơn hàng
 
-        orders.setPayment(payment); // Set the payment for the order
+        orderRepository.save(orders); // Lưu đơn hàng với payment đã cập nhật
         userRepository.save(manager);
-        userRepository.save(owner);
         paymentRepository.save(payment);
-        orderRepository.save(orders); // Save the order with the payment
+
     }
 
 
@@ -290,6 +282,7 @@ public class OrderService {
         order.setStatus(status);
         return orderRepository.save(order);
     }
+
 
     // Kiểm tra chuyển trạng thái hợp lệ
     private boolean isStatusChangeInvalid(OrderStatusEnum currentStatus, OrderStatusEnum newStatus) {
