@@ -66,9 +66,6 @@ public class Koi {
     @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
 
-    @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
-    @JsonIgnore // Prevent circular references during serialization
-    private List<Consignment> consignments; // Relationship with Consignment
 
 
 }
