@@ -1,8 +1,5 @@
 package com.example.koifarm.api;
 
-import com.example.koifarm.entity.Consignment;
-import com.example.koifarm.model.ConsignmentRequest;
-import com.example.koifarm.service.ConsignmentService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
