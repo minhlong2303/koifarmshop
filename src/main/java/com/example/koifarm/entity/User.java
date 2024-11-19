@@ -25,7 +25,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private Long id;
 
     @Column(unique = true)
     String username;
@@ -89,8 +89,8 @@ public class User implements UserDetails {
     }
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    List<Koi> kois;
+    @JsonIgnore // Đảm bảo tránh vòng lặp khi trả JSON
+    private List<Koi> kois;
 
     @OneToMany(mappedBy = "customer")
     List<Orders> orders;

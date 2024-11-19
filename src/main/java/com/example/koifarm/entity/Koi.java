@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-public class Koi extends Consignment {
+public class Koi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // Consider AUTO if UUID strategy causes issues
@@ -66,8 +66,9 @@ public class Koi extends Consignment {
     @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
     List<OrderDetails> orderDetails;
 
-    // Thêm thuộc tính consignment này
-    @OneToOne(mappedBy = "koi")
-    @JsonIgnore
-    Consignment consignment;
+    @OneToMany(mappedBy = "koi", cascade = CascadeType.ALL)
+    @JsonIgnore // Prevent circular references during serialization
+    private List<Consignment> consignments; // Relationship with Consignment
+
+
 }

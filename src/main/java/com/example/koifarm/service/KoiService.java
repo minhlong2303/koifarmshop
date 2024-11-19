@@ -3,10 +3,10 @@ package com.example.koifarm.service;
 import com.example.koifarm.entity.Koi;
 import com.example.koifarm.entity.KoiSpecies;
 import com.example.koifarm.entity.User;
+import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.model.KoiRequest;
 import com.example.koifarm.repository.KoiRepository;
 import com.example.koifarm.repository.KoiSpeciesRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,54 +16,48 @@ import java.util.UUID;
 
 @Service
 public class KoiService {
-    @Autowired
-    KoiRepository koiRepository;
 
     @Autowired
-    ModelMapper modelMapper;
+    private KoiRepository koiRepository;
 
     @Autowired
-    AuthenticationService authenticationService;
+    private ModelMapper modelMapper;
 
     @Autowired
-    KoiSpeciesRepository koiSpeciesRepository;
+    private AuthenticationService authenticationService;
 
-    public void createKoi(Koi koi) {
-        // Lưu cá koi vào cơ sở dữ liệu (hoặc các xử lý liên quan)
-        // Đây là ví dụ, bạn có thể cần thêm logic cho việc tạo cá koi
-    }
+    @Autowired
+    private KoiSpeciesRepository koiSpeciesRepository;
 
-    //create
-    public Koi create(KoiRequest koiRequest){
+    // Create a new Koi
+    public Koi create(KoiRequest koiRequest) {
         Koi koi = modelMapper.map(koiRequest, Koi.class);
 
-        //luu thong tin nguoi tao
+        // Set the creator (current user) for the Koi
         User user = authenticationService.getCurrentUser();
         koi.setUser(user);
 
+        // Fetch the Koi species
         KoiSpecies koiSpecies = koiSpeciesRepository.findKoiSpeciesById(koiRequest.getSpeciesId());
         if (koiSpecies == null) {
             throw new EntityNotFoundException("Koi Species not found!");
         }
         koi.setSpecies(koiSpecies);
 
-        Koi newKoi = koiRepository.save(koi);
-        return newKoi;
+        // Save and return the new Koi
+        return koiRepository.save(koi);
     }
 
-    //read
-    public List<Koi> getAllKoi(){
-        List<Koi> kois = koiRepository.findKoiByIsDeletedFalse();
-        return  kois;
+    // Read all Koi
+    public List<Koi> getAllKoi() {
+        return koiRepository.findKoiByIsDeletedFalse(); // Fetch only non-deleted Koi
     }
 
+    // Update an existing Koi
+    public Koi update(UUID koiID, Koi koi) {
+        Koi oldKoi = getKoiById(koiID); // Find the Koi to update
 
-    //Update
-    public Koi update(UUID koiID, Koi koi){
-        //b1: tim Koi can duoc update
-        Koi oldKoi = getKoiById(koiID);
-
-        //b2: cap nhat thong tin cua no
+        // Update the Koi properties
         oldKoi.setName(koi.getName());
         oldKoi.setOrigin(koi.getOrigin());
         oldKoi.setGender(koi.getGender());
@@ -74,22 +68,21 @@ public class KoiService {
         oldKoi.setOwner(koi.getOwner());
         oldKoi.setDescription(koi.getDescription());
         oldKoi.setImage(koi.getImage());
-        //b3: luu xuong DB
+
+        // Save the updated Koi
         return koiRepository.save(oldKoi);
     }
 
-    //Delete
-    public Koi delete(UUID koiID){
+    // Soft delete a Koi
+    public Koi delete(UUID koiID) {
         Koi oldKoi = getKoiById(koiID);
-        oldKoi.setDeleted(true);
-        return koiRepository.save(oldKoi);
+        oldKoi.setDeleted(true); // Mark as deleted
+        return koiRepository.save(oldKoi); // Save the updated Koi
     }
 
-    public Koi getKoiById(UUID koiID){
-        Koi koi = koiRepository.findKoiByKoiID(koiID)
+    // Get a Koi by its ID
+    public Koi getKoiById(UUID koiID) {
+        return koiRepository.findKoiByKoiID(koiID)
                 .orElseThrow(() -> new EntityNotFoundException("Koi not found!"));
-        return koi;
     }
-
-
 }
