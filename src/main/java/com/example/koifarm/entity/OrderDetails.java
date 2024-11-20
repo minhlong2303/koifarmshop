@@ -46,18 +46,16 @@ public class OrderDetails {
         return batchKoi != null ? batchKoi.getBatchKoiID() : null;
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     @JsonIgnore
     Orders orders;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "koi_id")
-    @JsonIgnore
     Koi koi;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "batchkoi_id")
-    @JsonIgnore
     BatchKoi batchKoi;
 }

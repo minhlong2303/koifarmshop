@@ -40,7 +40,6 @@ public class Orders {
     List<OrderDetails> orderDetails;
 
     @OneToOne(mappedBy = "orders", cascade = CascadeType.ALL)
-    @JsonIgnore
     Payment payment;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
