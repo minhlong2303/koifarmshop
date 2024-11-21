@@ -1,14 +1,17 @@
 package com.example.koifarm.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
-//@Table(name = "KoiSpecies")
 public class KoiSpecies {
 
     @Id
@@ -18,14 +21,19 @@ public class KoiSpecies {
     @JsonIgnore
     boolean isDeleted = false;
 
+    @Column(unique = true)
     String name;
+
     String description;
 
     // One-to-Many relationship with Koi
     @OneToMany(mappedBy = "species")
-    List<Koi> kois;
+    Set<Koi> kois;
 
-    // One-to-Many relationship with BatchKoi
     @OneToMany(mappedBy = "species")
-     List<BatchKoi> batchKois;
+    private Set<BatchKoi> batchKoi;
+
+    @OneToMany(mappedBy = "species")
+    Set<Consignment> consignments;
 }
+

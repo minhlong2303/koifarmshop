@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import java.util.List;
 
 @Service
@@ -50,7 +52,7 @@ public class AuthenticationService implements UserDetailsService {
             EmailDetail emailDetail = new EmailDetail();
             emailDetail.setUser(newUser);
             emailDetail.setSubject("Welcome to Koi Farm Shop");
-            emailDetail.setLink("https://www.google.com/");   //link project
+            emailDetail.setLink("http://localhost:5173/");   //link project
 
             emailService.sentEmail(emailDetail);
 
@@ -99,8 +101,22 @@ public class AuthenticationService implements UserDetailsService {
     //ai dang goi request
     public User getCurrentUser(){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserById(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found!"));
+        return userRepository.findUserById(user.getId());
+    }
+
+    public User delete(long id){
+        User oldUser = userRepository.findUserById(id);
+        if (oldUser == null) throw new EntityNotFoundException("User not found!");
+        oldUser.setDeleted(true);
+        return userRepository.save(oldUser);
+    }
+
+    public UserResponse getUserById(long id) {
+        User user = userRepository.findUserById(id);
+        if (user == null) {
+            throw new EntityNotFoundException("User with ID " + id + " not found!");
+        }
+        return modelMapper.map(user, UserResponse.class);
     }
 
     public void forgotPassword(ForgotPasswordRequest forgotPasswordRequest){

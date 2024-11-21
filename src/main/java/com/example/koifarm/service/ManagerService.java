@@ -78,11 +78,4 @@ public class ManagerService {
         return revenueDate;
     }
 
-    public User delete(long id) {
-        User oldUser = userRepository.findUserById(id).orElseThrow(() -> new EntityNotFoundException("User not found!"));
-        oldUser.setDeleted(true);
-        return userRepository.save(oldUser);
-    }
-
-
 }

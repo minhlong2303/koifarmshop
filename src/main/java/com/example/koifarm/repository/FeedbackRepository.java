@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
 
-    @Query("SELECT new com.example.koifarm.model.FeedBackResponse(f.id, f.content,f.rating,a.email) " +
-            "FROM Feedback  f join User a on f.shop.id = a.id where f.shop.id =:shopID")
-    List<FeedBackResponse> findFeedbackByShopId(@Param("shopID") Long shopID);
+    // Fetch feedback based on the user who is the customer
+    @Query("SELECT new com.example.koifarm.model.FeedBackResponse(f.id, f.content, f.rating, a.email) " +
+            "FROM Feedback f JOIN f.customer a WHERE a.id = :userId")
+    List<FeedBackResponse> findFeedbackByUserId(@Param("userId") Long userId);
 }

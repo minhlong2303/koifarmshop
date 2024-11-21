@@ -1,7 +1,6 @@
 package com.example.koifarm.service;
 
 import com.example.koifarm.entity.User;
-import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -38,22 +37,15 @@ public class TokenService {
     }
 
     //verify token
-    public User getUserByToken(String token) {
-        try {
-            Claims claims = Jwts.parser() // Sử dụng parserBuilder() cho phiên bản mới
-                    .setSigningKey(getSigninKey()) // Thiết lập key cho việc xác thực
-                    .build() // Xây dựng parser
-                    .parseClaimsJws(token) // Phân tích token và lấy claims
-                    .getBody(); // Lấy body từ claims
+    public User getUserByToken(String token){
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigninKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        String idString = claims.getSubject();
+        long id = Long.parseLong(idString);
 
-            String idString = claims.getSubject(); // Lấy subject từ claims
-            long id = Long.parseLong(idString); // Chuyển đổi subject thành long
-
-            return userRepository.findUserById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("User not found!")); // Tìm người dùng theo ID
-        } catch (Exception e) {
-            // Xử lý ngoại lệ nếu token không hợp lệ hoặc không thể phân tích
-            throw new RuntimeException("Invalid token");
-        }
+        return userRepository.findUserById(id);
     }
 }

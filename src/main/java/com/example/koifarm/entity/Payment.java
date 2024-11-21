@@ -26,7 +26,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     PaymentEnums payment_method;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "order_id")
     @JsonIgnore
     Orders orders;

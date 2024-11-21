@@ -38,6 +38,20 @@ public class AuthenticationAPI {
         List<User> users = authenticationService.getAllUser();
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("user/{id}")
+    public ResponseEntity<UserResponse> getUser(@PathVariable long id) {
+        UserResponse userResponse = authenticationService.getUserById(id);
+        return ResponseEntity.ok(userResponse);
+    }
+
+    @PreAuthorize("hasAuthority('MANAGER')")
+    @DeleteMapping("user/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id){
+        User deletedUser = authenticationService.delete(id);
+        return ResponseEntity.ok(deletedUser);
+    }
+
     @PostMapping("forgot-password")
     public ResponseEntity forgotPassword(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest){
         authenticationService.forgotPassword(forgotPasswordRequest);
