@@ -4,13 +4,9 @@ import com.example.koifarm.entity.BatchKoi;
 import com.example.koifarm.entity.KoiSpecies;
 import com.example.koifarm.exception.EntityNotFoundException;
 import com.example.koifarm.model.BatchKoiRequest;
-import com.example.koifarm.model.BatchKoiResponse;
 import com.example.koifarm.repository.BatchKoiRepository;
 import com.example.koifarm.repository.KoiSpeciesRepository;
-import org.hibernate.query.Page;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
