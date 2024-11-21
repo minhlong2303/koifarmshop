@@ -1,15 +1,12 @@
-import { Form, Image, InputNumber, Modal, message } from "antd";
+import { Image, message } from "antd";
 import React, { useEffect, useState } from "react";
 import api from "../../config/axios";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/features/cartSlice";
 import { useParams } from "react-router-dom";
-import { useForm } from "antd/es/form/Form";
 
 function BatchKoiDetail() {
   const [batchKoiFish, setBatchKoiFish] = useState(null);
-  const [openModal, setOpenModal] = useState(null);
-  const [form] = useForm();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { batchKoiID } = useParams();
@@ -27,22 +24,20 @@ function BatchKoiDetail() {
     fetchBatchKoiFishDetail();
   }, []);
 
-  const handleAddToCart = (values) => {
-    setLoading(true);
-    if (values.quantity > batchKoiFish.quantity) {
-      message.error("Số lượng nhập vào vượt quá số lượng có sẵn!");
-      setLoading(false);
+  const handleAddToCart = () => {
+    if (batchKoiFish.quantity <= 0) {
+      message.error("Sản phẩm này đã hết hàng!");
       return;
     }
 
+    setLoading(true);
     const productWithQuantity = {
       ...batchKoiFish,
-      quantity: values.quantity,
+      quantity: batchKoiFish.quantity, // Mặc định thêm số lượng là 1
     };
     dispatch(addProduct(productWithQuantity));
+    message.success("Đã thêm sản phẩm vào giỏ hàng!");
     setLoading(false);
-    setOpenModal(false);
-    form.resetFields();
   };
 
   if (!batchKoiFish) {
@@ -56,37 +51,9 @@ function BatchKoiDetail() {
       <p>Số lượng: {batchKoiFish.quantity}</p>
       <p>Mô tả: {batchKoiFish.description}</p>
       <span>{`${batchKoiFish.price} vnđ`}</span>
-      <button onClick={() => setOpenModal(true)}>Thêm vào giỏ hàng</button>
-      <Modal
-        open={openModal}
-        onCancel={() => setOpenModal(false)}
-        onOk={() => form.submit()}
-        title="Vui lòng điền số lượng"
-        confirmLoading={loading}
-      >
-        <Form form={form} labelCol={{ span: 24 }} onFinish={handleAddToCart}>
-          <Form.Item
-            label="Số lượng"
-            name="quantity"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng điền số lượng",
-              },
-              {
-                type: "number",
-                min: 1,
-                message: "Số lượng phải lớn hơn 0",
-              },
-            ]}
-          >
-            <InputNumber
-              min={1}
-              onBlur={() => form.validateFields(["quantity"])}
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
+      <button onClick={handleAddToCart} disabled={loading}>
+        Thêm vào giỏ hàng
+      </button>
     </div>
   );
 }

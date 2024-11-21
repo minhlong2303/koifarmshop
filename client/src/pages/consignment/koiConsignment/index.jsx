@@ -7,11 +7,13 @@ import "./index.css";
 import api from "../../../config/axios";
 import { useForm } from "antd/es/form/Form";
 import uploadFile from "../../../utils/file";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 function KoiConsignment() {
+  const navigate = useNavigate();
   const [form] = useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -52,6 +54,7 @@ function KoiConsignment() {
 
       await api.post("consignments", values);
       toast.success("Đơn ký gửi đã được gửi thành công");
+      navigate("/consignment-success");
     } catch (error) {
       console.log(error);
       toast.error("Có lỗi xảy ra khi gửi đơn ký gửi");

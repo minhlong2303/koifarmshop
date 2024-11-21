@@ -1,12 +1,47 @@
-import { useState } from "react";
-import { Form, Input, Button, Select, Upload, message, Row, Col } from "antd";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Upload,
+  message,
+  Row,
+  Col,
+  Spin,
+} from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import api from "../../../config/axios"; // Import config API
 
 const { Option } = Select;
 
 const UserAccount = () => {
   const [form] = Form.useForm();
+  const user = useSelector((state) => state.user); // Lấy thông tin người dùng từ Redux
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
+
+  // Gọi API để lấy thông tin người dùng
+  useEffect(() => {
+    if (user?.id) {
+      setLoading(true);
+      api
+        .get(`/user/${user.id}`)
+        .then((response) => {
+          setUserData(response.data);
+          form.setFieldsValue(response.data); // Set giá trị form với dữ liệu từ API
+        })
+        .catch((error) => {
+          message.error("Không thể tải thông tin người dùng.");
+          console.error(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [user, form]);
 
   const handleImageChange = (info) => {
     if (info.file.status === "done") {
@@ -17,9 +52,32 @@ const UserAccount = () => {
     }
   };
 
-  const onFinish = (values) => {
-    console.log("Form values:", values);
+  const onFinish = async (values) => {
+    try {
+      setLoading(true);
+      const updatedData = {
+        ...userData,
+        ...values,
+      };
+      // Gửi dữ liệu cập nhật tới API
+      await api.put(`/user/${user.id}`, updatedData);
+      message.success("Thông tin tài khoản đã được cập nhật thành công.");
+      setUserData(updatedData); // Cập nhật lại state
+    } catch (error) {
+      message.error("Cập nhật thông tin thất bại.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -30,8 +88,8 @@ const UserAccount = () => {
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
         maxWidth: "900px",
         margin: "0 auto",
-        maxHeight: "60vh", 
-        overflowY: "auto", 
+        maxHeight: "60vh",
+        overflowY: "auto",
       }}
     >
       <h2
@@ -79,15 +137,7 @@ const UserAccount = () => {
           </Col>
 
           <Col span={18}>
-            <Form
-              form={form}
-              layout="vertical"
-              onFinish={onFinish}
-              initialValues={{
-                email: "Customer@gmail.com",
-                username: "Customer",
-              }}
-            >
+            <Form form={form} layout="vertical" onFinish={onFinish}>
               <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item label="Email" name="email">
@@ -144,7 +194,6 @@ const UserAccount = () => {
                 <Col span={12}>
                   <Form.Item label="Tỉnh" name="city">
                     <Select placeholder="Thành phố">
-                      {/* Add more options here */}
                       <Option value="hanoi">Hà Nội</Option>
                       <Option value="hcm">Hồ Chí Minh</Option>
                     </Select>
@@ -153,7 +202,6 @@ const UserAccount = () => {
                 <Col span={12}>
                   <Form.Item label="Quận / Huyện" name="district">
                     <Select placeholder="Quận / Huyện">
-                      {/* Add more options here */}
                       <Option value="baDinh">Ba Đình</Option>
                       <Option value="cauGiay">Cầu Giấy</Option>
                     </Select>
@@ -165,7 +213,6 @@ const UserAccount = () => {
                 <Col span={12}>
                   <Form.Item label="Phường / Xã" name="ward">
                     <Select placeholder="Phường / Xã">
-                      {/* Add more options here */}
                       <Option value="phuong1">Phường 1</Option>
                       <Option value="phuong2">Phường 2</Option>
                     </Select>

@@ -38,6 +38,11 @@ const items = [
       "manage-orders",
       <IoIosList />
     ),
+    getItem(
+      <Link to="manage-consignment">Đơn Ký Gửi</Link>,
+      "manage-consignment",
+      <IoIosList />
+    ),
   ]),
   getItem("Dashboard & Report", "dashboardReport", <TeamOutlined />, [
     getItem(<Link to="overview">Overview</Link>, "overview", <IoIosList />),

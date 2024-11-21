@@ -35,6 +35,11 @@ const items = [
     "cart",
     <ShoppingOutlined />
   ),
+  getItem(
+    <Link to="/account-template/consignment">Đơn Ký Gửi</Link>,
+    "consignment",
+    <ShoppingOutlined />
+  ),
 ];
 
 const contentStyle = {

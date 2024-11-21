@@ -25,10 +25,10 @@ const cartSlice = createSlice({
       return [];
     },
     removeSelected: (state, action) => {
+      const { koiIDs = [], batchKoiIDs = [] } = action.payload;
       return state.filter(
         (item) =>
-          !action.payload.includes(item.koiID) &&
-          !action.payload.includes(item.batchKoiID)
+          !koiIDs.includes(item.koiID) && !batchKoiIDs.includes(item.batchKoiID)
       );
     },
     loadCart: (state, action) => {

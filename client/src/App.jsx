@@ -35,6 +35,9 @@ import ManageBatchKoi from "./pages/admin/manage-batchKoi";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 import ManageOrder from "./pages/admin/manage-orders/ManageOrder";
 import BatchKoiDetail from "./pages/BatchKoiDetail/BatchKoiDetail";
+import ManageConsignment from "./pages/admin/manage-consignments/ManageConsignment";
+import UserConsignment from "./pages/account/consignment/UserConsignment";
+import ConsignmentSuccess from "./pages/ConsignmentSuccess";
 
 function App() {
   const ProtectRouteAuth = ({ children }) => {
@@ -100,6 +103,10 @@ function App() {
           path: "koiConsignment",
           element: <KoiConsignment />,
         },
+        {
+          path: "consignment-success",
+          element: <ConsignmentSuccess></ConsignmentSuccess>,
+        },
       ],
     },
     {
@@ -163,6 +170,10 @@ function App() {
           path: "overview",
           element: <OverviewPage></OverviewPage>,
         },
+        {
+          path: "manage-consignment",
+          element: <ManageConsignment></ManageConsignment>,
+        },
       ],
     },
 
@@ -185,6 +196,10 @@ function App() {
         {
           path: "cart",
           element: <CartHistory />,
+        },
+        {
+          path: "consignment",
+          element: <UserConsignment></UserConsignment>,
         },
       ],
     },

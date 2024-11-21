@@ -29,11 +29,34 @@ function SuccessPage() {
   const getOrderDetail = async () => {
     try {
       const response = await api.get(`/order/${orderID}`);
-      console.log(response);
-      return response.data;
+      console.log("Order response:", response.data);
+
+      // Lấy koiId và batchKoiId từ trường bên ngoài
+      const koiIDs = response.data.koiId || [];
+      const batchKoiIDs = response.data.batchKoiId || [];
+
+      return { koiIDs, batchKoiIDs };
     } catch (error) {
-      console.log(error);
-      return [];
+      console.error("Error fetching order details:", error);
+      return { koiIDs: [], batchKoiIDs: [] };
+    }
+  };
+
+  const deleteItemsFromDatabase = async (koiIDs, batchKoiIDs) => {
+    try {
+      if (koiIDs.length > 0) {
+        await Promise.all(koiIDs.map((id) => api.delete(`/koi/${id}`)));
+        console.log("Deleted koi items:", koiIDs);
+      }
+
+      if (batchKoiIDs.length > 0) {
+        await Promise.all(
+          batchKoiIDs.map((id) => api.delete(`/batchKoi/${id}`))
+        );
+        console.log("Deleted batch koi items:", batchKoiIDs);
+      }
+    } catch (error) {
+      console.error("Error in deleteItemsFromDatabase:", error);
     }
   };
 
@@ -41,16 +64,20 @@ function SuccessPage() {
     const handlePaymentStatus = async () => {
       if (vnp_TransactionStatus === "00") {
         await postOrderID();
-        const orderDetails = await getOrderDetail();
 
-        if (orderDetails && orderDetails.orderDetails) {
-          const idsToRemove = orderDetails.orderDetails.map(
-            (item) => item.koiId
-          );
-          console.log("IDs cần xóa:", idsToRemove); // Kiểm tra danh sách IDs
-          dispatch(removeSelected(idsToRemove));
-        }
+        // Lấy danh sách koiId và batchKoiId
+        const { koiIDs, batchKoiIDs } = await getOrderDetail();
 
+        console.log("Koi IDs cần xóa:", koiIDs);
+        console.log("Batch Koi IDs cần xóa:", batchKoiIDs);
+
+        // Xóa sản phẩm trong database
+        await deleteItemsFromDatabase(koiIDs, batchKoiIDs);
+
+        // Dispatch action xóa các sản phẩm khỏi cart
+        dispatch(removeSelected({ koiIDs, batchKoiIDs }));
+
+        // Clear order
         dispatch(clearOrder());
       } else {
         navigate("/error");
@@ -65,7 +92,7 @@ function SuccessPage() {
       <Result
         status="success"
         title="Thanh toán thành công!"
-        subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+        subTitle="Cloud server configuration takes 1-5 minutes, please wait."
         extra={[
           <Button
             type="primary"
