@@ -31,8 +31,7 @@ public class ConsignmentService {
     @Autowired AuthenticationService authenticationService;
     @Autowired KoiRepository koiRepository;
     @Autowired
-    private KoiService koiService;
-
+    KoiService koiService;
     public ConsignmentService(ConsignmentRepository consignmentRepository,
                               UserRepository userRepository,
                               AuthenticationService authenticationService,
@@ -43,19 +42,45 @@ public class ConsignmentService {
         this.koiRepository = koiRepository;
     }
 
-    public Consignment createConsignment(ConsignmentRequest consignmentRequest) {
-        log.info("Creating consignment for request: {}", consignmentRequest);
 
-        // Lấy thông tin người dùng hiện tại
-        User customer = authenticationService.getCurrentUser();
-        if (customer == null) {
-            throw new EntityNotFoundException("Current user not found.");
-        }
+    public Consignment createConsignment(ConsignmentRequest consignmentRequest) {
+        User customer = authenticationService.getCurrentUser(); // Lấy người dùng hiện tại
 
         Consignment consignment = new Consignment();
-        populateConsignmentDetails(consignment, consignmentRequest, customer);
 
-        log.info("Consignment created successfully for user: {}", customer.getId());
+        // Thiết lập thông tin khách hàng
+        consignment.setFirstName(consignmentRequest.getFirstName());
+        consignment.setLastName(consignmentRequest.getLastName());
+        consignment.setPhone(consignmentRequest.getPhone());
+        consignment.setEmail(consignmentRequest.getEmail());
+        consignment.setAddress(consignmentRequest.getAddress());
+
+        // Thiết lập thông tin cá Koi
+        consignment.setKoiName(consignmentRequest.getKoiName());
+        consignment.setBreed(consignmentRequest.getBreed());
+        consignment.setSize(consignmentRequest.getSize());
+        consignment.setAge(consignmentRequest.getAge());
+        consignment.setGender(consignmentRequest.getGender());
+        consignment.setExpectedPrice(consignmentRequest.getExpectedPrice());
+
+        // Thiết lập các thông tin ký gửi
+        try {
+            consignment.setConsignmentType(consignmentRequest.getConsignmentType());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidConsignmentTypeException("Loại consignments không hợp lệ: " + consignmentRequest.getConsignmentType());
+        }
+
+        consignment.setInspectionMethod(consignmentRequest.getInspectionMethod());
+
+        // Thiết lập ảnh
+        consignment.setKoiImageUrl(consignmentRequest.getKoiImageUrl());
+        consignment.setCertificateImageUrl(consignmentRequest.getCertificateImageUrl());
+
+        // Thông tin khác
+        consignment.setCreatedDate(LocalDateTime.now());
+        consignment.setCustomer(customer); // Gán người dùng hiện tại vào consignments
+
+        // Lưu thông tin consignments vào cơ sở dữ liệu
         return consignmentRepository.save(consignment);
     }
 
@@ -102,63 +127,12 @@ public class ConsignmentService {
         return consignmentRepository.findByCustomer_Id(userId);
     }
 
-    public List<Consignment> getConsignmentsByKoiName(String koiName) {
-        log.info("Fetching consignments with Koi name containing: {}", koiName);
-        return consignmentRepository.findByKoiNameContainingIgnoreCase(koiName);
-    }
-
-    public List<Consignment> getConsignmentsByCurrentUser() {
-        log.info("Fetching consignments for current user");
-        User customer = authenticationService.getCurrentUser();
-        if (customer == null) {
-            throw new EntityNotFoundException("Current user not found.");
+    public void deleteConsignmentById(UUID consignmentId) {
+        if (!consignmentRepository.existsById(consignmentId)) {
+            throw new EntityNotFoundException("Consignment with ID " + consignmentId + " not found");
         }
-        return consignmentRepository.findByCustomer_Id(customer.getId());
+        consignmentRepository.deleteById(consignmentId);
     }
 
-    // Helper method to populate consignment details
-    private void populateConsignmentDetails(Consignment consignment, ConsignmentRequest request, User customer) {
-        consignment.setFirstName(request.getFirstName());
-        consignment.setLastName(request.getLastName());
-        consignment.setPhone(request.getPhone());
-        consignment.setEmail(request.getEmail());
-        consignment.setAddress(request.getAddress());
 
-        consignment.setKoiName(request.getKoiName());
-        consignment.setBreed(request.getBreed());
-        consignment.setSize(request.getSize());
-        consignment.setAge(request.getAge());
-        consignment.setGender(request.getGender());
-
-        try {
-            consignment.setConsignmentType(ConsignmentType.valueOf(request.getConsignmentType().toString().toUpperCase()));
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid consignment type: {}", request.getConsignmentType());
-            throw new InvalidConsignmentTypeException("Invalid consignment type: " + request.getConsignmentType());
-        }
-
-        consignment.setInspectionMethod(request.getInspectionMethod());
-        consignment.setExpectedPrice(request.getExpectedPrice());
-        consignment.setKoiImageUrl(request.getKoiImageUrl());
-        consignment.setCertificateImageUrl(request.getCertificateImageUrl());
-
-        consignment.setCreatedDate(LocalDateTime.now());
-        consignment.setCustomer(customer);
-    }
-
-    // Helper method to create a Koi object from a consignment
-    private Koi createKoiFromConsignment(Consignment consignment) {
-        Koi koi = new Koi();
-        koi.setName(consignment.getKoiName());
-        koi.setBreed(consignment.getBreed());
-        koi.setSize(consignment.getSize());
-        koi.setPrice(consignment.getExpectedPrice());
-        koi.setGender(consignment.getGender());
-        koi.setImage(consignment.getKoiImageUrl());
-        koi.setDescription("Age: " + consignment.getAge());
-        koi.setStatus("available");
-        koi.setAvailable(true);
-        koi.setConsignment(consignment);
-        return koi;
-    }
 }

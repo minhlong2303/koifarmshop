@@ -67,6 +67,7 @@ public class BatchKoiService {
         oldBatchKoi.setPrice(batchKoi.getPrice());
         oldBatchKoi.setQuantity(batchKoi.getQuantity());
         oldBatchKoi.setDescription(batchKoi.getDescription());
+        oldBatchKoi.setImage(batchKoi.getImage());
 
         return batchKoiRepository.save(oldBatchKoi);
     }

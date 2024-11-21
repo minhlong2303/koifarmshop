@@ -52,10 +52,22 @@ public class ConsignmentAPI {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Consignment>> getConsignmentsByUserId(@PathVariable Long userId) {
+        List<Consignment> consignments = consignmentService.getConsignmentsByUserId(userId);
+        return ResponseEntity.ok(consignments);
+    }
+
     @PostMapping("/{consignmentId}/create-koi")
     public ResponseEntity<Koi> createKoiFromConsignment(@PathVariable UUID consignmentId) {
         Koi newKoi = consignmentService.createKoiFromConsignment(consignmentId);
         return ResponseEntity.ok(newKoi);
+    }
+
+    @DeleteMapping("/{consignmentId}")
+    public ResponseEntity<Void> deleteConsignment(@PathVariable UUID consignmentId) {
+        consignmentService.deleteConsignmentById(consignmentId);
+        return ResponseEntity.noContent().build();
     }
 
 }

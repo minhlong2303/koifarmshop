@@ -132,8 +132,7 @@ public class OrderService {
 
 
     public List<Orders> get(){
-        User user = authenticationService.getCurrentUser();
-        List<Orders> orders = orderRepository.findOrdersByCustomer(user);
+        List<Orders> orders = orderRepository.findAll();
 
         // Sắp xếp theo thứ tự ngày từ nhỏ đến lớn
         orders.sort(Comparator.comparing(Orders::getDate));

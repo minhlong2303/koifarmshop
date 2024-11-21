@@ -25,7 +25,6 @@ public class Koi {
     boolean isDeleted = false;
 
     @NotBlank(message = "Name is required")
-    @Column(unique = true)
     private String name;
 
     @NotBlank(message = "Origin is required")
