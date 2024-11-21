@@ -54,6 +54,11 @@ public class Koi {
     boolean isAvailable = true;
 
     @ManyToOne
+    @JoinColumn(name = "consignment_id")
+    @JsonIgnore
+    Consignment consignment;  // Liên kết với Consignment (Ký gửi)
+
+    @ManyToOne
         @JoinColumn(name = "user_id")
     @JsonIgnore
     User user;

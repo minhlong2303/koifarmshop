@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -43,7 +44,7 @@ public class Consignment {
     private String breed;
 
     @Column(length = 20)
-    private String size;
+    private float size;
 
     private int age;
 
@@ -66,8 +67,17 @@ public class Consignment {
 
     private LocalDateTime createdDate = LocalDateTime.now(); // Khởi tạo mặc định
 
+    @Column(length = 20)
+    private String status = "PENDING"; // Trạng thái mặc định là "PENDING"
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private User customer;
+
+    @OneToMany(mappedBy = "consignment", cascade = CascadeType.ALL)
+    private List<Koi> kois;
+
+    float expectedPrice;
+
 }

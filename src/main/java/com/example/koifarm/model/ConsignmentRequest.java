@@ -1,5 +1,8 @@
 package com.example.koifarm.model;
 
+import com.example.koifarm.enums.ConsignmentType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,15 +20,17 @@ public class ConsignmentRequest {
     // Thông tin cá Koi
     private String koiName;
     private String breed;
-    private String size;
+    private float size;
     private int age;
     private String gender;
 
     // Hình thức và loại ký gửi
-    private String consignmentType;  // "SALE"
+    @Enumerated(EnumType.STRING)
+    private ConsignmentType consignmentType;  // "SALE"
     private String inspectionMethod;    //online
 
     // Thông tin hình ảnh
     private String koiImageUrl;  // URL của ảnh cá Koi
     private String certificateImageUrl;  // URL của ảnh giấy chứng nhận
+    private float expectedPrice;
 }
