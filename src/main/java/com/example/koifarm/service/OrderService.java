@@ -43,6 +43,9 @@ public class OrderService {
     @Autowired
     BatchKoiRepository batchKoiRepository;
 
+    @Autowired
+    TransactionRepository transactionRepository;
+
     @Transactional
     public Orders create(OrderRequest orderRequest) {
         User customer = authenticationService.getCurrentUser();
@@ -87,6 +90,7 @@ public class OrderService {
         // Gán giá trị cho itemType
         orderDetail.setItemType("batch");  // Gán giá trị cho itemType
         orderDetail.setPrice(batchKoi.getPrice() * orderDetailRequest.getQuantity());
+        orderDetail.setBatchKoiId(batchKoi.getBatchKoiID());
 
         // Chờ thanh toán hoàn tất để cập nhật trạng thái
         orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
@@ -97,7 +101,7 @@ public class OrderService {
     }
 
     private float processIndividualKoi(OrderDetailRequest orderDetailRequest, OrderDetails orderDetail) {
-        Koi koi = koiRepository.findKoiByKoiID(orderDetailRequest.getItemId())
+        Koi koi = koiRepository.findById(orderDetailRequest.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("Koi not found"));
 
         if (!koi.getStatus().equals("available")) {
@@ -107,6 +111,7 @@ public class OrderService {
         // Gán giá trị cho itemType
         orderDetail.setItemType("individual");  // Gán giá trị cho itemType
         orderDetail.setPrice(koi.getPrice());
+        orderDetail.setKoiId(koi.getKoiID());
 
         // Chờ thanh toán hoàn tất để cập nhật trạng thái
         orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
@@ -246,58 +251,88 @@ public class OrderService {
         transactions2.setPayment(payment);
         transactions2.setStatus(TransactionEnum.SUCCESS);
         transactions2.setDescription("CUSTOMER TO MANAGER");
-        float newBalance = manager.getBalance() + orders.getTotal() * 0.1f;  //10% hệ thống
+        float newBalance = manager.getBalance() + orders.getTotal();
         transactions2.setAmount(newBalance);
         manager.setBalance(newBalance);
         transactionsSet.add(transactions2);
-
-        // Tạo transaction từ quản lý đến chủ sở hữu
-        Transactions transactions3 = new Transactions();
-        transactions3.setPayment(payment);
-        transactions3.setStatus(TransactionEnum.SUCCESS);
-        transactions3.setDescription("MANAGER TO OWNER");
-        transactions3.setFrom(manager);
-        User owner = orders.getOrderDetails().get(0).getKoi().getUser();
-        transactions3.setTo(owner);
-        float newShopBalance = owner.getBalance() + orders.getTotal() * (1 - 0.1f);
-        transactions3.setAmount(newShopBalance);
-        owner.setBalance(newShopBalance);
-        transactionsSet.add(transactions3);
 
         // Lưu các transaction và cập nhật trạng thái của payment
         payment.setTransactions(transactionsSet);
         orders.setPayment(payment); // Liên kết payment với đơn hàng
 
-        // Cập nhật trạng thái đơn hàng sau khi thanh toán thành công
-        orders.setStatus(OrderStatusEnum.COMPLETED);  // Đặt trạng thái đơn hàng thành "COMPLETED"
-
         orderRepository.save(orders); // Lưu đơn hàng với payment đã cập nhật
         userRepository.save(manager);
-        userRepository.save(owner);
         paymentRepository.save(payment);
+
     }
 
 
-    // Cập nhật trạng thái đơn hàng, chỉ cho phép chuyển sang COMPLETED sau khi thanh toán hoàn tất
+    //Update Status
     public Orders updateOrderStatus(UUID orderId, OrderStatusEnum status) {
         Orders order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
 
-        // Kiểm tra nếu trạng thái là "PROCESSING" mới cho phép cập nhật
-        if (order.getStatus() != OrderStatusEnum.PROCESSING) {
-            throw new IllegalStateException("Order must be completed (payment successful) before changing status.");
-        }
+        // Lấy trạng thái hiện tại của đơn hàng
+        OrderStatusEnum currentStatus = order.getStatus();
 
-        // Nếu trạng thái yêu cầu là COMPLETED thì cập nhật
-        if (status == OrderStatusEnum.COMPLETED) {
-            order.setStatus(OrderStatusEnum.COMPLETED);
-        } else {
-            throw new IllegalStateException("Invalid status update request.");
+        // Kiểm tra nếu chuyển trạng thái không hợp lệ
+        if (isStatusChangeInvalid(currentStatus, status)) {
+            throw new IllegalStateException("Chuyển trạng thái không hợp lệ");
         }
-
+        order.setStatus(status);
         return orderRepository.save(order);
     }
 
 
+    // Kiểm tra chuyển trạng thái hợp lệ
+    private boolean isStatusChangeInvalid(OrderStatusEnum currentStatus, OrderStatusEnum newStatus) {
+        switch (currentStatus) {
+            case PENDING:
+                // Chỉ có thể chuyển từ PENDING sang PROCESSING hoặc CANCELLED
+                return newStatus != OrderStatusEnum.PROCESSING && newStatus != OrderStatusEnum.CANCELLED;
+
+            case PROCESSING:
+                // Chỉ có thể chuyển từ PROCESSING sang COMPLETED hoặc CANCELLED
+                return newStatus != OrderStatusEnum.COMPLETED && newStatus != OrderStatusEnum.CANCELLED;
+
+            case COMPLETED:
+            case CANCELLED:
+                // Không thể chuyển trạng thái nếu đã hoàn thành hoặc đã hủy
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    //Huy don hang
+    public Orders cancelOrder(UUID orderId) {
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
+
+        // Kiểm tra nếu trạng thái đơn hàng là PENDING hoặc PROCESSING thì mới có thể hủy
+        if (order.getStatus() == OrderStatusEnum.COMPLETED || order.getStatus() == OrderStatusEnum.CANCELLED) {
+            throw new IllegalStateException("Không thể hủy đơn hàng đã hoàn thành hoặc đã bị hủy.");
+        }
+
+        // Cập nhật trạng thái đơn hàng thành CANCELLED
+        order.setStatus(OrderStatusEnum.CANCELLED);
+        return orderRepository.save(order);
+    }
+
+    //Get orders
+    public Orders getOrderById(UUID orderId){
+        Orders oldOrders = orderRepository.findOrdersById(orderId);
+        if (oldOrders == null) throw new EntityNotFoundException("Orders not found!");
+        return oldOrders;
+    }
+
+    //delete order
+    public Orders deleteOrder(UUID orderId){
+        Orders oldOrders = orderRepository.findOrdersById(orderId);
+        if (oldOrders == null) throw new EntityNotFoundException("Orders not found!");
+        oldOrders.setDeleted(true);
+        return orderRepository.save(oldOrders);
+    }
 
 }

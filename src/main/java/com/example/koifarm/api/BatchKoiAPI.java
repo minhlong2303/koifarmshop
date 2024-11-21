@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class BatchKoiAPI {
     @Autowired
     BatchKoiService batchKoiService;
 
-   // @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAuthority('MANAGER')")
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody BatchKoiRequest batchKoiRequest){
         BatchKoi newBatchKoi = batchKoiService.create(batchKoiRequest);
@@ -30,6 +31,13 @@ public class BatchKoiAPI {
     @GetMapping
     public ResponseEntity get(){
         List<BatchKoi> batchKoi = batchKoiService.getAllBatchKoi();
+        return ResponseEntity.ok(batchKoi);
+    }
+
+    //lay thong tin chi tiet cua 1 lo Koi cu the
+    @GetMapping("{batchKoiID}")
+    public ResponseEntity getbatchKoiDetails(@PathVariable UUID batchKoiID){
+        BatchKoi batchKoi = batchKoiService.getBatchKoiById(batchKoiID);
         return ResponseEntity.ok(batchKoi);
     }
 

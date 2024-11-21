@@ -48,4 +48,5 @@ public class BatchKoi {
     boolean isAvailable = true;
 
     String status = "available"; // Default status
+
 }

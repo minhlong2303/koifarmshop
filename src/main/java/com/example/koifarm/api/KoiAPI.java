@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class KoiAPI {
     @Autowired
     KoiService koiService;
 
-    //@PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAuthority('MANAGER')")
     //@PreAuthorize("hasAnyAuthority('MANAGER', 'OWNER')")
 
 
@@ -37,6 +38,13 @@ public class KoiAPI {
     public ResponseEntity get(){
         List<Koi> kois = koiService.getAllKoi();
         return ResponseEntity.ok(kois);
+    }
+
+    // Get details of a specific Koi by ID
+    @GetMapping("{koiID}")
+    public ResponseEntity getKoiDetails(@PathVariable UUID koiID) {
+        Koi koi = koiService.getKoiById(koiID);
+        return ResponseEntity.ok(koi);
     }
 
     //api/koi/{koiId}
