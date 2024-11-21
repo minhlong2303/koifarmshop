@@ -94,9 +94,9 @@ public class OrderService {
 
         // Gán giá trị cho itemType
         orderDetail.setBatchKoi(batchKoi);
+        orderDetail.setBatchKoiId(orderDetailRequest.getItemId());
         orderDetail.setItemType("batch");  // Gán giá trị cho itemType
         orderDetail.setPrice(batchKoi.getPrice() * orderDetailRequest.getQuantity());
-        orderDetail.setBatchKoiId(batchKoi.getBatchKoiID());
 
         // Chờ thanh toán hoàn tất để cập nhật trạng thái
         orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
@@ -115,9 +115,10 @@ public class OrderService {
         }
 
         // Gán giá trị cho itemType
+        orderDetail.setKoi(koi);
+        orderDetail.setKoiId(orderDetailRequest.getItemId());
         orderDetail.setItemType("individual");  // Gán giá trị cho itemType
         orderDetail.setPrice(koi.getPrice());
-        orderDetail.setKoiId(koi.getKoiID());
 
         //Chờ thanh toán hoàn tất để cập nhật trạng thái
         orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
