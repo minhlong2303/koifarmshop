@@ -26,7 +26,6 @@ public class OrderDetails {
     @NotNull(message = "Item type is required")
     private String itemType;
 
-    String status = "available"; // Default status
 
     @Transient
     private UUID koiId;

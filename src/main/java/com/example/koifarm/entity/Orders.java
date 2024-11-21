@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -51,6 +52,29 @@ public class Orders {
         if (this.date == null) {
             this.date = LocalDateTime.now();
         }
+    }
+
+    @ElementCollection
+    private List<String> koiId = new ArrayList<>();
+
+    @ElementCollection
+    private List<String> batchKoiId = new ArrayList<>();
+
+
+    public List<String> getKoiId() {
+        return koiId;
+    }
+
+    public void setKoiId(List<String> koiId) {
+        this.koiId = koiId;
+    }
+
+    public List<String> getBatchKoiId() {
+        return batchKoiId;
+    }
+
+    public void setBatchKoiId(List<String> batchKoiId) {
+        this.batchKoiId = batchKoiId;
     }
 }
 

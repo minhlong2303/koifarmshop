@@ -57,31 +57,37 @@ public class OrderService {
         order.setDate(LocalDateTime.now());
         order.setStatus(OrderStatusEnum.PENDING);
 
+        // Danh sách các ID cá thể và lô cá
+        List<String> koiId = new ArrayList<>();
+        List<String> batchKoiId = new ArrayList<>();
+
         for (OrderDetailRequest orderDetailRequest : orderRequest.getDetail()) {
             OrderDetails orderDetail = new OrderDetails();
             orderDetail.setQuantity(orderDetailRequest.getQuantity());
             orderDetail.setOrders(order);
+
             if (orderDetailRequest.isBatch()) {
-                // Xử lý lô cá
                 total += processBatchKoi(orderDetailRequest, orderDetail);
-            } else {
-                // Xử lý cá thể
+                batchKoiId.add(orderDetail.getBatchKoiId().toString()); // Thêm batchKoiId vào danh sách
+            } else if (!orderDetailRequest.isBatch()){
                 total += processIndividualKoi(orderDetailRequest, orderDetail);
+                koiId.add(orderDetail.getKoiId().toString()); // Thêm koiId vào danh sách
             }
             orderDetails.add(orderDetail);
         }
 
         order.setOrderDetails(orderDetails);
         order.setTotal(total);
-//
-//        return orderRepository.save(order);
+        order.setKoiId(koiId);  // Cập nhật koiIds vào order
+        order.setBatchKoiId(batchKoiId);  // Cập nhật batchKoiIds vào order
         // Lưu đơn hàng
         Orders savedOrder = orderRepository.save(order);
 
         // Tạo thông tin thanh toán cho đơn hàng
         createTransaction(savedOrder.getId());
         order.setPayment(savedOrder.getPayment());
-        return savedOrder; // Đảm bảo trả về đơn hàng cùng với thông tin thanh toán
+
+        return savedOrder; // Trả về đơn hàng với thông tin thanh toán và các ID
     }
 
     private float processBatchKoi(OrderDetailRequest orderDetailRequest, OrderDetails orderDetail) {
@@ -97,9 +103,6 @@ public class OrderService {
         orderDetail.setBatchKoiId(orderDetailRequest.getItemId());
         orderDetail.setItemType("batch");  // Gán giá trị cho itemType
         orderDetail.setPrice(batchKoi.getPrice() * orderDetailRequest.getQuantity());
-
-        // Chờ thanh toán hoàn tất để cập nhật trạng thái
-        orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
 
         batchKoiRepository.save(batchKoi);
 
@@ -119,9 +122,6 @@ public class OrderService {
         orderDetail.setKoiId(orderDetailRequest.getItemId());
         orderDetail.setItemType("individual");  // Gán giá trị cho itemType
         orderDetail.setPrice(koi.getPrice());
-
-        //Chờ thanh toán hoàn tất để cập nhật trạng thái
-        orderDetail.setStatus("pending"); // Đặt trạng thái đơn hàng là 'pending'
 
         koiRepository.save(koi);
 
