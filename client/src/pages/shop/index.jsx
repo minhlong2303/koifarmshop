@@ -46,10 +46,10 @@ const Product = ({ koiFish }) => {
     <div className="product">
       <div onClick={handleViewDetail}>
         <Image src={koiFish.image} alt="koi's picture"></Image>
-        {/*Khi nào koi có image sẽ thay vô */}
-        {/* <img src={koiFish.image} alt="koi's picture"></img> */}
         <h3>{koiFish.name}</h3>
-        <p>{koiFish.description}</p>
+        <h3>{`Nguồn Gốc: ${koiFish.origin}`}</h3>
+        <h3>{`Kích Thước: ${koiFish.size} cm`}</h3>
+        {/* <p>{koiFish.description}</p> */}
         <span>{`${koiFish.price} vnđ`}</span>
       </div>
       {/* <Image src={koiFish.image} alt="koi's picture"></Image>

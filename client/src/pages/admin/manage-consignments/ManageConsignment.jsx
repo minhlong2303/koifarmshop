@@ -1,46 +1,47 @@
 import React, { useState, useEffect } from "react";
 import ManageTemplate from "../../../components/manage-template";
-import { Descriptions, message, Select, Table, Image } from "antd";
+import { Descriptions, message, Select, Table, Image, Button } from "antd";
 import api from "../../../config/axios";
-const { Option } = Select;
 
 function ManageConsignment() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
-  //   // Fetch dữ liệu consignment
-  //   useEffect(() => {
-  //     const fetchConsignment = async () => {
-  //       try {
-  //         const response = await api.get("consignments");
-  //         setData(response.data);
-  //       } catch (error) {
-  //         message.error("Failed to fetch consignments.");
-  //         console.error(error);
-  //       }
-  //     };
-  //     fetchConsignment();
-  //   }, []);
+  // Fetch dữ liệu consignment
+  useEffect(() => {
+    const fetchConsignment = async () => {
+      try {
+        const response = await api.get("consignments");
+        setData(response.data);
+      } catch (error) {
+        message.error("Failed to fetch consignments.");
+        console.error(error);
+      }
+    };
+    fetchConsignment();
+  }, []);
 
-  // Cập nhật trạng thái consignment
-  const handleStatusChange = async (consignmentId, newStatus) => {
+  // Xử lý việc chuyển trạng thái và tạo Koi
+  const handleCreateKoi = async (consignmentId) => {
     setLoading(true);
     try {
-      const response = await api.put(
-        `/consignment/${consignmentId}/status`,
-        null,
-        {
-          params: { status: newStatus },
-        }
+      // Gọi API để chuyển trạng thái và tạo Koi
+      const response = await api.post(
+        `/consignments/${consignmentId}/create-koi`
       );
-      message.success(`Consignment status updated to ${newStatus}`);
+
+      message.success(
+        "Koi created successfully and status updated to APPROVED."
+      );
+
+      // Cập nhật trạng thái consignment trong bảng
       setData((prevData) =>
         prevData.map((item) =>
-          item.id === consignmentId ? { ...item, status: newStatus } : item
+          item.id === consignmentId ? { ...item, status: "APPROVED" } : item
         )
       );
     } catch (error) {
-      message.error("Failed to update consignment status.");
+      message.error("Failed to create Koi or update status.");
       console.error(error);
     } finally {
       setLoading(false);
@@ -70,18 +71,19 @@ function ManageConsignment() {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (status, record) => (
-        <Select
-          value={status}
-          onChange={(value) => handleStatusChange(record.id, value)}
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Button
+          type="primary"
+          onClick={() => handleCreateKoi(record.id)}
           loading={loading}
-          disabled={loading}
+          disabled={record.status === "APPROVED"} // Không cho phép tạo lại nếu đã APPROVED
         >
-          <Option value="PENDING">Pending</Option>
-          <Option value="PROCESSING">Processing</Option>
-          <Option value="COMPLETED">Completed</Option>
-          <Option value="CANCELLED">Cancelled</Option>
-        </Select>
+          Duyệt
+        </Button>
       ),
     },
   ];

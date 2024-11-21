@@ -54,8 +54,8 @@ const Product = ({ koiFish }) => {
     <div className="product">
       <div onClick={() => navigate(`/batch-koi/${koiFish.batchKoiID}`)}>
         <Image src={koiFish.image} alt="koi's picture"></Image>
-        <h3>{koiFish.name}</h3>
-        <p>{koiFish.quantity}</p>
+        <h3>{`Lô: ${koiFish.name}`}</h3>
+        <p>{`Số lượng: ${koiFish.quantity}`}</p>
         <span>{`${koiFish.price} vnđ`}</span>
       </div>
       <center>
