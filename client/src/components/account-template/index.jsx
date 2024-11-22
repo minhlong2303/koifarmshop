@@ -25,11 +25,11 @@ const items = [
     "users",
     <UserOutlined />
   ),
-  getItem(
-    <Link to="/account-template/address">Địa chỉ</Link>,
-    "address",
-    <EnvironmentOutlined />
-  ),
+  // getItem(
+  //   <Link to="/account-template/address">Địa chỉ</Link>,
+  //   "address",
+  //   <EnvironmentOutlined />
+  // ),
   getItem(
     <Link to="/account-template/cart">Đơn hàng</Link>,
     "cart",

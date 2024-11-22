@@ -6,30 +6,39 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/features/cartSlice";
 import { Image, message } from "antd";
 import { useNavigate } from "react-router-dom";
+
 function BatchKoiPage() {
   const [koiFishs, setKoiFishs] = useState([]);
+  const [loading, setLoading] = useState(true); // Thêm trạng thái loading
+
   const fetchKoiFish = async () => {
     try {
-      // const response = await api.get("koi");
       const response = await api.get("batchKoi");
       setKoiFishs(response.data);
-      //Bên back-end là response.data.content
     } catch (error) {
       console.log(error.response.data);
+    } finally {
+      setLoading(false); // Dừng loading sau khi fetch xong
     }
   };
+
   useEffect(() => {
     fetchKoiFish();
   }, []);
+
   return (
     <div>
-      {/*koiFishs => <Product></Product> */}
-      <div className="product-list">
-        {koiFishs.map((koiFish) => (
-          // eslint-disable-next-line react/jsx-key
-          <Product key={koiFish.batchKoiID} koiFish={koiFish} />
-        ))}
-      </div>
+      {loading ? ( // Hiển thị trạng thái loading
+        <p>Đang tải dữ liệu...</p>
+      ) : koiFishs.length === 0 ? ( // Kiểm tra nếu danh sách trống
+        <p>Không có lô cá Koi nào hiện tại!</p>
+      ) : (
+        <div className="product-list">
+          {koiFishs.map((koiFish) => (
+            <Product key={koiFish.batchKoiID} koiFish={koiFish} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -53,7 +62,7 @@ const Product = ({ koiFish }) => {
   return (
     <div className="product">
       <div onClick={() => navigate(`/batch-koi/${koiFish.batchKoiID}`)}>
-        <Image src={koiFish.image} alt="koi's picture"></Image>
+        <Image src={koiFish.image} alt="koi's picture" />
         <h3>{`Lô: ${koiFish.name}`}</h3>
         <p>{`Số lượng: ${koiFish.quantity}`}</p>
         <span>{`${koiFish.price} vnđ`}</span>

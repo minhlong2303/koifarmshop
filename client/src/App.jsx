@@ -189,10 +189,10 @@ function App() {
           path: "users",
           element: <UserAccount />,
         },
-        {
-          path: "address",
-          element: <Address />,
-        },
+        // {
+        //   path: "address",
+        //   element: <Address />,
+        // },
         {
           path: "cart",
           element: <CartHistory />,

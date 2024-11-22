@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Table, Tag, Button, message, Spin, Popconfirm } from "antd";
-import api from "../../../config/axios"; // Cấu hình axios cho API
+import api from "../../../config/axios";
+import { useSelector } from "react-redux";
 
 const UserConsignment = () => {
   const [consignments, setConsignments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user); // Lấy thông tin người dùng từ Redux
 
-  // Gọi API để lấy danh sách consignment
+  // Gọi API để lấy danh sách consignment của người dùng hiện tại
   const fetchConsignments = async () => {
+    if (!user) {
+      message.warning("Bạn cần đăng nhập để xem consignment.");
+      return;
+    }
+
     setLoading(true);
     try {
-      const response = await api.get("/api/consignment");
+      const response = await api.get(`/consignments/user/${user.id}`);
       setConsignments(response.data);
     } catch (error) {
       message.error("Không thể tải danh sách consignment.");
@@ -23,7 +30,7 @@ const UserConsignment = () => {
   // Xóa consignment
   const deleteConsignment = async (id) => {
     try {
-      await api.delete(`/api/consignment/${id}`);
+      await api.delete(`/consignments/${id}`);
       message.success("Xóa consignment thành công!");
       fetchConsignments(); // Cập nhật danh sách sau khi xóa
     } catch (error) {
@@ -48,7 +55,7 @@ const UserConsignment = () => {
       title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (date) => new Date(date).toLocaleDateString(),
+      render: (date) => (date ? new Date(date).toLocaleDateString() : "N/A"),
     },
     {
       title: "Trạng thái",
@@ -63,7 +70,10 @@ const UserConsignment = () => {
       title: "Tổng giá trị",
       dataIndex: "totalValue",
       key: "totalValue",
-      render: (value) => `${value.toLocaleString()} VND`,
+      render: (value) =>
+        value !== undefined && value !== null
+          ? `${value.toLocaleString()} VND`
+          : "N/A",
     },
     {
       title: "Hành động",
